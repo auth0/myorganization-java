@@ -1,0 +1,29 @@
+# Specify files that shouldn't be modified by Fern
+
+README.md
+
+LICENSE
+CHANGELOG.md
+
+.codecov.yml
+.editorconfig
+.semgrepignore
+.shiprc
+.snyk
+.version
+
+# GitHub workflows
+.github/
+.claude/
+
+# Build files and configs
+gradle/
+gradlew
+gradlew.bat
+gradle.properties
+settings.gradle
+build.gradle
+sample-app/
+
+# Custom auth wrapper (token providers, client wrapper, telemetry)
+src/main/java/com/auth0/client/myorganization/auth/
