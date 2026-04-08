@@ -86,7 +86,7 @@ public final class OrgDomain {
         return verificationHost;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof OrgDomain && equalTo((OrgDomain) other);
@@ -106,12 +106,12 @@ public final class OrgDomain {
                 && verificationHost.equals(other.verificationHost);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.orgId, this.domain, this.status, this.verificationTxt, this.verificationHost);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -186,7 +186,7 @@ public final class OrgDomain {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(OrgDomain other) {
             id(other.getId());
             orgId(other.getOrgId());
@@ -197,28 +197,28 @@ public final class OrgDomain {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public OrgIdStage id(@NotNull String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("org_id")
         public DomainStage orgId(@NotNull String orgId) {
             this.orgId = Objects.requireNonNull(orgId, "orgId must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("domain")
         public StatusStage domain(@NotNull String domain) {
             this.domain = Objects.requireNonNull(domain, "domain must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public VerificationTxtStage status(@NotNull OrgDomainStatusEnum status) {
             this.status = Objects.requireNonNull(status, "status must not be null");
@@ -230,7 +230,7 @@ public final class OrgDomain {
          * <p>Value used to verify the domain.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("verification_txt")
         public VerificationHostStage verificationTxt(@NotNull String verificationTxt) {
             this.verificationTxt = Objects.requireNonNull(verificationTxt, "verificationTxt must not be null");
@@ -242,25 +242,25 @@ public final class OrgDomain {
          * <p>Stores the full domain where the TXT record should be added.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("verification_host")
         public _FinalStage verificationHost(@NotNull String verificationHost) {
             this.verificationHost = Objects.requireNonNull(verificationHost, "verificationHost must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public OrgDomain build() {
             return new OrgDomain(id, orgId, domain, status, verificationTxt, verificationHost, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

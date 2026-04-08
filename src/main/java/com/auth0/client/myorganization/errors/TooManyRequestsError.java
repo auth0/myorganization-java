@@ -26,7 +26,7 @@ public final class TooManyRequestsError extends MyOrganizationApiException {
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public ErrorResponseContent body() {
         return this.body;
     }

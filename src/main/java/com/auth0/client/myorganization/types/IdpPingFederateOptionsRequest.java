@@ -103,7 +103,7 @@ public final class IdpPingFederateOptionsRequest {
         return iconUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpPingFederateOptionsRequest && equalTo((IdpPingFederateOptionsRequest) other);
@@ -124,7 +124,7 @@ public final class IdpPingFederateOptionsRequest {
                 && iconUrl.equals(other.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.signatureAlgorithm,
@@ -136,7 +136,7 @@ public final class IdpPingFederateOptionsRequest {
                 this.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -222,7 +222,7 @@ public final class IdpPingFederateOptionsRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IdpPingFederateOptionsRequest other) {
             signatureAlgorithm(other.getSignatureAlgorithm());
             digestAlgorithm(other.getDigestAlgorithm());
@@ -234,14 +234,14 @@ public final class IdpPingFederateOptionsRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("signatureAlgorithm")
         public DigestAlgorithmStage signatureAlgorithm(@NotNull IdpSignAlgTypeEnum signatureAlgorithm) {
             this.signatureAlgorithm = Objects.requireNonNull(signatureAlgorithm, "signatureAlgorithm must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("digestAlgorithm")
         public SignSamlRequestStage digestAlgorithm(@NotNull IdpSignAlgDigestTypeEnum digestAlgorithm) {
             this.digestAlgorithm = Objects.requireNonNull(digestAlgorithm, "digestAlgorithm must not be null");
@@ -253,7 +253,7 @@ public final class IdpPingFederateOptionsRequest {
          * <p>Indicates whether PingFederate should digitally sign outgoing SAML authentication requests to relying parties</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("signSAMLRequest")
         public PingFederateBaseUrlStage signSamlRequest(boolean signSamlRequest) {
             this.signSamlRequest = signSamlRequest;
@@ -265,7 +265,7 @@ public final class IdpPingFederateOptionsRequest {
          * <p>URL provided by PingFederate which returns information used for creating the connection</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("pingFederateBaseUrl")
         public SigningCertStage pingFederateBaseUrl(@NotNull String pingFederateBaseUrl) {
             this.pingFederateBaseUrl =
@@ -278,7 +278,7 @@ public final class IdpPingFederateOptionsRequest {
          * <p>PingFederate Server public key (encoded in PEM or CER) you retrieved from the IdP</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("signingCert")
         public _FinalStage signingCert(@NotNull String signingCert) {
             this.signingCert = Objects.requireNonNull(signingCert, "signingCert must not be null");
@@ -289,7 +289,7 @@ public final class IdpPingFederateOptionsRequest {
          * <p>A URL pointing to an image file that represents your client application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage iconUrl(String iconUrl) {
             this.iconUrl = Optional.ofNullable(iconUrl);
             return this;
@@ -298,27 +298,27 @@ public final class IdpPingFederateOptionsRequest {
         /**
          * <p>A URL pointing to an image file that represents your client application.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "icon_url", nulls = Nulls.SKIP)
         public _FinalStage iconUrl(Optional<String> iconUrl) {
             this.iconUrl = iconUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage idpInitiated(IdpOptionsIdpInitiated idpInitiated) {
             this.idpInitiated = Optional.ofNullable(idpInitiated);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "idpInitiated", nulls = Nulls.SKIP)
         public _FinalStage idpInitiated(Optional<IdpOptionsIdpInitiated> idpInitiated) {
             this.idpInitiated = idpInitiated;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IdpPingFederateOptionsRequest build() {
             return new IdpPingFederateOptionsRequest(
                     signatureAlgorithm,
@@ -331,13 +331,13 @@ public final class IdpPingFederateOptionsRequest {
                     additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

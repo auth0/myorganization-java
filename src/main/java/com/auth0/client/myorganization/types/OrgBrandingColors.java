@@ -47,7 +47,7 @@ public final class OrgBrandingColors {
         return pageBackground;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof OrgBrandingColors && equalTo((OrgBrandingColors) other);
@@ -62,12 +62,12 @@ public final class OrgBrandingColors {
         return primary.equals(other.primary) && pageBackground.equals(other.pageBackground);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.primary, this.pageBackground);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -111,7 +111,7 @@ public final class OrgBrandingColors {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(OrgBrandingColors other) {
             primary(other.getPrimary());
             pageBackground(other.getPageBackground());
@@ -123,7 +123,7 @@ public final class OrgBrandingColors {
          * <p>HEX Color for primary elements.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("primary")
         public PageBackgroundStage primary(@NotNull String primary) {
             this.primary = Objects.requireNonNull(primary, "primary must not be null");
@@ -135,25 +135,25 @@ public final class OrgBrandingColors {
          * <p>HEX Color for background.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("page_background")
         public _FinalStage pageBackground(@NotNull String pageBackground) {
             this.pageBackground = Objects.requireNonNull(pageBackground, "pageBackground must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public OrgBrandingColors build() {
             return new OrgBrandingColors(primary, pageBackground, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

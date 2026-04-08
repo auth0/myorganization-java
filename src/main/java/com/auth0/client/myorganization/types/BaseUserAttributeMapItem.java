@@ -55,7 +55,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
      * @return The name of the user attribute.
      */
     @JsonProperty("user_attribute")
-    @Override
+    @java.lang.Override
     public Optional<String> getUserAttribute() {
         return userAttribute;
     }
@@ -64,7 +64,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
      * @return The description of the user attribute.
      */
     @JsonProperty("description")
-    @Override
+    @java.lang.Override
     public Optional<String> getDescription() {
         return description;
     }
@@ -73,7 +73,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
      * @return The label of the user attribute.
      */
     @JsonProperty("label")
-    @Override
+    @java.lang.Override
     public Optional<String> getLabel() {
         return label;
     }
@@ -82,7 +82,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
      * @return Indicates if the attribute is required.
      */
     @JsonProperty("is_required")
-    @Override
+    @java.lang.Override
     public boolean getIsRequired() {
         return isRequired;
     }
@@ -91,7 +91,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
      * @return Indicates whether this attribute is not part of the admin defined schema but is provided by the source. The property will be removed when a refresh operation is performed.
      */
     @JsonProperty("is_extra")
-    @Override
+    @java.lang.Override
     public boolean getIsExtra() {
         return isExtra;
     }
@@ -100,12 +100,12 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
      * @return Indicates whether this attribute is expected but not provided by the admin defined schema. The property will be added when a refresh operation is performed.
      */
     @JsonProperty("is_missing")
-    @Override
+    @java.lang.Override
     public boolean getIsMissing() {
         return isMissing;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BaseUserAttributeMapItem && equalTo((BaseUserAttributeMapItem) other);
@@ -125,13 +125,13 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
                 && isMissing == other.isMissing;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.userAttribute, this.description, this.label, this.isRequired, this.isExtra, this.isMissing);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -211,7 +211,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(BaseUserAttributeMapItem other) {
             userAttribute(other.getUserAttribute());
             description(other.getDescription());
@@ -227,7 +227,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
          * <p>Indicates if the attribute is required.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("is_required")
         public IsExtraStage isRequired(boolean isRequired) {
             this.isRequired = isRequired;
@@ -239,7 +239,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
          * <p>Indicates whether this attribute is not part of the admin defined schema but is provided by the source. The property will be removed when a refresh operation is performed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("is_extra")
         public IsMissingStage isExtra(boolean isExtra) {
             this.isExtra = isExtra;
@@ -251,7 +251,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
          * <p>Indicates whether this attribute is expected but not provided by the admin defined schema. The property will be added when a refresh operation is performed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("is_missing")
         public _FinalStage isMissing(boolean isMissing) {
             this.isMissing = isMissing;
@@ -262,7 +262,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
          * <p>The label of the user attribute.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage label(String label) {
             this.label = Optional.ofNullable(label);
             return this;
@@ -271,7 +271,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
         /**
          * <p>The label of the user attribute.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "label", nulls = Nulls.SKIP)
         public _FinalStage label(Optional<String> label) {
             this.label = label;
@@ -282,7 +282,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
          * <p>The description of the user attribute.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage description(String description) {
             this.description = Optional.ofNullable(description);
             return this;
@@ -291,7 +291,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
         /**
          * <p>The description of the user attribute.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "description", nulls = Nulls.SKIP)
         public _FinalStage description(Optional<String> description) {
             this.description = description;
@@ -302,7 +302,7 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
          * <p>The name of the user attribute.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage userAttribute(String userAttribute) {
             this.userAttribute = Optional.ofNullable(userAttribute);
             return this;
@@ -311,26 +311,26 @@ public final class BaseUserAttributeMapItem implements IBaseUserAttributeMapItem
         /**
          * <p>The name of the user attribute.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "user_attribute", nulls = Nulls.SKIP)
         public _FinalStage userAttribute(Optional<String> userAttribute) {
             this.userAttribute = userAttribute;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public BaseUserAttributeMapItem build() {
             return new BaseUserAttributeMapItem(
                     userAttribute, description, label, isRequired, isExtra, isMissing, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

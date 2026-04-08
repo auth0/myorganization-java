@@ -60,7 +60,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
      * @return The name of the user attribute.
      */
     @JsonProperty("user_attribute")
-    @Override
+    @java.lang.Override
     public Optional<String> getUserAttribute() {
         return userAttribute;
     }
@@ -69,7 +69,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
      * @return The description of the user attribute.
      */
     @JsonProperty("description")
-    @Override
+    @java.lang.Override
     public Optional<String> getDescription() {
         return description;
     }
@@ -78,7 +78,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
      * @return The label of the user attribute.
      */
     @JsonProperty("label")
-    @Override
+    @java.lang.Override
     public Optional<String> getLabel() {
         return label;
     }
@@ -87,7 +87,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
      * @return Indicates if the attribute is required.
      */
     @JsonProperty("is_required")
-    @Override
+    @java.lang.Override
     public boolean getIsRequired() {
         return isRequired;
     }
@@ -96,7 +96,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
      * @return Indicates whether this attribute is not part of the admin defined schema but is provided by the source. The property will be removed when a refresh operation is performed.
      */
     @JsonProperty("is_extra")
-    @Override
+    @java.lang.Override
     public boolean getIsExtra() {
         return isExtra;
     }
@@ -105,7 +105,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
      * @return Indicates whether this attribute is expected but not provided by the admin defined schema. The property will be added when a refresh operation is performed.
      */
     @JsonProperty("is_missing")
-    @Override
+    @java.lang.Override
     public boolean getIsMissing() {
         return isMissing;
     }
@@ -118,7 +118,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
         return provisioningField;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpProvisioningUserAttributeMapItem
@@ -140,7 +140,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
                 && provisioningField.equals(other.provisioningField);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.userAttribute,
@@ -152,7 +152,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
                 this.provisioningField);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -242,7 +242,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IdpProvisioningUserAttributeMapItem other) {
             userAttribute(other.getUserAttribute());
             description(other.getDescription());
@@ -259,7 +259,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
          * <p>Indicates if the attribute is required.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("is_required")
         public IsExtraStage isRequired(boolean isRequired) {
             this.isRequired = isRequired;
@@ -271,7 +271,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
          * <p>Indicates whether this attribute is not part of the admin defined schema but is provided by the source. The property will be removed when a refresh operation is performed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("is_extra")
         public IsMissingStage isExtra(boolean isExtra) {
             this.isExtra = isExtra;
@@ -283,7 +283,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
          * <p>Indicates whether this attribute is expected but not provided by the admin defined schema. The property will be added when a refresh operation is performed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("is_missing")
         public ProvisioningFieldStage isMissing(boolean isMissing) {
             this.isMissing = isMissing;
@@ -295,7 +295,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
          * <p>The name of the provisioning field.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("provisioning_field")
         public _FinalStage provisioningField(@NotNull String provisioningField) {
             this.provisioningField = Objects.requireNonNull(provisioningField, "provisioningField must not be null");
@@ -306,7 +306,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
          * <p>The label of the user attribute.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage label(String label) {
             this.label = Optional.ofNullable(label);
             return this;
@@ -315,7 +315,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
         /**
          * <p>The label of the user attribute.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "label", nulls = Nulls.SKIP)
         public _FinalStage label(Optional<String> label) {
             this.label = label;
@@ -326,7 +326,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
          * <p>The description of the user attribute.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage description(String description) {
             this.description = Optional.ofNullable(description);
             return this;
@@ -335,7 +335,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
         /**
          * <p>The description of the user attribute.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "description", nulls = Nulls.SKIP)
         public _FinalStage description(Optional<String> description) {
             this.description = description;
@@ -346,7 +346,7 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
          * <p>The name of the user attribute.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage userAttribute(String userAttribute) {
             this.userAttribute = Optional.ofNullable(userAttribute);
             return this;
@@ -355,14 +355,14 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
         /**
          * <p>The name of the user attribute.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "user_attribute", nulls = Nulls.SKIP)
         public _FinalStage userAttribute(Optional<String> userAttribute) {
             this.userAttribute = userAttribute;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IdpProvisioningUserAttributeMapItem build() {
             return new IdpProvisioningUserAttributeMapItem(
                     userAttribute,
@@ -375,13 +375,13 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
                     additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

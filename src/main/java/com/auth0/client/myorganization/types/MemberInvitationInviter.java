@@ -37,7 +37,7 @@ public final class MemberInvitationInviter {
         return name;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MemberInvitationInviter && equalTo((MemberInvitationInviter) other);
@@ -52,12 +52,12 @@ public final class MemberInvitationInviter {
         return name.equals(other.name);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -76,7 +76,7 @@ public final class IdpOktaOptionsRequest {
         return iconUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpOktaOptionsRequest && equalTo((IdpOktaOptionsRequest) other);
@@ -94,12 +94,12 @@ public final class IdpOktaOptionsRequest {
                 && iconUrl.equals(other.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.domain, this.clientId, this.clientSecret, this.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -161,7 +161,7 @@ public final class IdpOktaOptionsRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IdpOktaOptionsRequest other) {
             domain(other.getDomain());
             clientId(other.getClientId());
@@ -175,7 +175,7 @@ public final class IdpOktaOptionsRequest {
          * <p>Okta's domain name for your organization.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("domain")
         public ClientIdStage domain(@NotNull String domain) {
             this.domain = Objects.requireNonNull(domain, "domain must not be null");
@@ -187,7 +187,7 @@ public final class IdpOktaOptionsRequest {
          * <p>Unique identifier for your registered Okta application</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("client_id")
         public ClientSecretStage clientId(@NotNull String clientId) {
             this.clientId = Objects.requireNonNull(clientId, "clientId must not be null");
@@ -199,7 +199,7 @@ public final class IdpOktaOptionsRequest {
          * <p>String used to gain access to your registered Okta application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("client_secret")
         public _FinalStage clientSecret(@NotNull String clientSecret) {
             this.clientSecret = Objects.requireNonNull(clientSecret, "clientSecret must not be null");
@@ -210,7 +210,7 @@ public final class IdpOktaOptionsRequest {
          * <p>A URL pointing to an image file that represents your client application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage iconUrl(String iconUrl) {
             this.iconUrl = Optional.ofNullable(iconUrl);
             return this;
@@ -219,25 +219,25 @@ public final class IdpOktaOptionsRequest {
         /**
          * <p>A URL pointing to an image file that represents your client application.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "icon_url", nulls = Nulls.SKIP)
         public _FinalStage iconUrl(Optional<String> iconUrl) {
             this.iconUrl = iconUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IdpOktaOptionsRequest build() {
             return new IdpOktaOptionsRequest(domain, clientId, clientSecret, iconUrl, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

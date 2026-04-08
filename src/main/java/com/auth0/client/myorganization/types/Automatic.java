@@ -123,7 +123,7 @@ public final class Automatic {
         return iconUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Automatic && equalTo((Automatic) other);
@@ -146,7 +146,7 @@ public final class Automatic {
                 && iconUrl.equals(other.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.metadataUrl,
@@ -160,7 +160,7 @@ public final class Automatic {
                 this.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

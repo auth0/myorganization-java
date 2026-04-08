@@ -36,7 +36,7 @@ public final class IdpAdfsOptionsRequestAdfsServer {
         return adfsServer;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpAdfsOptionsRequestAdfsServer && equalTo((IdpAdfsOptionsRequestAdfsServer) other);
@@ -51,12 +51,12 @@ public final class IdpAdfsOptionsRequestAdfsServer {
         return adfsServer.equals(other.adfsServer);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.adfsServer);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -91,7 +91,7 @@ public final class IdpAdfsOptionsRequestAdfsServer {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IdpAdfsOptionsRequestAdfsServer other) {
             adfsServer(other.getAdfsServer());
             return this;
@@ -102,25 +102,25 @@ public final class IdpAdfsOptionsRequestAdfsServer {
          * <p>The adfs_server is the public-facing URL that relying parties and internal clients use to communicate with an ADFS server for authentication and token issuance</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("adfs_server")
         public _FinalStage adfsServer(@NotNull String adfsServer) {
             this.adfsServer = Objects.requireNonNull(adfsServer, "adfsServer must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IdpAdfsOptionsRequestAdfsServer build() {
             return new IdpAdfsOptionsRequestAdfsServer(adfsServer, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;
