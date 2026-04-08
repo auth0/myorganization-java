@@ -27,3 +27,7 @@ sample-app/
 
 # Custom auth wrapper (token providers, client wrapper, telemetry)
 src/main/java/com/auth0/client/myorganization/auth/
+src/test/java/com/auth0/client/myorganization/auth/
+
+# Manually fixed this test
+src/test/java/com/auth0/client/myorganization/OrganizationIdentityProvidersWireTest.java
