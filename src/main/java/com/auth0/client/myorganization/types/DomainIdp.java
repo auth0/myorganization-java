@@ -57,7 +57,7 @@ public final class DomainIdp {
         return displayName;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DomainIdp && equalTo((DomainIdp) other);
@@ -72,12 +72,12 @@ public final class DomainIdp {
         return id.equals(other.id) && name.equals(other.name) && displayName.equals(other.displayName);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.name, this.displayName);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -127,7 +127,7 @@ public final class DomainIdp {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DomainIdp other) {
             id(other.getId());
             name(other.getName());
@@ -135,7 +135,7 @@ public final class DomainIdp {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NameStage id(@NotNull String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
@@ -147,7 +147,7 @@ public final class DomainIdp {
          * <p>The name of the identity provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
@@ -158,7 +158,7 @@ public final class DomainIdp {
          * <p>Identity provider name used on the login screen.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage displayName(String displayName) {
             this.displayName = Optional.ofNullable(displayName);
             return this;
@@ -167,25 +167,25 @@ public final class DomainIdp {
         /**
          * <p>Identity provider name used on the login screen.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "display_name", nulls = Nulls.SKIP)
         public _FinalStage displayName(Optional<String> displayName) {
             this.displayName = displayName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DomainIdp build() {
             return new DomainIdp(id, name, displayName, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

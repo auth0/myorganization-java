@@ -1,7 +1,7 @@
 {
-  "cliVersion": "4.29.0",
+  "cliVersion": "4.62.4",
   "generatorName": "fernapi/fern-java-sdk",
-  "generatorVersion": "3.44.4",
+  "generatorVersion": "4.1.1",
   "generatorConfig": {
     "client-class-name": "MyOrganizationApi",
     "base-api-exception-class-name": "MyOrganizationApiException",
@@ -14,6 +14,6 @@
     "collapse-optional-nullable": true,
     "use-nullable-annotation": true
   },
-  "originGitCommit": "33bcc5d4e893559e35a90ad0025a42cfb645c687",
-  "sdkVersion": "0.0.0"
+  "originGitCommit": "a81259fc42b81e7f98ad6ea2f458c597ef4e8bca",
+  "sdkVersion": "0.0.1"
 }

@@ -123,7 +123,7 @@ public final class Manual {
         return iconUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Manual && equalTo((Manual) other);
@@ -146,7 +146,7 @@ public final class Manual {
                 && iconUrl.equals(other.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.signInEndpoint,
@@ -160,7 +160,7 @@ public final class Manual {
                 this.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

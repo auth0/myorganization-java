@@ -76,7 +76,7 @@ public final class IdpWaadOptionsRequest {
         return iconUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpWaadOptionsRequest && equalTo((IdpWaadOptionsRequest) other);
@@ -94,12 +94,12 @@ public final class IdpWaadOptionsRequest {
                 && iconUrl.equals(other.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.tenantDomain, this.clientId, this.clientSecret, this.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -161,7 +161,7 @@ public final class IdpWaadOptionsRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IdpWaadOptionsRequest other) {
             tenantDomain(other.getTenantDomain());
             clientId(other.getClientId());
@@ -175,7 +175,7 @@ public final class IdpWaadOptionsRequest {
          * <p>Your Azure AD domain name. You can find this on your Azure AD directory's overview page in the Microsoft Azure portal.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("tenant_domain")
         public ClientIdStage tenantDomain(@NotNull String tenantDomain) {
             this.tenantDomain = Objects.requireNonNull(tenantDomain, "tenantDomain must not be null");
@@ -187,7 +187,7 @@ public final class IdpWaadOptionsRequest {
          * <p>Unique identifier for your registered Azure AD application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("client_id")
         public ClientSecretStage clientId(@NotNull String clientId) {
             this.clientId = Objects.requireNonNull(clientId, "clientId must not be null");
@@ -199,7 +199,7 @@ public final class IdpWaadOptionsRequest {
          * <p>String used to gain access to your registered Azure AD application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("client_secret")
         public _FinalStage clientSecret(@NotNull String clientSecret) {
             this.clientSecret = Objects.requireNonNull(clientSecret, "clientSecret must not be null");
@@ -210,7 +210,7 @@ public final class IdpWaadOptionsRequest {
          * <p>A URL pointing to an image file that represents your client application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage iconUrl(String iconUrl) {
             this.iconUrl = Optional.ofNullable(iconUrl);
             return this;
@@ -219,25 +219,25 @@ public final class IdpWaadOptionsRequest {
         /**
          * <p>A URL pointing to an image file that represents your client application.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "icon_url", nulls = Nulls.SKIP)
         public _FinalStage iconUrl(Optional<String> iconUrl) {
             this.iconUrl = iconUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IdpWaadOptionsRequest build() {
             return new IdpWaadOptionsRequest(tenantDomain, clientId, clientSecret, iconUrl, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

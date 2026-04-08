@@ -374,6 +374,10 @@ public class OrganizationIdentityProvidersWireTest {
                 + "  \"assign_membership_on_login\": false,\n"
                 + "  \"is_enabled\": true,\n"
                 + "  \"options\": {\n"
+                + "    \"type\": \"front_channel\",\n"
+                + "    \"client_id\": \"a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d\",\n"
+                + "    \"client_secret\": \"KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp\",\n"
+                + "    \"discovery_url\": \"https://{yourDomain}/.well-known/openid-configuration\"\n"
                 + "  }\n"
                 + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
@@ -450,7 +454,6 @@ public class OrganizationIdentityProvidersWireTest {
                 + "  ]\n"
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
-
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertTrue(
                 jsonEquals(expectedResponseNode, actualResponseNode),

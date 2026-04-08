@@ -36,7 +36,7 @@ public final class ListIdpProvisioningScimTokensResponseContent {
         return scimTokens;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListIdpProvisioningScimTokensResponseContent
@@ -52,12 +52,12 @@ public final class ListIdpProvisioningScimTokensResponseContent {
         return scimTokens.equals(other.scimTokens);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.scimTokens);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

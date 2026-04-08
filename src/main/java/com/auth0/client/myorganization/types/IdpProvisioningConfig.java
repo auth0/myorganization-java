@@ -54,7 +54,7 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
     }
 
     @JsonProperty("identity_provider_id")
-    @Override
+    @java.lang.Override
     public String getIdentityProviderId() {
         return identityProviderId;
     }
@@ -63,25 +63,25 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
      * @return The name of the identity provider
      */
     @JsonProperty("identity_provider_name")
-    @Override
+    @java.lang.Override
     public String getIdentityProviderName() {
         return identityProviderName;
     }
 
     @JsonProperty("strategy")
-    @Override
+    @java.lang.Override
     public IdpStrategyEnum getStrategy() {
         return strategy;
     }
 
     @JsonProperty("method")
-    @Override
+    @java.lang.Override
     public IdpProvisioningMethodEnum getMethod() {
         return method;
     }
 
     @JsonProperty("attributes")
-    @Override
+    @java.lang.Override
     public List<IdpProvisioningUserAttributeMapItem> getAttributes() {
         return attributes;
     }
@@ -90,12 +90,12 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
      * @return The ID of the user
      */
     @JsonProperty("user_id_attribute")
-    @Override
+    @java.lang.Override
     public String getUserIdAttribute() {
         return userIdAttribute;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpProvisioningConfig && equalTo((IdpProvisioningConfig) other);
@@ -115,7 +115,7 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
                 && userIdAttribute.equals(other.userIdAttribute);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.identityProviderId,
@@ -126,7 +126,7 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
                 this.userIdAttribute);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -202,7 +202,7 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IdpProvisioningConfig other) {
             identityProviderId(other.getIdentityProviderId());
             identityProviderName(other.getIdentityProviderName());
@@ -213,7 +213,7 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("identity_provider_id")
         public IdentityProviderNameStage identityProviderId(@NotNull String identityProviderId) {
             this.identityProviderId = Objects.requireNonNull(identityProviderId, "identityProviderId must not be null");
@@ -225,7 +225,7 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
          * <p>The name of the identity provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("identity_provider_name")
         public StrategyStage identityProviderName(@NotNull String identityProviderName) {
             this.identityProviderName =
@@ -233,14 +233,14 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("strategy")
         public MethodStage strategy(@NotNull IdpStrategyEnum strategy) {
             this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("method")
         public UserIdAttributeStage method(@NotNull IdpProvisioningMethodEnum method) {
             this.method = Objects.requireNonNull(method, "method must not be null");
@@ -252,14 +252,14 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
          * <p>The ID of the user</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id_attribute")
         public _FinalStage userIdAttribute(@NotNull String userIdAttribute) {
             this.userIdAttribute = Objects.requireNonNull(userIdAttribute, "userIdAttribute must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllAttributes(List<IdpProvisioningUserAttributeMapItem> attributes) {
             if (attributes != null) {
                 this.attributes.addAll(attributes);
@@ -267,13 +267,13 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAttributes(IdpProvisioningUserAttributeMapItem attributes) {
             this.attributes.add(attributes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "attributes", nulls = Nulls.SKIP)
         public _FinalStage attributes(List<IdpProvisioningUserAttributeMapItem> attributes) {
             this.attributes.clear();
@@ -283,7 +283,7 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IdpProvisioningConfig build() {
             return new IdpProvisioningConfig(
                     identityProviderId,
@@ -295,13 +295,13 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
                     additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

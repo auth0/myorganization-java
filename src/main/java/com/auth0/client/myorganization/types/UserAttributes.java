@@ -51,7 +51,7 @@ public final class UserAttributes implements IUserAttributes {
      * @return Email
      */
     @JsonProperty("email")
-    @Override
+    @java.lang.Override
     public Optional<String> getEmail() {
         return email;
     }
@@ -60,7 +60,7 @@ public final class UserAttributes implements IUserAttributes {
      * @return Full Name
      */
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public Optional<String> getName() {
         return name;
     }
@@ -69,7 +69,7 @@ public final class UserAttributes implements IUserAttributes {
      * @return User nickname
      */
     @JsonProperty("nickname")
-    @Override
+    @java.lang.Override
     public Optional<String> getNickname() {
         return nickname;
     }
@@ -78,7 +78,7 @@ public final class UserAttributes implements IUserAttributes {
      * @return First name
      */
     @JsonProperty("given_name")
-    @Override
+    @java.lang.Override
     public Optional<String> getGivenName() {
         return givenName;
     }
@@ -87,12 +87,12 @@ public final class UserAttributes implements IUserAttributes {
      * @return Last name
      */
     @JsonProperty("family_name")
-    @Override
+    @java.lang.Override
     public Optional<String> getFamilyName() {
         return familyName;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserAttributes && equalTo((UserAttributes) other);
@@ -111,12 +111,12 @@ public final class UserAttributes implements IUserAttributes {
                 && familyName.equals(other.familyName);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.email, this.name, this.nickname, this.givenName, this.familyName);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

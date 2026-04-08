@@ -90,7 +90,7 @@ public final class IdentityProvidersConfigStrategyOverride {
         return waad;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdentityProvidersConfigStrategyOverride
@@ -112,12 +112,12 @@ public final class IdentityProvidersConfigStrategyOverride {
                 && waad.equals(other.waad);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.adfs, this.googleapps, this.oidc, this.okta, this.pingfederate, this.samlp, this.waad);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

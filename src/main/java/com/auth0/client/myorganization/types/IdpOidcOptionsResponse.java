@@ -60,7 +60,7 @@ public final class IdpOidcOptionsResponse {
         return discoveryUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpOidcOptionsResponse && equalTo((IdpOidcOptionsResponse) other);
@@ -75,12 +75,12 @@ public final class IdpOidcOptionsResponse {
         return type.equals(other.type) && clientId.equals(other.clientId) && discoveryUrl.equals(other.discoveryUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.type, this.clientId, this.discoveryUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

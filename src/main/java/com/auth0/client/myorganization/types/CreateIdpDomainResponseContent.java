@@ -33,7 +33,7 @@ public final class CreateIdpDomainResponseContent {
         return domain;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateIdpDomainResponseContent && equalTo((CreateIdpDomainResponseContent) other);
@@ -48,12 +48,12 @@ public final class CreateIdpDomainResponseContent {
         return domain.equals(other.domain);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.domain);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -85,31 +85,31 @@ public final class CreateIdpDomainResponseContent {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreateIdpDomainResponseContent other) {
             domain(other.getDomain());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("domain")
         public _FinalStage domain(@NotNull String domain) {
             this.domain = Objects.requireNonNull(domain, "domain must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreateIdpDomainResponseContent build() {
             return new CreateIdpDomainResponseContent(domain, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

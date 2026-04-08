@@ -102,7 +102,7 @@ public final class IdpPingFederateOptionsResponse {
         return iconUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpPingFederateOptionsResponse && equalTo((IdpPingFederateOptionsResponse) other);
@@ -123,7 +123,7 @@ public final class IdpPingFederateOptionsResponse {
                 && iconUrl.equals(other.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.signatureAlgorithm,
@@ -135,7 +135,7 @@ public final class IdpPingFederateOptionsResponse {
                 this.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

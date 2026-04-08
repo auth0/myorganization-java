@@ -49,7 +49,7 @@ public final class IdentityProvidersConfigOrganization {
         return canSetAssignMembershipOnLogin;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdentityProvidersConfigOrganization
@@ -66,12 +66,12 @@ public final class IdentityProvidersConfigOrganization {
                 && canSetAssignMembershipOnLogin == other.canSetAssignMembershipOnLogin;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.canSetShowAsButton, this.canSetAssignMembershipOnLogin);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -116,7 +116,7 @@ public final class IdentityProvidersConfigOrganization {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IdentityProvidersConfigOrganization other) {
             canSetShowAsButton(other.getCanSetShowAsButton());
             canSetAssignMembershipOnLogin(other.getCanSetAssignMembershipOnLogin());
@@ -128,7 +128,7 @@ public final class IdentityProvidersConfigOrganization {
          * <p>If Org Admin can set show_as_button</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("can_set_show_as_button")
         public CanSetAssignMembershipOnLoginStage canSetShowAsButton(boolean canSetShowAsButton) {
             this.canSetShowAsButton = canSetShowAsButton;
@@ -140,26 +140,26 @@ public final class IdentityProvidersConfigOrganization {
          * <p>If Org Admin can set assign_membership_on_login</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("can_set_assign_membership_on_login")
         public _FinalStage canSetAssignMembershipOnLogin(boolean canSetAssignMembershipOnLogin) {
             this.canSetAssignMembershipOnLogin = canSetAssignMembershipOnLogin;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IdentityProvidersConfigOrganization build() {
             return new IdentityProvidersConfigOrganization(
                     canSetShowAsButton, canSetAssignMembershipOnLogin, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

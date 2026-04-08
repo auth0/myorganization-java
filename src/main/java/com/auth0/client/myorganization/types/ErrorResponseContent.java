@@ -70,7 +70,7 @@ public final class ErrorResponseContent {
         return detail;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ErrorResponseContent && equalTo((ErrorResponseContent) other);
@@ -88,12 +88,12 @@ public final class ErrorResponseContent {
                 && detail.equals(other.detail);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.type, this.status, this.title, this.detail);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -155,7 +155,7 @@ public final class ErrorResponseContent {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ErrorResponseContent other) {
             type(other.getType());
             status(other.getStatus());
@@ -169,7 +169,7 @@ public final class ErrorResponseContent {
          * <p>A URI that describes the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public StatusStage type(@NotNull String type) {
             this.type = Objects.requireNonNull(type, "type must not be null");
@@ -181,7 +181,7 @@ public final class ErrorResponseContent {
          * <p>The HTTP status code result of the request.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public TitleStage status(int status) {
             this.status = status;
@@ -193,7 +193,7 @@ public final class ErrorResponseContent {
          * <p>A brief description of the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("title")
         public DetailStage title(@NotNull String title) {
             this.title = Objects.requireNonNull(title, "title must not be null");
@@ -205,25 +205,25 @@ public final class ErrorResponseContent {
          * <p>A detailed description of the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("detail")
         public _FinalStage detail(@NotNull String detail) {
             this.detail = Objects.requireNonNull(detail, "detail must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ErrorResponseContent build() {
             return new ErrorResponseContent(type, status, title, detail, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;
