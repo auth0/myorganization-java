@@ -2,7 +2,7 @@
   "files": {
     "README.md": [],
     ".version": [],
-    "build.gradle": ["version = \"{MAJOR}.{MINOR}.{PATCH}\""]
+    "gradle.properties": ["VERSION_NAME={MAJOR}.{MINOR}.{PATCH}"]
   },
   "prefixVersion": false
 }
