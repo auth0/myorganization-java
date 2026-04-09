@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'com.diffplug.spotless' version '6.11.0'
+    id 'io.github.gradle-nexus.publish-plugin' version '2.0.0'
 }
 
 repositories {
@@ -10,6 +11,14 @@ repositories {
         url 'https://s01.oss.sonatype.org/content/repositories/releases/'
     }
 }
+
+apply from: rootProject.file('gradle/versioning.gradle')
+
+version = getVersionFromFile()
+group = GROUP
+
+logger.lifecycle("Using version ${version} for ${name} group $group")
+
 
 dependencies {
     api 'com.squareup.okhttp3:okhttp:5.2.1'
@@ -23,13 +32,18 @@ dependencies {
     testImplementation 'com.squareup.okhttp3:mockwebserver:5.2.1'
 }
 
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 processResources {
     from('.version')
 }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 tasks.withType(Javadoc) {
     failOnError false
@@ -42,16 +56,11 @@ spotless {
     }
 }
 
-
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
-
-
 test {
     useJUnitPlatform()
     testLogging {
         showStandardStreams = true
     }
 }
+
+apply from: rootProject.file('gradle/maven-publish.gradle')
