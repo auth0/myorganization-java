@@ -60,7 +60,7 @@ public final class OrgDetails {
         return branding;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof OrgDetails && equalTo((OrgDetails) other);
@@ -75,12 +75,12 @@ public final class OrgDetails {
         return name.equals(other.name) && displayName.equals(other.displayName) && branding.equals(other.branding);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.displayName, this.branding);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

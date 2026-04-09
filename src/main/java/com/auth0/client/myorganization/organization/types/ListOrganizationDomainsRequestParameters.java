@@ -54,7 +54,7 @@ public final class ListOrganizationDomainsRequestParameters {
         return take;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListOrganizationDomainsRequestParameters
@@ -70,12 +70,12 @@ public final class ListOrganizationDomainsRequestParameters {
         return from.equals(other.from) && take.equals(other.take);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.from, this.take);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

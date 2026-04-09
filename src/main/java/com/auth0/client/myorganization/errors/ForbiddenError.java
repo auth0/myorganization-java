@@ -26,7 +26,7 @@ public final class ForbiddenError extends MyOrganizationApiException {
     /**
      * @return the body
      */
-    @Override
+    @java.lang.Override
     public ErrorResponseContent body() {
         return this.body;
     }

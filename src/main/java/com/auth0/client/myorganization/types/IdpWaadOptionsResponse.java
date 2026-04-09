@@ -63,7 +63,7 @@ public final class IdpWaadOptionsResponse {
         return iconUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpWaadOptionsResponse && equalTo((IdpWaadOptionsResponse) other);
@@ -80,12 +80,12 @@ public final class IdpWaadOptionsResponse {
                 && iconUrl.equals(other.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.tenantDomain, this.clientId, this.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

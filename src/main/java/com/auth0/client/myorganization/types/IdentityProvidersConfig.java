@@ -44,7 +44,7 @@ public final class IdentityProvidersConfig {
         return strategies;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdentityProvidersConfig && equalTo((IdentityProvidersConfig) other);
@@ -59,12 +59,12 @@ public final class IdentityProvidersConfig {
         return organization.equals(other.organization) && strategies.equals(other.strategies);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.organization, this.strategies);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -102,39 +102,39 @@ public final class IdentityProvidersConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IdentityProvidersConfig other) {
             organization(other.getOrganization());
             strategies(other.getStrategies());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("organization")
         public StrategiesStage organization(@NotNull IdentityProvidersConfigOrganization organization) {
             this.organization = Objects.requireNonNull(organization, "organization must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("strategies")
         public _FinalStage strategies(@NotNull IdentityProvidersConfigStrategyOverride strategies) {
             this.strategies = Objects.requireNonNull(strategies, "strategies must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IdentityProvidersConfig build() {
             return new IdentityProvidersConfig(organization, strategies, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

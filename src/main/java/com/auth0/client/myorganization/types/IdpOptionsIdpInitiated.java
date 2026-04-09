@@ -75,7 +75,7 @@ public final class IdpOptionsIdpInitiated {
         return clientAuthorizequery;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpOptionsIdpInitiated && equalTo((IdpOptionsIdpInitiated) other);
@@ -93,12 +93,12 @@ public final class IdpOptionsIdpInitiated {
                 && clientAuthorizequery.equals(other.clientAuthorizequery);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.enabled, this.clientId, this.clientProtocol, this.clientAuthorizequery);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

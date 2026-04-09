@@ -73,7 +73,7 @@ public final class IdpOidcOptionsRequest {
         return discoveryUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpOidcOptionsRequest && equalTo((IdpOidcOptionsRequest) other);
@@ -91,12 +91,12 @@ public final class IdpOidcOptionsRequest {
                 && discoveryUrl.equals(other.discoveryUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.type, this.clientId, this.clientSecret, this.discoveryUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -155,7 +155,7 @@ public final class IdpOidcOptionsRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IdpOidcOptionsRequest other) {
             type(other.getType());
             clientId(other.getClientId());
@@ -164,7 +164,7 @@ public final class IdpOidcOptionsRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public ClientIdStage type(@NotNull IdpOidcOptionsTypeEnum type) {
             this.type = Objects.requireNonNull(type, "type must not be null");
@@ -176,7 +176,7 @@ public final class IdpOidcOptionsRequest {
          * <p>The identifier given to you by your provider. Unique identifier for your registered application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("client_id")
         public DiscoveryUrlStage clientId(@NotNull String clientId) {
             this.clientId = Objects.requireNonNull(clientId, "clientId must not be null");
@@ -188,7 +188,7 @@ public final class IdpOidcOptionsRequest {
          * <p>The URL where the OIDC Identity Provider publishes its OpenID Provider Configuration Information</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("discovery_url")
         public _FinalStage discoveryUrl(@NotNull String discoveryUrl) {
             this.discoveryUrl = Objects.requireNonNull(discoveryUrl, "discoveryUrl must not be null");
@@ -199,7 +199,7 @@ public final class IdpOidcOptionsRequest {
          * <p>Available if Back Channel is chosen earlier. The secret given to you by your provider and each provider manages this step differently.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage clientSecret(String clientSecret) {
             this.clientSecret = Optional.ofNullable(clientSecret);
             return this;
@@ -208,25 +208,25 @@ public final class IdpOidcOptionsRequest {
         /**
          * <p>Available if Back Channel is chosen earlier. The secret given to you by your provider and each provider manages this step differently.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "client_secret", nulls = Nulls.SKIP)
         public _FinalStage clientSecret(Optional<String> clientSecret) {
             this.clientSecret = clientSecret;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IdpOidcOptionsRequest build() {
             return new IdpOidcOptionsRequest(type, clientId, clientSecret, discoveryUrl, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;
