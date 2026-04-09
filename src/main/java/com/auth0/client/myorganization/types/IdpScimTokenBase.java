@@ -50,7 +50,7 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
      * @return The token identifier.
      */
     @JsonProperty("token_id")
-    @Override
+    @java.lang.Override
     public String getTokenId() {
         return tokenId;
     }
@@ -59,7 +59,7 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
      * @return The token's scopes.
      */
     @JsonProperty("scopes")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getScopes() {
         return scopes;
     }
@@ -68,7 +68,7 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
      * @return The token's created at timestamp.
      */
     @JsonProperty("created_at")
-    @Override
+    @java.lang.Override
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
@@ -77,12 +77,12 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
      * @return The token's valid until at timestamp (will not exist for non-expiring tokens).
      */
     @JsonProperty("valid_until")
-    @Override
+    @java.lang.Override
     public Optional<OffsetDateTime> getValidUntil() {
         return validUntil;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpScimTokenBase && equalTo((IdpScimTokenBase) other);
@@ -100,12 +100,12 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
                 && validUntil.equals(other.validUntil);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.tokenId, this.scopes, this.createdAt, this.validUntil);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -167,7 +167,7 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IdpScimTokenBase other) {
             tokenId(other.getTokenId());
             scopes(other.getScopes());
@@ -181,7 +181,7 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
          * <p>The token identifier.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("token_id")
         public CreatedAtStage tokenId(@NotNull String tokenId) {
             this.tokenId = Objects.requireNonNull(tokenId, "tokenId must not be null");
@@ -193,7 +193,7 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
          * <p>The token's created at timestamp.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("created_at")
         public _FinalStage createdAt(@NotNull OffsetDateTime createdAt) {
             this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
@@ -204,7 +204,7 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
          * <p>The token's valid until at timestamp (will not exist for non-expiring tokens).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage validUntil(OffsetDateTime validUntil) {
             this.validUntil = Optional.ofNullable(validUntil);
             return this;
@@ -213,7 +213,7 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
         /**
          * <p>The token's valid until at timestamp (will not exist for non-expiring tokens).</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "valid_until", nulls = Nulls.SKIP)
         public _FinalStage validUntil(Optional<OffsetDateTime> validUntil) {
             this.validUntil = validUntil;
@@ -224,7 +224,7 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
          * <p>The token's scopes.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage scopes(List<String> scopes) {
             this.scopes = Optional.ofNullable(scopes);
             return this;
@@ -233,25 +233,25 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
         /**
          * <p>The token's scopes.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "scopes", nulls = Nulls.SKIP)
         public _FinalStage scopes(Optional<List<String>> scopes) {
             this.scopes = scopes;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IdpScimTokenBase build() {
             return new IdpScimTokenBase(tokenId, scopes, createdAt, validUntil, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

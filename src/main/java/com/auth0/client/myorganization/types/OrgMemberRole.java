@@ -52,7 +52,7 @@ public final class OrgMemberRole {
         return description;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof OrgMemberRole && equalTo((OrgMemberRole) other);
@@ -67,12 +67,12 @@ public final class OrgMemberRole {
         return id.equals(other.id) && name.equals(other.name) && description.equals(other.description);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.name, this.description);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -116,7 +116,7 @@ public final class OrgMemberRole {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(OrgMemberRole other) {
             id(other.getId());
             name(other.getName());
@@ -124,45 +124,45 @@ public final class OrgMemberRole {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NameStage id(@NotNull String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage description(String description) {
             this.description = Optional.ofNullable(description);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "description", nulls = Nulls.SKIP)
         public _FinalStage description(Optional<String> description) {
             this.description = description;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public OrgMemberRole build() {
             return new OrgMemberRole(id, name, description, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

@@ -22,20 +22,20 @@ public final class IdpWaadRequestStrategy {
         return value;
     }
 
-    @Override
+    @java.lang.Override
     @JsonValue
     public String toString() {
         return this.string;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         return (this == other)
                 || (other instanceof IdpWaadRequestStrategy
                         && this.string.equals(((IdpWaadRequestStrategy) other).string));
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return this.string.hashCode();
     }

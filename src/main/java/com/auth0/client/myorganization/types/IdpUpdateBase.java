@@ -47,7 +47,7 @@ public final class IdpUpdateBase implements IIdpUpdateBase {
      * @return Identity provider name used on the login screen. Requires access_level to be 'full'
      */
     @JsonProperty("display_name")
-    @Override
+    @java.lang.Override
     public Optional<String> getDisplayName() {
         return displayName;
     }
@@ -56,7 +56,7 @@ public final class IdpUpdateBase implements IIdpUpdateBase {
      * @return Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by Home Realm Discovery (HRD). Requires access_level to be 'full' or 'limited'
      */
     @JsonProperty("show_as_button")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getShowAsButton() {
         return showAsButton;
     }
@@ -65,7 +65,7 @@ public final class IdpUpdateBase implements IIdpUpdateBase {
      * @return If true, the user will be made a member of the organization upon login. Requires access_level to be 'full' or 'limited'.
      */
     @JsonProperty("assign_membership_on_login")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getAssignMembershipOnLogin() {
         return assignMembershipOnLogin;
     }
@@ -74,12 +74,12 @@ public final class IdpUpdateBase implements IIdpUpdateBase {
      * @return True if the identity provider is enabled for the organization. Requires access_level to be 'full' or 'limited'
      */
     @JsonProperty("is_enabled")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getIsEnabled() {
         return isEnabled;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpUpdateBase && equalTo((IdpUpdateBase) other);
@@ -97,12 +97,12 @@ public final class IdpUpdateBase implements IIdpUpdateBase {
                 && isEnabled.equals(other.isEnabled);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.displayName, this.showAsButton, this.assignMembershipOnLogin, this.isEnabled);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

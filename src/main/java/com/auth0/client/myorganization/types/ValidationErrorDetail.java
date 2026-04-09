@@ -76,7 +76,7 @@ public final class ValidationErrorDetail {
         return source;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ValidationErrorDetail && equalTo((ValidationErrorDetail) other);
@@ -94,12 +94,12 @@ public final class ValidationErrorDetail {
                 && source.equals(other.source);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.detail, this.field, this.pointer, this.source);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -161,7 +161,7 @@ public final class ValidationErrorDetail {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ValidationErrorDetail other) {
             detail(other.getDetail());
             field(other.getField());
@@ -175,7 +175,7 @@ public final class ValidationErrorDetail {
          * <p>A detailed description of the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("detail")
         public _FinalStage detail(@NotNull String detail) {
             this.detail = Objects.requireNonNull(detail, "detail must not be null");
@@ -186,7 +186,7 @@ public final class ValidationErrorDetail {
          * <p>Specifies the source of the error (e.g., body, query, or header in an HTML message).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage source(String source) {
             this.source = Optional.ofNullable(source);
             return this;
@@ -195,7 +195,7 @@ public final class ValidationErrorDetail {
         /**
          * <p>Specifies the source of the error (e.g., body, query, or header in an HTML message).</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "source", nulls = Nulls.SKIP)
         public _FinalStage source(Optional<String> source) {
             this.source = source;
@@ -206,7 +206,7 @@ public final class ValidationErrorDetail {
          * <p>JSON Pointer that points to the exact location of the error in a JSON document being validated.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage pointer(String pointer) {
             this.pointer = Optional.ofNullable(pointer);
             return this;
@@ -215,7 +215,7 @@ public final class ValidationErrorDetail {
         /**
          * <p>JSON Pointer that points to the exact location of the error in a JSON document being validated.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "pointer", nulls = Nulls.SKIP)
         public _FinalStage pointer(Optional<String> pointer) {
             this.pointer = pointer;
@@ -226,7 +226,7 @@ public final class ValidationErrorDetail {
          * <p>The name of the invalid parameter.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage field(String field) {
             this.field = Optional.ofNullable(field);
             return this;
@@ -235,25 +235,25 @@ public final class ValidationErrorDetail {
         /**
          * <p>The name of the invalid parameter.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "field", nulls = Nulls.SKIP)
         public _FinalStage field(Optional<String> field) {
             this.field = field;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ValidationErrorDetail build() {
             return new ValidationErrorDetail(detail, field, pointer, source, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

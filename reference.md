@@ -69,30 +69,22 @@ Update details for this Organization, such as display name and branding options.
 client.organizationDetails().update(
     OrgDetails
         .builder()
-        .name(
-            OptionalNullable.of("testorg")
-        )
-        .displayName(
-            OptionalNullable.of("Test Organization")
-        )
+        .name("testorg")
+        .displayName("Test Organization")
         .branding(
-            OptionalNullable.of(
-                OrgBranding
-                    .builder()
-                    .logoUrl(
-                        OptionalNullable.of("https://example.com/logo.png")
-                    )
-                    .colors(
-                        OptionalNullable.of(
-                            OrgBrandingColors
-                                .builder()
-                                .primary("#000000")
-                                .pageBackground("#FFFFFF")
-                                .build()
-                        )
-                    )
-                    .build()
-            )
+            OrgBranding
+                .builder()
+                .logoUrl(
+                    OptionalNullable.of("https://example.com/logo.png")
+                )
+                .colors(
+                    OrgBrandingColors
+                        .builder()
+                        .primary("#000000")
+                        .pageBackground("#FFFFFF")
+                        .build()
+                )
+                .build()
         )
         .build()
 );
@@ -479,30 +471,20 @@ client.organization().identityProviders().create(
                     .builder()
                     .type(IdpOidcOptionsTypeEnum.FRONT_CHANNEL)
                     .clientId("a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d")
-                    .clientSecret(
-                        OptionalNullable.of("KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp")
-                    )
                     .discoveryUrl("https://{yourDomain}/.well-known/openid-configuration")
+                    .clientSecret(Optional.of("KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp"))
                     .build()
             )
             .name("oidcIdp")
             .domains(
-                OptionalNullable.of(
+                Optional.of(
                     Arrays.asList("mydomain.com")
                 )
             )
-            .displayName(
-                OptionalNullable.of("OIDC IdP")
-            )
-            .showAsButton(
-                OptionalNullable.of(true)
-            )
-            .assignMembershipOnLogin(
-                OptionalNullable.of(false)
-            )
-            .isEnabled(
-                OptionalNullable.of(true)
-            )
+            .displayName(Optional.of("OIDC IdP"))
+            .showAsButton(Optional.of(true))
+            .assignMembershipOnLogin(Optional.of(false))
+            .isEnabled(Optional.of(true))
             .build()
     )
 );
@@ -672,23 +654,19 @@ client.organization().identityProviders().update(
     IdpUpdateKnownRequest.of(
         IdpAdfsUpdateRequest
             .builder()
-            .displayName(
-                OptionalNullable.of("OIDC IdP")
-            )
-            .showAsButton(
-                OptionalNullable.of(true)
-            )
-            .assignMembershipOnLogin(
-                OptionalNullable.of(false)
-            )
-            .isEnabled(
-                OptionalNullable.of(true)
-            )
+            .displayName(Optional.of("OIDC IdP"))
+            .showAsButton(Optional.of(true))
+            .assignMembershipOnLogin(Optional.of(false))
+            .isEnabled(Optional.of(true))
             .options(
-                OptionalNullable.of(
+                Optional.of(
                     IdpAdfsOptionsRequest.of(
                         FedMetadataXml
                             .builder()
+                            .additionalProperty("type", "front_channel")
+                            .additionalProperty("client_id", "a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d")
+                            .additionalProperty("client_secret", "KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp")
+                            .additionalProperty("discovery_url", "https://{yourDomain}/.well-known/openid-configuration")
                             .build()
                     )
                 )
@@ -1448,9 +1426,7 @@ client.organization().identityProviders().provisioning().scimTokens().create(
     "idp_id",
     CreateIdpProvisioningScimTokenRequestContent
         .builder()
-        .tokenLifetime(
-            OptionalNullable.of(86400)
-        )
+        .tokenLifetime(86400)
         .build()
 );
 ```

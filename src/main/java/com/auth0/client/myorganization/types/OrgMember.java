@@ -73,7 +73,7 @@ public final class OrgMember implements IUserAttributes {
      * @return Email
      */
     @JsonProperty("email")
-    @Override
+    @java.lang.Override
     public Optional<String> getEmail() {
         return email;
     }
@@ -82,7 +82,7 @@ public final class OrgMember implements IUserAttributes {
      * @return Full Name
      */
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public Optional<String> getName() {
         return name;
     }
@@ -91,7 +91,7 @@ public final class OrgMember implements IUserAttributes {
      * @return User nickname
      */
     @JsonProperty("nickname")
-    @Override
+    @java.lang.Override
     public Optional<String> getNickname() {
         return nickname;
     }
@@ -100,7 +100,7 @@ public final class OrgMember implements IUserAttributes {
      * @return First name
      */
     @JsonProperty("given_name")
-    @Override
+    @java.lang.Override
     public Optional<String> getGivenName() {
         return givenName;
     }
@@ -109,7 +109,7 @@ public final class OrgMember implements IUserAttributes {
      * @return Last name
      */
     @JsonProperty("family_name")
-    @Override
+    @java.lang.Override
     public Optional<String> getFamilyName() {
         return familyName;
     }
@@ -148,7 +148,7 @@ public final class OrgMember implements IUserAttributes {
         return lastLogin;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof OrgMember && equalTo((OrgMember) other);
@@ -172,7 +172,7 @@ public final class OrgMember implements IUserAttributes {
                 && lastLogin.equals(other.lastLogin);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.email,
@@ -187,7 +187,7 @@ public final class OrgMember implements IUserAttributes {
                 this.lastLogin);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

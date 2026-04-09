@@ -49,7 +49,7 @@ public final class IdentityProvidersConfigStrategyBase {
         return provisioningMethods;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdentityProvidersConfigStrategyBase
@@ -65,12 +65,12 @@ public final class IdentityProvidersConfigStrategyBase {
         return enabledFeatures.equals(other.enabledFeatures) && provisioningMethods.equals(other.provisioningMethods);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.enabledFeatures, this.provisioningMethods);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

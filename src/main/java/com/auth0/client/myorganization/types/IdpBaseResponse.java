@@ -141,7 +141,7 @@ public final class IdpBaseResponse {
         return name;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpBaseResponse && equalTo((IdpBaseResponse) other);
@@ -164,7 +164,7 @@ public final class IdpBaseResponse {
                 && accessLevel.equals(other.accessLevel);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -178,7 +178,7 @@ public final class IdpBaseResponse {
                 this.accessLevel);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -280,7 +280,7 @@ public final class IdpBaseResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IdpBaseResponse other) {
             id(other.getId());
             name(other.getName());
@@ -294,20 +294,20 @@ public final class IdpBaseResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("strategy")
         public _FinalStage strategy(@NotNull IdpStrategyEnum strategy) {
             this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage accessLevel(OrganizationAccessLevelEnum accessLevel) {
             this.accessLevel = Optional.ofNullable(accessLevel);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "access_level", nulls = Nulls.SKIP)
         public _FinalStage accessLevel(Optional<OrganizationAccessLevelEnum> accessLevel) {
             this.accessLevel = accessLevel;
@@ -318,7 +318,7 @@ public final class IdpBaseResponse {
          * <p>True if the identity provider is enabled for the organization.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage isEnabled(Boolean isEnabled) {
             this.isEnabled = Optional.ofNullable(isEnabled);
             return this;
@@ -327,7 +327,7 @@ public final class IdpBaseResponse {
         /**
          * <p>True if the identity provider is enabled for the organization.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "is_enabled", nulls = Nulls.SKIP)
         public _FinalStage isEnabled(Optional<Boolean> isEnabled) {
             this.isEnabled = isEnabled;
@@ -338,7 +338,7 @@ public final class IdpBaseResponse {
          * <p>If true, the user will be made a member of the organization upon login.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage assignMembershipOnLogin(Boolean assignMembershipOnLogin) {
             this.assignMembershipOnLogin = Optional.ofNullable(assignMembershipOnLogin);
             return this;
@@ -347,7 +347,7 @@ public final class IdpBaseResponse {
         /**
          * <p>If true, the user will be made a member of the organization upon login.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "assign_membership_on_login", nulls = Nulls.SKIP)
         public _FinalStage assignMembershipOnLogin(Optional<Boolean> assignMembershipOnLogin) {
             this.assignMembershipOnLogin = assignMembershipOnLogin;
@@ -358,7 +358,7 @@ public final class IdpBaseResponse {
          * <p>Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by Home Realm Discovery (HRD).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage showAsButton(Boolean showAsButton) {
             this.showAsButton = Optional.ofNullable(showAsButton);
             return this;
@@ -367,7 +367,7 @@ public final class IdpBaseResponse {
         /**
          * <p>Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by Home Realm Discovery (HRD).</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "show_as_button", nulls = Nulls.SKIP)
         public _FinalStage showAsButton(Optional<Boolean> showAsButton) {
             this.showAsButton = showAsButton;
@@ -378,7 +378,7 @@ public final class IdpBaseResponse {
          * <p>Identity provider name used on the login screen.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage displayName(String displayName) {
             this.displayName = Optional.ofNullable(displayName);
             return this;
@@ -387,7 +387,7 @@ public final class IdpBaseResponse {
         /**
          * <p>Identity provider name used on the login screen.</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "display_name", nulls = Nulls.SKIP)
         public _FinalStage displayName(Optional<String> displayName) {
             this.displayName = displayName;
@@ -398,7 +398,7 @@ public final class IdpBaseResponse {
          * <p>List of domains for Home Realm Discovery (HRD)</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage domains(List<String> domains) {
             this.domains = Optional.ofNullable(domains);
             return this;
@@ -407,7 +407,7 @@ public final class IdpBaseResponse {
         /**
          * <p>List of domains for Home Realm Discovery (HRD)</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "domains", nulls = Nulls.SKIP)
         public _FinalStage domains(Optional<List<String>> domains) {
             this.domains = domains;
@@ -418,7 +418,7 @@ public final class IdpBaseResponse {
          * <p>The name of the identity provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage name(com.auth0.client.myorganization.core.Nullable<String> name) {
             if (name.isNull()) {
                 this.name = OptionalNullable.ofNull();
@@ -434,7 +434,7 @@ public final class IdpBaseResponse {
          * <p>The name of the identity provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage name(Optional<String> name) {
             if (name.isPresent()) {
                 this.name = OptionalNullable.of(name.get());
@@ -448,7 +448,7 @@ public final class IdpBaseResponse {
          * <p>The name of the identity provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage name(String name) {
             this.name = OptionalNullable.of(name);
             return this;
@@ -457,27 +457,27 @@ public final class IdpBaseResponse {
         /**
          * <p>The name of the identity provider</p>
          */
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "name", nulls = Nulls.SKIP)
         public _FinalStage name(@Nullable OptionalNullable<String> name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage id(String id) {
             this.id = Optional.ofNullable(id);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
         public _FinalStage id(Optional<String> id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IdpBaseResponse build() {
             return new IdpBaseResponse(
                     id,
@@ -492,13 +492,13 @@ public final class IdpBaseResponse {
                     additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

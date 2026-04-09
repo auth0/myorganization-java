@@ -63,7 +63,7 @@ public final class IdpGoogleAppsOptionsResponse {
         return iconUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IdpGoogleAppsOptionsResponse && equalTo((IdpGoogleAppsOptionsResponse) other);
@@ -78,12 +78,12 @@ public final class IdpGoogleAppsOptionsResponse {
         return domain.equals(other.domain) && clientId.equals(other.clientId) && iconUrl.equals(other.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.domain, this.clientId, this.iconUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -61,7 +61,7 @@ public final class OrgBranding {
         return logoUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof OrgBranding && equalTo((OrgBranding) other);
@@ -76,12 +76,12 @@ public final class OrgBranding {
         return logoUrl.equals(other.logoUrl) && colors.equals(other.colors);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.logoUrl, this.colors);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

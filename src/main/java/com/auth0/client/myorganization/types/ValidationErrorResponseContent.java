@@ -74,7 +74,7 @@ public final class ValidationErrorResponseContent {
         return validationErrors;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ValidationErrorResponseContent && equalTo((ValidationErrorResponseContent) other);
@@ -92,12 +92,12 @@ public final class ValidationErrorResponseContent {
                 && validationErrors.equals(other.validationErrors);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.type, this.status, this.title, this.validationErrors);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -158,7 +158,7 @@ public final class ValidationErrorResponseContent {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ValidationErrorResponseContent other) {
             type(other.getType());
             status(other.getStatus());
@@ -172,7 +172,7 @@ public final class ValidationErrorResponseContent {
          * <p>A URI that describes the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public StatusStage type(@NotNull String type) {
             this.type = Objects.requireNonNull(type, "type must not be null");
@@ -184,7 +184,7 @@ public final class ValidationErrorResponseContent {
          * <p>The HTTP status code result of the request.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public TitleStage status(int status) {
             this.status = status;
@@ -196,14 +196,14 @@ public final class ValidationErrorResponseContent {
          * <p>A brief description of the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("title")
         public _FinalStage title(@NotNull String title) {
             this.title = Objects.requireNonNull(title, "title must not be null");
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllValidationErrors(List<ValidationErrorDetail> validationErrors) {
             if (validationErrors != null) {
                 this.validationErrors.addAll(validationErrors);
@@ -211,13 +211,13 @@ public final class ValidationErrorResponseContent {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addValidationErrors(ValidationErrorDetail validationErrors) {
             this.validationErrors.add(validationErrors);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "validation_errors", nulls = Nulls.SKIP)
         public _FinalStage validationErrors(List<ValidationErrorDetail> validationErrors) {
             this.validationErrors.clear();
@@ -227,18 +227,18 @@ public final class ValidationErrorResponseContent {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ValidationErrorResponseContent build() {
             return new ValidationErrorResponseContent(type, status, title, validationErrors, additionalProperties);
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

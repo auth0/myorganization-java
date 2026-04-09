@@ -48,7 +48,7 @@ public final class ListOrganizationDomainsResponseContent {
         return organizationDomains;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListOrganizationDomainsResponseContent
@@ -64,12 +64,12 @@ public final class ListOrganizationDomainsResponseContent {
         return next.equals(other.next) && organizationDomains.equals(other.organizationDomains);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.next, this.organizationDomains);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
