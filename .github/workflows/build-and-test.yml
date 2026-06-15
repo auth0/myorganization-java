@@ -1,4 +1,4 @@
-name: fern-demo/auth0-myorg-java-sdk/build-and-test
+name: auth0/myorganization-java/build-and-test
 
 on:
   pull_request:
