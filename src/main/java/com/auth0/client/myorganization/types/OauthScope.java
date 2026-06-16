@@ -43,17 +43,11 @@ public final class OauthScope {
     public static final OauthScope READ_MY_ORG_MEMBERS =
             new OauthScope(Value.READ_MY_ORG_MEMBERS, "read:my_org:members");
 
-    public static final OauthScope UPDATE_MY_ORG_MEMBER_ROLES =
-            new OauthScope(Value.UPDATE_MY_ORG_MEMBER_ROLES, "update:my_org:member_roles");
-
     public static final OauthScope CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS = new OauthScope(
             Value.CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS, "create:my_org:identity_providers_scim_tokens");
 
     public static final OauthScope CREATE_MY_ORG_DOMAINS =
             new OauthScope(Value.CREATE_MY_ORG_DOMAINS, "create:my_org:domains");
-
-    public static final OauthScope DELETE_MY_ORG_MEMBERS =
-            new OauthScope(Value.DELETE_MY_ORG_MEMBERS, "delete:my_org:members");
 
     public static final OauthScope UPDATE_MY_ORG_IDENTITY_PROVIDERS =
             new OauthScope(Value.UPDATE_MY_ORG_IDENTITY_PROVIDERS, "update:my_org:identity_providers");
@@ -167,14 +161,10 @@ public final class OauthScope {
                 return visitor.visitReadMyOrgIdentityProvidersScimTokens();
             case READ_MY_ORG_MEMBERS:
                 return visitor.visitReadMyOrgMembers();
-            case UPDATE_MY_ORG_MEMBER_ROLES:
-                return visitor.visitUpdateMyOrgMemberRoles();
             case CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS:
                 return visitor.visitCreateMyOrgIdentityProvidersScimTokens();
             case CREATE_MY_ORG_DOMAINS:
                 return visitor.visitCreateMyOrgDomains();
-            case DELETE_MY_ORG_MEMBERS:
-                return visitor.visitDeleteMyOrgMembers();
             case UPDATE_MY_ORG_IDENTITY_PROVIDERS:
                 return visitor.visitUpdateMyOrgIdentityProviders();
             case DELETE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS:
@@ -246,14 +236,10 @@ public final class OauthScope {
                 return READ_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS;
             case "read:my_org:members":
                 return READ_MY_ORG_MEMBERS;
-            case "update:my_org:member_roles":
-                return UPDATE_MY_ORG_MEMBER_ROLES;
             case "create:my_org:identity_providers_scim_tokens":
                 return CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS;
             case "create:my_org:domains":
                 return CREATE_MY_ORG_DOMAINS;
-            case "delete:my_org:members":
-                return DELETE_MY_ORG_MEMBERS;
             case "update:my_org:identity_providers":
                 return UPDATE_MY_ORG_IDENTITY_PROVIDERS;
             case "delete:my_org:identity_providers_domains":
@@ -348,15 +334,11 @@ public final class OauthScope {
 
         READ_MY_ORG_MEMBERS,
 
-        DELETE_MY_ORG_MEMBERS,
-
         DELETE_MY_ORG_MEMBERSHIPS,
 
         READ_MY_ORG_MEMBER_ROLES,
 
         CREATE_MY_ORG_MEMBER_ROLES,
-
-        UPDATE_MY_ORG_MEMBER_ROLES,
 
         DELETE_MY_ORG_MEMBER_ROLES,
 
@@ -422,15 +404,11 @@ public final class OauthScope {
 
         T visitReadMyOrgMembers();
 
-        T visitDeleteMyOrgMembers();
-
         T visitDeleteMyOrgMemberships();
 
         T visitReadMyOrgMemberRoles();
 
         T visitCreateMyOrgMemberRoles();
-
-        T visitUpdateMyOrgMemberRoles();
 
         T visitDeleteMyOrgMemberRoles();
 

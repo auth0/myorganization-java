@@ -34,13 +34,15 @@ public final class OrgMember implements IUserAttributes {
 
     private final Optional<String> userId;
 
-    private final Optional<List<OrgMemberRole>> roles;
+    private final Optional<List<Role>> roles;
 
     private final Optional<OffsetDateTime> createdAt;
 
     private final Optional<OffsetDateTime> updatedAt;
 
     private final Optional<OffsetDateTime> lastLogin;
+
+    private final Optional<String> phoneNumber;
 
     private final Map<String, Object> additionalProperties;
 
@@ -51,10 +53,11 @@ public final class OrgMember implements IUserAttributes {
             Optional<String> givenName,
             Optional<String> familyName,
             Optional<String> userId,
-            Optional<List<OrgMemberRole>> roles,
+            Optional<List<Role>> roles,
             Optional<OffsetDateTime> createdAt,
             Optional<OffsetDateTime> updatedAt,
             Optional<OffsetDateTime> lastLogin,
+            Optional<String> phoneNumber,
             Map<String, Object> additionalProperties) {
         this.email = email;
         this.name = name;
@@ -66,6 +69,7 @@ public final class OrgMember implements IUserAttributes {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.lastLogin = lastLogin;
+        this.phoneNumber = phoneNumber;
         this.additionalProperties = additionalProperties;
     }
 
@@ -120,7 +124,7 @@ public final class OrgMember implements IUserAttributes {
     }
 
     @JsonProperty("roles")
-    public Optional<List<OrgMemberRole>> getRoles() {
+    public Optional<List<Role>> getRoles() {
         return roles;
     }
 
@@ -148,6 +152,14 @@ public final class OrgMember implements IUserAttributes {
         return lastLogin;
     }
 
+    /**
+     * @return Phone number associated with the user.
+     */
+    @JsonProperty("phone_number")
+    public Optional<String> getPhoneNumber() {
+        return phoneNumber;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -169,7 +181,8 @@ public final class OrgMember implements IUserAttributes {
                 && roles.equals(other.roles)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
-                && lastLogin.equals(other.lastLogin);
+                && lastLogin.equals(other.lastLogin)
+                && phoneNumber.equals(other.phoneNumber);
     }
 
     @java.lang.Override
@@ -184,7 +197,8 @@ public final class OrgMember implements IUserAttributes {
                 this.roles,
                 this.createdAt,
                 this.updatedAt,
-                this.lastLogin);
+                this.lastLogin,
+                this.phoneNumber);
     }
 
     @java.lang.Override
@@ -210,13 +224,15 @@ public final class OrgMember implements IUserAttributes {
 
         private Optional<String> userId = Optional.empty();
 
-        private Optional<List<OrgMemberRole>> roles = Optional.empty();
+        private Optional<List<Role>> roles = Optional.empty();
 
         private Optional<OffsetDateTime> createdAt = Optional.empty();
 
         private Optional<OffsetDateTime> updatedAt = Optional.empty();
 
         private Optional<OffsetDateTime> lastLogin = Optional.empty();
+
+        private Optional<String> phoneNumber = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -234,6 +250,7 @@ public final class OrgMember implements IUserAttributes {
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             lastLogin(other.getLastLogin());
+            phoneNumber(other.getPhoneNumber());
             return this;
         }
 
@@ -319,12 +336,12 @@ public final class OrgMember implements IUserAttributes {
         }
 
         @JsonSetter(value = "roles", nulls = Nulls.SKIP)
-        public Builder roles(Optional<List<OrgMemberRole>> roles) {
+        public Builder roles(Optional<List<Role>> roles) {
             this.roles = roles;
             return this;
         }
 
-        public Builder roles(List<OrgMemberRole> roles) {
+        public Builder roles(List<Role> roles) {
             this.roles = Optional.ofNullable(roles);
             return this;
         }
@@ -371,6 +388,20 @@ public final class OrgMember implements IUserAttributes {
             return this;
         }
 
+        /**
+         * <p>Phone number associated with the user.</p>
+         */
+        @JsonSetter(value = "phone_number", nulls = Nulls.SKIP)
+        public Builder phoneNumber(Optional<String> phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder phoneNumber(String phoneNumber) {
+            this.phoneNumber = Optional.ofNullable(phoneNumber);
+            return this;
+        }
+
         public OrgMember build() {
             return new OrgMember(
                     email,
@@ -383,6 +414,7 @@ public final class OrgMember implements IUserAttributes {
                     createdAt,
                     updatedAt,
                     lastLogin,
+                    phoneNumber,
                     additionalProperties);
         }
 

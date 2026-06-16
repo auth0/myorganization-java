@@ -16,11 +16,23 @@ public class OrganizationClient {
 
     protected final Supplier<IdentityProvidersClient> identityProvidersClient;
 
+    protected final Supplier<MembersClient> membersClient;
+
+    protected final Supplier<MembershipsClient> membershipsClient;
+
+    protected final Supplier<InvitationsClient> invitationsClient;
+
+    protected final Supplier<RolesClient> rolesClient;
+
     public OrganizationClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.configurationClient = Suppliers.memoize(() -> new ConfigurationClient(clientOptions));
         this.domainsClient = Suppliers.memoize(() -> new DomainsClient(clientOptions));
         this.identityProvidersClient = Suppliers.memoize(() -> new IdentityProvidersClient(clientOptions));
+        this.membersClient = Suppliers.memoize(() -> new MembersClient(clientOptions));
+        this.membershipsClient = Suppliers.memoize(() -> new MembershipsClient(clientOptions));
+        this.invitationsClient = Suppliers.memoize(() -> new InvitationsClient(clientOptions));
+        this.rolesClient = Suppliers.memoize(() -> new RolesClient(clientOptions));
     }
 
     public ConfigurationClient configuration() {
@@ -33,5 +45,21 @@ public class OrganizationClient {
 
     public IdentityProvidersClient identityProviders() {
         return this.identityProvidersClient.get();
+    }
+
+    public MembersClient members() {
+        return this.membersClient.get();
+    }
+
+    public MembershipsClient memberships() {
+        return this.membershipsClient.get();
+    }
+
+    public InvitationsClient invitations() {
+        return this.invitationsClient.get();
+    }
+
+    public RolesClient roles() {
+        return this.rolesClient.get();
     }
 }

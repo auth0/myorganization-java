@@ -19,8 +19,8 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = OrgMemberRole.Builder.class)
-public final class OrgMemberRole {
+@JsonDeserialize(builder = Role.Builder.class)
+public final class Role {
     private final String id;
 
     private final String name;
@@ -29,8 +29,7 @@ public final class OrgMemberRole {
 
     private final Map<String, Object> additionalProperties;
 
-    private OrgMemberRole(
-            String id, String name, Optional<String> description, Map<String, Object> additionalProperties) {
+    private Role(String id, String name, Optional<String> description, Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -55,7 +54,7 @@ public final class OrgMemberRole {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof OrgMemberRole && equalTo((OrgMemberRole) other);
+        return other instanceof Role && equalTo((Role) other);
     }
 
     @JsonAnyGetter
@@ -63,7 +62,7 @@ public final class OrgMemberRole {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(OrgMemberRole other) {
+    private boolean equalTo(Role other) {
         return id.equals(other.id) && name.equals(other.name) && description.equals(other.description);
     }
 
@@ -84,7 +83,7 @@ public final class OrgMemberRole {
     public interface IdStage {
         NameStage id(@NotNull String id);
 
-        Builder from(OrgMemberRole other);
+        Builder from(Role other);
     }
 
     public interface NameStage {
@@ -92,7 +91,7 @@ public final class OrgMemberRole {
     }
 
     public interface _FinalStage {
-        OrgMemberRole build();
+        Role build();
 
         _FinalStage additionalProperty(String key, Object value);
 
@@ -117,7 +116,7 @@ public final class OrgMemberRole {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(OrgMemberRole other) {
+        public Builder from(Role other) {
             id(other.getId());
             name(other.getName());
             description(other.getDescription());
@@ -152,8 +151,8 @@ public final class OrgMemberRole {
         }
 
         @java.lang.Override
-        public OrgMemberRole build() {
-            return new OrgMemberRole(id, name, description, additionalProperties);
+        public Role build() {
+            return new Role(id, name, description, additionalProperties);
         }
 
         @java.lang.Override

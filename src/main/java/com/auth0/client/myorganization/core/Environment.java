@@ -4,7 +4,7 @@
 package com.auth0.client.myorganization.core;
 
 public final class Environment {
-    public static final Environment DEFAULT = new Environment("https://%7BTENANT%7D.auth0.com/my-org");
+    public static final Environment DEFAULT = new Environment("https://%7BTENANT%7D.auth0.com/my-org/v1");
 
     private final String url;
 
