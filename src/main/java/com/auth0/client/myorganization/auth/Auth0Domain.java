@@ -40,10 +40,10 @@ public final class Auth0Domain {
     /**
      * Derives the base URL from a sanitized domain.
      *
-     * @return {@code https://{domain}/my-org}
+     * @return {@code https://{domain}/my-org/v1}
      */
     public static String deriveBaseURL(String sanitizedDomain) {
-        return "https://" + sanitizedDomain + "/my-org";
+        return "https://" + sanitizedDomain + "/my-org/v1";
     }
 
     /**

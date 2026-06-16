@@ -1,0 +1,91 @@
+package com.auth0.client.myorganization;
+
+import com.auth0.client.myorganization.core.ObjectMappers;
+import com.auth0.client.myorganization.core.OptionalNullable;
+import com.auth0.client.myorganization.core.SyncPagingIterable;
+import com.auth0.client.myorganization.organization.types.ListRolesRequestParameters;
+import com.auth0.client.myorganization.types.Role;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class OrganizationRolesWireTest {
+    private MockWebServer server;
+    private MyOrganizationApi client;
+    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
+
+    @BeforeEach
+    public void setup() throws Exception {
+        server = new MockWebServer();
+        server.start();
+        client = MyOrganizationApi.builder()
+                .url(server.url("/").toString())
+                .token("test-token")
+                .build();
+    }
+
+    @AfterEach
+    public void teardown() throws Exception {
+        server.shutdown();
+    }
+
+    @Test
+    public void testList() throws Exception {
+        server.enqueue(
+                new MockResponse()
+                        .setResponseCode(200)
+                        .setBody(
+                                "{\"roles\":[{\"id\":\"rol_BKI0BKI0BKI0BKI0\",\"name\":\"Admin\",\"description\":\"Administrator role with full access\"},{\"id\":\"rol_BKI0BKI0BKI0BKI1\",\"name\":\"User\",\"description\":\"Standard user role with limited access\"}],\"next\":\"abc123\"}"));
+        SyncPagingIterable<Role> response = client.organization()
+                .roles()
+                .list(ListRolesRequestParameters.builder()
+                        .from(OptionalNullable.of("from"))
+                        .take(OptionalNullable.of(1))
+                        .name(OptionalNullable.of("name"))
+                        .build());
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate response body
+        Assertions.assertNotNull(response, "Response should not be null");
+        // Pagination response validated via MockWebServer
+        // The SDK correctly parses the response into a SyncPagingIterable
+    }
+
+    /**
+     * Compares two JsonNodes with numeric equivalence and null safety.
+     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
+     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
+     */
+    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
+        if (expected == null && actual == null) return true;
+        if (expected == null || actual == null) return false;
+        if (expected.equals(actual)) return true;
+        if (expected.isNumber() && actual.isNumber())
+            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
+        if (expected.isObject() && actual.isObject()) {
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
+            while (iter.hasNext()) {
+                java.util.Map.Entry<String, JsonNode> entry = iter.next();
+                JsonNode actualValue = actual.get(entry.getKey());
+                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+            }
+            return true;
+        }
+        if (expected.isArray() && actual.isArray()) {
+            if (expected.size() != actual.size()) return false;
+            for (int i = 0; i < expected.size(); i++) {
+                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
+    }
+}

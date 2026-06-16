@@ -121,7 +121,7 @@ public class MyOrganizationApiBuilder {
         if (this.tenantDomain != null) {
             String _tenantDomain = this.tenantDomain != null ? this.tenantDomain : "{TENANT}.auth0.com";
             this.environment =
-                    Environment.custom("https://{tenantDomain}/my-org".replace("{tenantDomain}", _tenantDomain));
+                    Environment.custom("https://{tenantDomain}/my-org/v1".replace("{tenantDomain}", _tenantDomain));
         }
         builder.environment(this.environment);
     }
