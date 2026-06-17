@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.0](https://github.com/auth0/myorganization-java/tree/1.0.0) (2026-06-16)
+[Full Changelog](https://github.com/auth0/myorganization-java/compare/1.0.0-beta.0...1.0.0)
+
+**Added**
+- Feat: Adds Organization Member, Roles and Invitation Management [\#36](https://github.com/auth0/myorganization-java/pull/36) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [1.0.0-beta.0](https://github.com/auth0/myorganization-java/tree/1.0.0-beta.0) (2026-04-09)
 
 ### Features
