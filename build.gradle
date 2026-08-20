@@ -22,7 +22,7 @@ logger.lifecycle("Using version ${version} for ${name} group $group")
 
 dependencies {
     api 'com.squareup.okhttp3:okhttp:5.4.0'
-    api 'com.fasterxml.jackson.core:jackson-databind:2.22.1'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.22.2'
     api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.22.1'
     api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.22.1'
     implementation 'com.auth0:java-jwt:4.6.0'
