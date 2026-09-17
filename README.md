@@ -28,7 +28,7 @@
 #### Gradle
 
 ```groovy
-implementation 'com.auth0:myorganization-java:1.0.0'
+implementation 'com.auth0:myorganization-java:2.0.0'
 ```
 
 #### Maven
@@ -37,7 +37,7 @@ implementation 'com.auth0:myorganization-java:1.0.0'
 <dependency>
     <groupId>com.auth0</groupId>
     <artifactId>myorganization-java</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
