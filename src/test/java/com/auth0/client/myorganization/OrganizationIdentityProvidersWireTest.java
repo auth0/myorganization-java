@@ -1,8 +1,8 @@
 package com.auth0.client.myorganization;
 
 import com.auth0.client.myorganization.core.ObjectMappers;
-import com.auth0.client.myorganization.types.FedMetadataXml;
 import com.auth0.client.myorganization.types.IdpAdfsOptionsRequest;
+import com.auth0.client.myorganization.types.IdpAdfsOptionsRequestFedMetadataXml;
 import com.auth0.client.myorganization.types.IdpAdfsUpdateRequest;
 import com.auth0.client.myorganization.types.IdpKnownRequest;
 import com.auth0.client.myorganization.types.IdpKnownResponse;
@@ -105,13 +105,13 @@ public class OrganizationIdentityProvidersWireTest {
                 .identityProviders()
                 .create(IdpKnownRequest.of(IdpOidcRequest.builder()
                         .strategy(IdpOidcRequestStrategy.OIDC)
+                        .name("oidcIdp")
                         .options(IdpOidcOptionsRequest.builder()
                                 .type(IdpOidcOptionsTypeEnum.FRONT_CHANNEL)
                                 .clientId("a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d")
                                 .discoveryUrl("https://{yourDomain}/.well-known/openid-configuration")
                                 .clientSecret(Optional.of("KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp"))
                                 .build())
-                        .name("oidcIdp")
                         .domains(Optional.of(Arrays.asList("mydomain.com")))
                         .displayName(Optional.of("OIDC IdP"))
                         .showAsButton(Optional.of(true))
@@ -359,8 +359,10 @@ public class OrganizationIdentityProvidersWireTest {
                                 .showAsButton(Optional.of(true))
                                 .assignMembershipOnLogin(Optional.of(false))
                                 .isEnabled(Optional.of(true))
-                                .options(Optional.of(IdpAdfsOptionsRequest.of(
-                                        FedMetadataXml.builder().build())))
+                                .options(Optional.of(
+                                        IdpAdfsOptionsRequest.of(IdpAdfsOptionsRequestFedMetadataXml.builder()
+                                                .fedMetadataXml("<EntityDescriptor></EntityDescriptor>")
+                                                .build())))
                                 .build()));
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);

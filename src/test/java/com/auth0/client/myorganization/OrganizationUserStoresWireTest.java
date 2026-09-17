@@ -8,7 +8,6 @@ import com.auth0.client.myorganization.types.OrganizationAccessLevelEnum;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
-import java.util.Optional;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -48,7 +47,7 @@ public class OrganizationUserStoresWireTest {
                 .userStores()
                 .list(ListOrganizationUserStoresRequestParameters.builder()
                         .isEnabled(OptionalNullable.of(true))
-                        .memberAccessLevel(Arrays.asList(Optional.of(OrganizationAccessLevelEnum.NONE)))
+                        .memberAccessLevel(Arrays.asList(OrganizationAccessLevelEnum.NONE))
                         .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
