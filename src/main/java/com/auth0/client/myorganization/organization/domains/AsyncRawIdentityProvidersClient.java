@@ -39,15 +39,15 @@ public class AsyncRawIdentityProvidersClient {
     /**
      * Retrieve the list of Identity Providers associated with a domain specified by ID for this Organization.
      */
-    public CompletableFuture<MyOrganizationApiHttpResponse<ListDomainIdentityProvidersResponseContent>> get(
+    public CompletableFuture<MyOrganizationApiHttpResponse<ListDomainIdentityProvidersResponseContent>> list(
             String domainId) {
-        return get(domainId, null);
+        return list(domainId, null);
     }
 
     /**
      * Retrieve the list of Identity Providers associated with a domain specified by ID for this Organization.
      */
-    public CompletableFuture<MyOrganizationApiHttpResponse<ListDomainIdentityProvidersResponseContent>> get(
+    public CompletableFuture<MyOrganizationApiHttpResponse<ListDomainIdentityProvidersResponseContent>> list(
             String domainId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

@@ -33,14 +33,14 @@ public class OrganizationDomainsIdentityProvidersWireTest {
     }
 
     @Test
-    public void testGet() throws Exception {
+    public void testList() throws Exception {
         server.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
                                 "{\"identity_providers\":[{\"id\":\"con_2CZPv6IY0gWzDaQJ\",\"name\":\"acme-engineering\",\"display_name\":\"Acme Engineering\"},{\"id\":\"con_2CZPv6IY0gWzDaQG\",\"name\":\"acme-engineering-2\",\"display_name\":\"Acme Engineering 2\"}]}"));
         ListDomainIdentityProvidersResponseContent response =
-                client.organization().domains().identityProviders().get("domain_id");
+                client.organization().domains().identityProviders().list("domain_id");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());

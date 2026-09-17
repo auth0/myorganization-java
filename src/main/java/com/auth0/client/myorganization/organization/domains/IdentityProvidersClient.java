@@ -27,14 +27,14 @@ public class IdentityProvidersClient {
     /**
      * Retrieve the list of Identity Providers associated with a domain specified by ID for this Organization.
      */
-    public ListDomainIdentityProvidersResponseContent get(String domainId) {
-        return this.rawClient.get(domainId).body();
+    public ListDomainIdentityProvidersResponseContent list(String domainId) {
+        return this.rawClient.list(domainId).body();
     }
 
     /**
      * Retrieve the list of Identity Providers associated with a domain specified by ID for this Organization.
      */
-    public ListDomainIdentityProvidersResponseContent get(String domainId, RequestOptions requestOptions) {
-        return this.rawClient.get(domainId, requestOptions).body();
+    public ListDomainIdentityProvidersResponseContent list(String domainId, RequestOptions requestOptions) {
+        return this.rawClient.list(domainId, requestOptions).body();
     }
 }

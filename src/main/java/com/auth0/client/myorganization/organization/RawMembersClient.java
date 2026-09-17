@@ -21,6 +21,7 @@ import com.auth0.client.myorganization.organization.types.ListOrganizationMember
 import com.auth0.client.myorganization.types.ErrorResponseContent;
 import com.auth0.client.myorganization.types.ListOrganizationMembersResponseContent;
 import com.auth0.client.myorganization.types.OrgMember;
+import com.auth0.client.myorganization.types.OrgMemberBase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.util.Collections;
@@ -81,6 +82,8 @@ public class RawMembersClient {
                     httpUrl, "from", request.getFrom().orElse(null), false);
         }
         QueryStringMapper.addQueryParameter(httpUrl, "take", request.getTake().orElse(50), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "include_totals", request.getIncludeTotals().orElse(false), false);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -151,28 +154,29 @@ public class RawMembersClient {
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public MyOrganizationApiHttpResponse<OrgMember> get(String userId) {
+    public MyOrganizationApiHttpResponse<OrgMemberBase> get(String userId) {
         return get(userId, GetOrganizationMemberRequestParameters.builder().build());
     }
 
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public MyOrganizationApiHttpResponse<OrgMember> get(String userId, RequestOptions requestOptions) {
+    public MyOrganizationApiHttpResponse<OrgMemberBase> get(String userId, RequestOptions requestOptions) {
         return get(userId, GetOrganizationMemberRequestParameters.builder().build(), requestOptions);
     }
 
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public MyOrganizationApiHttpResponse<OrgMember> get(String userId, GetOrganizationMemberRequestParameters request) {
+    public MyOrganizationApiHttpResponse<OrgMemberBase> get(
+            String userId, GetOrganizationMemberRequestParameters request) {
         return get(userId, request, null);
     }
 
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public MyOrganizationApiHttpResponse<OrgMember> get(
+    public MyOrganizationApiHttpResponse<OrgMemberBase> get(
             String userId, GetOrganizationMemberRequestParameters request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -204,7 +208,7 @@ public class RawMembersClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new MyOrganizationApiHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OrgMember.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OrgMemberBase.class), response);
             }
             try {
                 switch (response.code()) {

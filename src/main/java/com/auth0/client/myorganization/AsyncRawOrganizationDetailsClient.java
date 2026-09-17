@@ -40,6 +40,87 @@ public class AsyncRawOrganizationDetailsClient {
     }
 
     /**
+     * Permanently delete this Organization.
+     */
+    public CompletableFuture<MyOrganizationApiHttpResponse<Void>> delete() {
+        return delete(null);
+    }
+
+    /**
+     * Permanently delete this Organization.
+     */
+    public CompletableFuture<MyOrganizationApiHttpResponse<Void>> delete(RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl =
+                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("DELETE", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<MyOrganizationApiHttpResponse<Void>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful()) {
+                        future.complete(new MyOrganizationApiHttpResponse<>(null, response));
+                        return;
+                    }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    try {
+                        switch (response.code()) {
+                            case 401:
+                                future.completeExceptionally(new UnauthorizedError(
+                                        ObjectMappers.JSON_MAPPER.readValue(
+                                                responseBodyString, ErrorResponseContent.class),
+                                        response));
+                                return;
+                            case 403:
+                                future.completeExceptionally(new ForbiddenError(
+                                        ObjectMappers.JSON_MAPPER.readValue(
+                                                responseBodyString, ErrorResponseContent.class),
+                                        response));
+                                return;
+                            case 429:
+                                future.completeExceptionally(new TooManyRequestsError(
+                                        ObjectMappers.JSON_MAPPER.readValue(
+                                                responseBodyString, ErrorResponseContent.class),
+                                        response));
+                                return;
+                        }
+                    } catch (JsonProcessingException ignored) {
+                        // unable to map error response, throwing generic error
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new MyOrganizationApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new MyOrganizationException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new MyOrganizationException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
      * Retrieve details for this Organization, including display name and branding options. To learn more about Auth0 Organizations, read <a href="https://auth0.com/docs/manage-users/organizations">Organizations</a>.
      */
     public CompletableFuture<MyOrganizationApiHttpResponse<OrgDetailsRead>> get() {

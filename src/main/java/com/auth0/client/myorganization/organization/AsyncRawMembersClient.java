@@ -21,6 +21,7 @@ import com.auth0.client.myorganization.organization.types.ListOrganizationMember
 import com.auth0.client.myorganization.types.ErrorResponseContent;
 import com.auth0.client.myorganization.types.ListOrganizationMembersResponseContent;
 import com.auth0.client.myorganization.types.OrgMember;
+import com.auth0.client.myorganization.types.OrgMemberBase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.util.Collections;
@@ -87,6 +88,8 @@ public class AsyncRawMembersClient {
                     httpUrl, "from", request.getFrom().orElse(null), false);
         }
         QueryStringMapper.addQueryParameter(httpUrl, "take", request.getTake().orElse(50), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "include_totals", request.getIncludeTotals().orElse(false), false);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -189,14 +192,14 @@ public class AsyncRawMembersClient {
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public CompletableFuture<MyOrganizationApiHttpResponse<OrgMember>> get(String userId) {
+    public CompletableFuture<MyOrganizationApiHttpResponse<OrgMemberBase>> get(String userId) {
         return get(userId, GetOrganizationMemberRequestParameters.builder().build());
     }
 
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public CompletableFuture<MyOrganizationApiHttpResponse<OrgMember>> get(
+    public CompletableFuture<MyOrganizationApiHttpResponse<OrgMemberBase>> get(
             String userId, RequestOptions requestOptions) {
         return get(userId, GetOrganizationMemberRequestParameters.builder().build(), requestOptions);
     }
@@ -204,7 +207,7 @@ public class AsyncRawMembersClient {
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public CompletableFuture<MyOrganizationApiHttpResponse<OrgMember>> get(
+    public CompletableFuture<MyOrganizationApiHttpResponse<OrgMemberBase>> get(
             String userId, GetOrganizationMemberRequestParameters request) {
         return get(userId, request, null);
     }
@@ -212,7 +215,7 @@ public class AsyncRawMembersClient {
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public CompletableFuture<MyOrganizationApiHttpResponse<OrgMember>> get(
+    public CompletableFuture<MyOrganizationApiHttpResponse<OrgMemberBase>> get(
             String userId, GetOrganizationMemberRequestParameters request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -239,7 +242,7 @@ public class AsyncRawMembersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<MyOrganizationApiHttpResponse<OrgMember>> future = new CompletableFuture<>();
+        CompletableFuture<MyOrganizationApiHttpResponse<OrgMemberBase>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -247,7 +250,8 @@ public class AsyncRawMembersClient {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new MyOrganizationApiHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OrgMember.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OrgMemberBase.class),
+                                response));
                         return;
                     }
                     try {

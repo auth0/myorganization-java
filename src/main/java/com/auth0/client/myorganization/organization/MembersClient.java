@@ -11,6 +11,7 @@ import com.auth0.client.myorganization.organization.members.RolesClient;
 import com.auth0.client.myorganization.organization.types.GetOrganizationMemberRequestParameters;
 import com.auth0.client.myorganization.organization.types.ListOrganizationMembersRequestParameters;
 import com.auth0.client.myorganization.types.OrgMember;
+import com.auth0.client.myorganization.types.OrgMemberBase;
 import java.util.function.Supplier;
 
 public class MembersClient {
@@ -65,28 +66,29 @@ public class MembersClient {
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public OrgMember get(String userId) {
+    public OrgMemberBase get(String userId) {
         return this.rawClient.get(userId).body();
     }
 
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public OrgMember get(String userId, RequestOptions requestOptions) {
+    public OrgMemberBase get(String userId, RequestOptions requestOptions) {
         return this.rawClient.get(userId, requestOptions).body();
     }
 
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public OrgMember get(String userId, GetOrganizationMemberRequestParameters request) {
+    public OrgMemberBase get(String userId, GetOrganizationMemberRequestParameters request) {
         return this.rawClient.get(userId, request).body();
     }
 
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public OrgMember get(String userId, GetOrganizationMemberRequestParameters request, RequestOptions requestOptions) {
+    public OrgMemberBase get(
+            String userId, GetOrganizationMemberRequestParameters request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).body();
     }
 

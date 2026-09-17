@@ -27,6 +27,20 @@ public class AsyncOrganizationDetailsClient {
     }
 
     /**
+     * Permanently delete this Organization.
+     */
+    public CompletableFuture<Void> delete() {
+        return this.rawClient.delete().thenApply(response -> response.body());
+    }
+
+    /**
+     * Permanently delete this Organization.
+     */
+    public CompletableFuture<Void> delete(RequestOptions requestOptions) {
+        return this.rawClient.delete(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
      * Retrieve details for this Organization, including display name and branding options. To learn more about Auth0 Organizations, read <a href="https://auth0.com/docs/manage-users/organizations">Organizations</a>.
      */
     public CompletableFuture<OrgDetailsRead> get() {

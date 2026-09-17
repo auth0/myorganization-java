@@ -38,7 +38,7 @@ public class OrganizationConfigurationWireTest {
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"allowed_strategies\":[\"adfs\",\"pingfederate\"],\"connection_deletion_behavior\":\"allow\"}"));
+                                "{\"allowed_strategies\":[\"adfs\",\"pingfederate\"],\"connection_deletion_behavior\":\"allow\",\"third_party_client_access\":{\"default_value\":\"allow\",\"allowed_values\":[\"allow\"]}}"));
         GetConfigurationResponseContent response =
                 client.organization().configuration().get();
         RecordedRequest request = server.takeRequest();
@@ -54,7 +54,13 @@ public class OrganizationConfigurationWireTest {
                 + "    \"adfs\",\n"
                 + "    \"pingfederate\"\n"
                 + "  ],\n"
-                + "  \"connection_deletion_behavior\": \"allow\"\n"
+                + "  \"connection_deletion_behavior\": \"allow\",\n"
+                + "  \"third_party_client_access\": {\n"
+                + "    \"default_value\": \"allow\",\n"
+                + "    \"allowed_values\": [\n"
+                + "      \"allow\"\n"
+                + "    ]\n"
+                + "  }\n"
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);

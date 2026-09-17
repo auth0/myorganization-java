@@ -8,6 +8,7 @@ import com.auth0.client.myorganization.core.RequestOptions;
 import com.auth0.client.myorganization.core.Suppliers;
 import com.auth0.client.myorganization.organization.identityproviders.AsyncDomainsClient;
 import com.auth0.client.myorganization.organization.identityproviders.AsyncProvisioningClient;
+import com.auth0.client.myorganization.organization.types.ListOrganizationIdentityProvidersRequestParameters;
 import com.auth0.client.myorganization.types.IdpKnownRequest;
 import com.auth0.client.myorganization.types.IdpKnownResponse;
 import com.auth0.client.myorganization.types.IdpUpdateKnownRequest;
@@ -41,28 +42,44 @@ public class AsyncIdentityProvidersClient {
     }
 
     /**
-     * Retrieve a list of all Identity Providers for this Organization.
+     * Retrieve the comprehensive list of identity providers and their respective configurations associated with an Auth0 Organization.
      */
     public CompletableFuture<ListIdentityProvidersResponseContent> list() {
         return this.rawClient.list().thenApply(response -> response.body());
     }
 
     /**
-     * Retrieve a list of all Identity Providers for this Organization.
+     * Retrieve the comprehensive list of identity providers and their respective configurations associated with an Auth0 Organization.
      */
     public CompletableFuture<ListIdentityProvidersResponseContent> list(RequestOptions requestOptions) {
         return this.rawClient.list(requestOptions).thenApply(response -> response.body());
     }
 
     /**
-     * Create a new Identity Provider for this Organization.
+     * Retrieve the comprehensive list of identity providers and their respective configurations associated with an Auth0 Organization.
+     */
+    public CompletableFuture<ListIdentityProvidersResponseContent> list(
+            ListOrganizationIdentityProvidersRequestParameters request) {
+        return this.rawClient.list(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Retrieve the comprehensive list of identity providers and their respective configurations associated with an Auth0 Organization.
+     */
+    public CompletableFuture<ListIdentityProvidersResponseContent> list(
+            ListOrganizationIdentityProvidersRequestParameters request, RequestOptions requestOptions) {
+        return this.rawClient.list(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Create a new enterprise Identity Provider utilizing the specified configuration settings and details for this Auth0 Organization.
      */
     public CompletableFuture<IdpKnownResponse> create(IdpKnownRequest request) {
         return this.rawClient.create(request).thenApply(response -> response.body());
     }
 
     /**
-     * Create a new Identity Provider for this Organization.
+     * Create a new enterprise Identity Provider utilizing the specified configuration settings and details for this Auth0 Organization.
      */
     public CompletableFuture<IdpKnownResponse> create(IdpKnownRequest request, RequestOptions requestOptions) {
         return this.rawClient.create(request, requestOptions).thenApply(response -> response.body());

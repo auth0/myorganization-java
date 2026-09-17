@@ -9,6 +9,7 @@ import com.auth0.client.myorganization.core.MyOrganizationApiException;
 import com.auth0.client.myorganization.core.MyOrganizationApiHttpResponse;
 import com.auth0.client.myorganization.core.MyOrganizationException;
 import com.auth0.client.myorganization.core.ObjectMappers;
+import com.auth0.client.myorganization.core.QueryStringMapper;
 import com.auth0.client.myorganization.core.RequestOptions;
 import com.auth0.client.myorganization.errors.BadRequestError;
 import com.auth0.client.myorganization.errors.ConflictError;
@@ -16,6 +17,7 @@ import com.auth0.client.myorganization.errors.ForbiddenError;
 import com.auth0.client.myorganization.errors.NotFoundError;
 import com.auth0.client.myorganization.errors.TooManyRequestsError;
 import com.auth0.client.myorganization.errors.UnauthorizedError;
+import com.auth0.client.myorganization.organization.types.ListOrganizationIdentityProvidersRequestParameters;
 import com.auth0.client.myorganization.types.ErrorResponseContent;
 import com.auth0.client.myorganization.types.IdpKnownRequest;
 import com.auth0.client.myorganization.types.IdpKnownResponse;
@@ -45,31 +47,58 @@ public class AsyncRawIdentityProvidersClient {
     }
 
     /**
-     * Retrieve a list of all Identity Providers for this Organization.
+     * Retrieve the comprehensive list of identity providers and their respective configurations associated with an Auth0 Organization.
      */
     public CompletableFuture<MyOrganizationApiHttpResponse<ListIdentityProvidersResponseContent>> list() {
-        return list(null);
+        return list(ListOrganizationIdentityProvidersRequestParameters.builder().build());
     }
 
     /**
-     * Retrieve a list of all Identity Providers for this Organization.
+     * Retrieve the comprehensive list of identity providers and their respective configurations associated with an Auth0 Organization.
      */
     public CompletableFuture<MyOrganizationApiHttpResponse<ListIdentityProvidersResponseContent>> list(
             RequestOptions requestOptions) {
+        return list(ListOrganizationIdentityProvidersRequestParameters.builder().build(), requestOptions);
+    }
+
+    /**
+     * Retrieve the comprehensive list of identity providers and their respective configurations associated with an Auth0 Organization.
+     */
+    public CompletableFuture<MyOrganizationApiHttpResponse<ListIdentityProvidersResponseContent>> list(
+            ListOrganizationIdentityProvidersRequestParameters request) {
+        return list(request, null);
+    }
+
+    /**
+     * Retrieve the comprehensive list of identity providers and their respective configurations associated with an Auth0 Organization.
+     */
+    public CompletableFuture<MyOrganizationApiHttpResponse<ListIdentityProvidersResponseContent>> list(
+            ListOrganizationIdentityProvidersRequestParameters request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("identity-providers");
+        if (!request.getIsEnabled().isAbsent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "is_enabled", request.getIsEnabled().orElse(null), false);
+        }
+        if (request.getMemberAccessLevel().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "member_access_level",
+                    request.getMemberAccessLevel().get(),
+                    true);
+        }
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -90,6 +119,11 @@ public class AsyncRawIdentityProvidersClient {
                     }
                     try {
                         switch (response.code()) {
+                            case 400:
+                                future.completeExceptionally(new BadRequestError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                                        response));
+                                return;
                             case 401:
                                 future.completeExceptionally(new UnauthorizedError(
                                         ObjectMappers.JSON_MAPPER.readValue(
@@ -137,14 +171,14 @@ public class AsyncRawIdentityProvidersClient {
     }
 
     /**
-     * Create a new Identity Provider for this Organization.
+     * Create a new enterprise Identity Provider utilizing the specified configuration settings and details for this Auth0 Organization.
      */
     public CompletableFuture<MyOrganizationApiHttpResponse<IdpKnownResponse>> create(IdpKnownRequest request) {
         return create(request, null);
     }
 
     /**
-     * Create a new Identity Provider for this Organization.
+     * Create a new enterprise Identity Provider utilizing the specified configuration settings and details for this Auth0 Organization.
      */
     public CompletableFuture<MyOrganizationApiHttpResponse<IdpKnownResponse>> create(
             IdpKnownRequest request, RequestOptions requestOptions) {

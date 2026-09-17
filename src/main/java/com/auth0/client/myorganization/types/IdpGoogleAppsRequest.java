@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 public final class IdpGoogleAppsRequest {
     private final IdpGoogleAppsRequestStrategy strategy;
 
-    private final IdpGoogleAppsOptionsRequest options;
+    private final Optional<IdpGoogleAppsOptionsRequest> options;
 
     private final Optional<String> id;
 
@@ -42,11 +42,15 @@ public final class IdpGoogleAppsRequest {
 
     private final Optional<OrganizationAccessLevelEnum> accessLevel;
 
+    private final Optional<Boolean> useForThirdPartyClientAccess;
+
+    private final Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp;
+
     private final Map<String, Object> additionalProperties;
 
     private IdpGoogleAppsRequest(
             IdpGoogleAppsRequestStrategy strategy,
-            IdpGoogleAppsOptionsRequest options,
+            Optional<IdpGoogleAppsOptionsRequest> options,
             Optional<String> id,
             String name,
             Optional<List<String>> domains,
@@ -55,6 +59,8 @@ public final class IdpGoogleAppsRequest {
             Optional<Boolean> assignMembershipOnLogin,
             Optional<Boolean> isEnabled,
             Optional<OrganizationAccessLevelEnum> accessLevel,
+            Optional<Boolean> useForThirdPartyClientAccess,
+            Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp,
             Map<String, Object> additionalProperties) {
         this.strategy = strategy;
         this.options = options;
@@ -66,6 +72,8 @@ public final class IdpGoogleAppsRequest {
         this.assignMembershipOnLogin = assignMembershipOnLogin;
         this.isEnabled = isEnabled;
         this.accessLevel = accessLevel;
+        this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
+        this.crossAppAccessResourceApp = crossAppAccessResourceApp;
         this.additionalProperties = additionalProperties;
     }
 
@@ -78,7 +86,7 @@ public final class IdpGoogleAppsRequest {
      * @return Identity provider specific options.
      */
     @JsonProperty("options")
-    public IdpGoogleAppsOptionsRequest getOptions() {
+    public Optional<IdpGoogleAppsOptionsRequest> getOptions() {
         return options;
     }
 
@@ -140,6 +148,22 @@ public final class IdpGoogleAppsRequest {
         return accessLevel;
     }
 
+    /**
+     * @return True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.
+     */
+    @JsonProperty("use_for_third_party_client_access")
+    public Optional<Boolean> getUseForThirdPartyClientAccess() {
+        return useForThirdPartyClientAccess;
+    }
+
+    /**
+     * @return Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.
+     */
+    @JsonProperty("cross_app_access_resource_app")
+    public Optional<CrossAppAccessResourceApp> getCrossAppAccessResourceApp() {
+        return crossAppAccessResourceApp;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -161,7 +185,9 @@ public final class IdpGoogleAppsRequest {
                 && showAsButton.equals(other.showAsButton)
                 && assignMembershipOnLogin.equals(other.assignMembershipOnLogin)
                 && isEnabled.equals(other.isEnabled)
-                && accessLevel.equals(other.accessLevel);
+                && accessLevel.equals(other.accessLevel)
+                && useForThirdPartyClientAccess.equals(other.useForThirdPartyClientAccess)
+                && crossAppAccessResourceApp.equals(other.crossAppAccessResourceApp);
     }
 
     @java.lang.Override
@@ -176,7 +202,9 @@ public final class IdpGoogleAppsRequest {
                 this.showAsButton,
                 this.assignMembershipOnLogin,
                 this.isEnabled,
-                this.accessLevel);
+                this.accessLevel,
+                this.useForThirdPartyClientAccess,
+                this.crossAppAccessResourceApp);
     }
 
     @java.lang.Override
@@ -189,16 +217,9 @@ public final class IdpGoogleAppsRequest {
     }
 
     public interface StrategyStage {
-        OptionsStage strategy(@NotNull IdpGoogleAppsRequestStrategy strategy);
+        NameStage strategy(@NotNull IdpGoogleAppsRequestStrategy strategy);
 
         Builder from(IdpGoogleAppsRequest other);
-    }
-
-    public interface OptionsStage {
-        /**
-         * <p>Identity provider specific options.</p>
-         */
-        NameStage options(@NotNull IdpGoogleAppsOptionsRequest options);
     }
 
     public interface NameStage {
@@ -214,6 +235,13 @@ public final class IdpGoogleAppsRequest {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>Identity provider specific options.</p>
+         */
+        _FinalStage options(Optional<IdpGoogleAppsOptionsRequest> options);
+
+        _FinalStage options(IdpGoogleAppsOptionsRequest options);
 
         _FinalStage id(Optional<String> id);
 
@@ -257,15 +285,31 @@ public final class IdpGoogleAppsRequest {
         _FinalStage accessLevel(Optional<OrganizationAccessLevelEnum> accessLevel);
 
         _FinalStage accessLevel(OrganizationAccessLevelEnum accessLevel);
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         */
+        _FinalStage useForThirdPartyClientAccess(Optional<Boolean> useForThirdPartyClientAccess);
+
+        _FinalStage useForThirdPartyClientAccess(Boolean useForThirdPartyClientAccess);
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         */
+        _FinalStage crossAppAccessResourceApp(Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp);
+
+        _FinalStage crossAppAccessResourceApp(CrossAppAccessResourceApp crossAppAccessResourceApp);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements StrategyStage, OptionsStage, NameStage, _FinalStage {
+    public static final class Builder implements StrategyStage, NameStage, _FinalStage {
         private IdpGoogleAppsRequestStrategy strategy;
 
-        private IdpGoogleAppsOptionsRequest options;
-
         private String name;
+
+        private Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp = Optional.empty();
+
+        private Optional<Boolean> useForThirdPartyClientAccess = Optional.empty();
 
         private Optional<OrganizationAccessLevelEnum> accessLevel = Optional.empty();
 
@@ -280,6 +324,8 @@ public final class IdpGoogleAppsRequest {
         private Optional<List<String>> domains = Optional.empty();
 
         private Optional<String> id = Optional.empty();
+
+        private Optional<IdpGoogleAppsOptionsRequest> options = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -298,25 +344,15 @@ public final class IdpGoogleAppsRequest {
             assignMembershipOnLogin(other.getAssignMembershipOnLogin());
             isEnabled(other.getIsEnabled());
             accessLevel(other.getAccessLevel());
+            useForThirdPartyClientAccess(other.getUseForThirdPartyClientAccess());
+            crossAppAccessResourceApp(other.getCrossAppAccessResourceApp());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("strategy")
-        public OptionsStage strategy(@NotNull IdpGoogleAppsRequestStrategy strategy) {
+        public NameStage strategy(@NotNull IdpGoogleAppsRequestStrategy strategy) {
             this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
-            return this;
-        }
-
-        /**
-         * <p>Identity provider specific options.</p>
-         * <p>Identity provider specific options.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("options")
-        public NameStage options(@NotNull IdpGoogleAppsOptionsRequest options) {
-            this.options = Objects.requireNonNull(options, "options must not be null");
             return this;
         }
 
@@ -329,6 +365,46 @@ public final class IdpGoogleAppsRequest {
         @JsonSetter("name")
         public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage crossAppAccessResourceApp(CrossAppAccessResourceApp crossAppAccessResourceApp) {
+            this.crossAppAccessResourceApp = Optional.ofNullable(crossAppAccessResourceApp);
+            return this;
+        }
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "cross_app_access_resource_app", nulls = Nulls.SKIP)
+        public _FinalStage crossAppAccessResourceApp(Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp) {
+            this.crossAppAccessResourceApp = crossAppAccessResourceApp;
+            return this;
+        }
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage useForThirdPartyClientAccess(Boolean useForThirdPartyClientAccess) {
+            this.useForThirdPartyClientAccess = Optional.ofNullable(useForThirdPartyClientAccess);
+            return this;
+        }
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "use_for_third_party_client_access", nulls = Nulls.SKIP)
+        public _FinalStage useForThirdPartyClientAccess(Optional<Boolean> useForThirdPartyClientAccess) {
+            this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
             return this;
         }
 
@@ -458,6 +534,26 @@ public final class IdpGoogleAppsRequest {
             return this;
         }
 
+        /**
+         * <p>Identity provider specific options.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage options(IdpGoogleAppsOptionsRequest options) {
+            this.options = Optional.ofNullable(options);
+            return this;
+        }
+
+        /**
+         * <p>Identity provider specific options.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "options", nulls = Nulls.SKIP)
+        public _FinalStage options(Optional<IdpGoogleAppsOptionsRequest> options) {
+            this.options = options;
+            return this;
+        }
+
         @java.lang.Override
         public IdpGoogleAppsRequest build() {
             return new IdpGoogleAppsRequest(
@@ -471,6 +567,8 @@ public final class IdpGoogleAppsRequest {
                     assignMembershipOnLogin,
                     isEnabled,
                     accessLevel,
+                    useForThirdPartyClientAccess,
+                    crossAppAccessResourceApp,
                     additionalProperties);
         }
 

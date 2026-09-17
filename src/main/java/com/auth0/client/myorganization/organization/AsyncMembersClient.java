@@ -11,6 +11,7 @@ import com.auth0.client.myorganization.organization.members.AsyncRolesClient;
 import com.auth0.client.myorganization.organization.types.GetOrganizationMemberRequestParameters;
 import com.auth0.client.myorganization.organization.types.ListOrganizationMembersRequestParameters;
 import com.auth0.client.myorganization.types.OrgMember;
+import com.auth0.client.myorganization.types.OrgMemberBase;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -66,28 +67,28 @@ public class AsyncMembersClient {
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public CompletableFuture<OrgMember> get(String userId) {
+    public CompletableFuture<OrgMemberBase> get(String userId) {
         return this.rawClient.get(userId).thenApply(response -> response.body());
     }
 
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public CompletableFuture<OrgMember> get(String userId, RequestOptions requestOptions) {
+    public CompletableFuture<OrgMemberBase> get(String userId, RequestOptions requestOptions) {
         return this.rawClient.get(userId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public CompletableFuture<OrgMember> get(String userId, GetOrganizationMemberRequestParameters request) {
+    public CompletableFuture<OrgMemberBase> get(String userId, GetOrganizationMemberRequestParameters request) {
         return this.rawClient.get(userId, request).thenApply(response -> response.body());
     }
 
     /**
      * Retrieve details of a member specified by user ID for this Organization.
      */
-    public CompletableFuture<OrgMember> get(
+    public CompletableFuture<OrgMemberBase> get(
             String userId, GetOrganizationMemberRequestParameters request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).thenApply(response -> response.body());
     }

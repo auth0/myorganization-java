@@ -36,6 +36,10 @@ public final class IdpBaseRequest {
 
     private final Optional<Boolean> isEnabled;
 
+    private final Optional<Boolean> useForThirdPartyClientAccess;
+
+    private final Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp;
+
     private final Map<String, Object> additionalProperties;
 
     private IdpBaseRequest(
@@ -46,6 +50,8 @@ public final class IdpBaseRequest {
             Optional<Boolean> showAsButton,
             Optional<Boolean> assignMembershipOnLogin,
             Optional<Boolean> isEnabled,
+            Optional<Boolean> useForThirdPartyClientAccess,
+            Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.strategy = strategy;
@@ -54,6 +60,8 @@ public final class IdpBaseRequest {
         this.showAsButton = showAsButton;
         this.assignMembershipOnLogin = assignMembershipOnLogin;
         this.isEnabled = isEnabled;
+        this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
+        this.crossAppAccessResourceApp = crossAppAccessResourceApp;
         this.additionalProperties = additionalProperties;
     }
 
@@ -110,6 +118,22 @@ public final class IdpBaseRequest {
         return isEnabled;
     }
 
+    /**
+     * @return True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.
+     */
+    @JsonProperty("use_for_third_party_client_access")
+    public Optional<Boolean> getUseForThirdPartyClientAccess() {
+        return useForThirdPartyClientAccess;
+    }
+
+    /**
+     * @return Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.
+     */
+    @JsonProperty("cross_app_access_resource_app")
+    public Optional<CrossAppAccessResourceApp> getCrossAppAccessResourceApp() {
+        return crossAppAccessResourceApp;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -128,7 +152,9 @@ public final class IdpBaseRequest {
                 && displayName.equals(other.displayName)
                 && showAsButton.equals(other.showAsButton)
                 && assignMembershipOnLogin.equals(other.assignMembershipOnLogin)
-                && isEnabled.equals(other.isEnabled);
+                && isEnabled.equals(other.isEnabled)
+                && useForThirdPartyClientAccess.equals(other.useForThirdPartyClientAccess)
+                && crossAppAccessResourceApp.equals(other.crossAppAccessResourceApp);
     }
 
     @java.lang.Override
@@ -140,7 +166,9 @@ public final class IdpBaseRequest {
                 this.displayName,
                 this.showAsButton,
                 this.assignMembershipOnLogin,
-                this.isEnabled);
+                this.isEnabled,
+                this.useForThirdPartyClientAccess,
+                this.crossAppAccessResourceApp);
     }
 
     @java.lang.Override
@@ -206,6 +234,20 @@ public final class IdpBaseRequest {
         _FinalStage isEnabled(Optional<Boolean> isEnabled);
 
         _FinalStage isEnabled(Boolean isEnabled);
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         */
+        _FinalStage useForThirdPartyClientAccess(Optional<Boolean> useForThirdPartyClientAccess);
+
+        _FinalStage useForThirdPartyClientAccess(Boolean useForThirdPartyClientAccess);
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         */
+        _FinalStage crossAppAccessResourceApp(Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp);
+
+        _FinalStage crossAppAccessResourceApp(CrossAppAccessResourceApp crossAppAccessResourceApp);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -213,6 +255,10 @@ public final class IdpBaseRequest {
         private String name;
 
         private IdpStrategyEnum strategy;
+
+        private Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp = Optional.empty();
+
+        private Optional<Boolean> useForThirdPartyClientAccess = Optional.empty();
 
         private Optional<Boolean> isEnabled = Optional.empty();
 
@@ -238,6 +284,8 @@ public final class IdpBaseRequest {
             showAsButton(other.getShowAsButton());
             assignMembershipOnLogin(other.getAssignMembershipOnLogin());
             isEnabled(other.getIsEnabled());
+            useForThirdPartyClientAccess(other.getUseForThirdPartyClientAccess());
+            crossAppAccessResourceApp(other.getCrossAppAccessResourceApp());
             return this;
         }
 
@@ -257,6 +305,46 @@ public final class IdpBaseRequest {
         @JsonSetter("strategy")
         public _FinalStage strategy(@NotNull IdpStrategyEnum strategy) {
             this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage crossAppAccessResourceApp(CrossAppAccessResourceApp crossAppAccessResourceApp) {
+            this.crossAppAccessResourceApp = Optional.ofNullable(crossAppAccessResourceApp);
+            return this;
+        }
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "cross_app_access_resource_app", nulls = Nulls.SKIP)
+        public _FinalStage crossAppAccessResourceApp(Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp) {
+            this.crossAppAccessResourceApp = crossAppAccessResourceApp;
+            return this;
+        }
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage useForThirdPartyClientAccess(Boolean useForThirdPartyClientAccess) {
+            this.useForThirdPartyClientAccess = Optional.ofNullable(useForThirdPartyClientAccess);
+            return this;
+        }
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "use_for_third_party_client_access", nulls = Nulls.SKIP)
+        public _FinalStage useForThirdPartyClientAccess(Optional<Boolean> useForThirdPartyClientAccess) {
+            this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
             return this;
         }
 
@@ -370,6 +458,8 @@ public final class IdpBaseRequest {
                     showAsButton,
                     assignMembershipOnLogin,
                     isEnabled,
+                    useForThirdPartyClientAccess,
+                    crossAppAccessResourceApp,
                     additionalProperties);
         }
 

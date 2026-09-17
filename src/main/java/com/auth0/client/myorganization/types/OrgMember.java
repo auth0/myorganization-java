@@ -21,7 +21,19 @@ import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = OrgMember.Builder.class)
-public final class OrgMember implements IUserAttributes {
+public final class OrgMember implements IOrgMemberBase, IUserAttributes {
+    private final Optional<String> userId;
+
+    private final Optional<OffsetDateTime> createdAt;
+
+    private final Optional<OffsetDateTime> updatedAt;
+
+    private final Optional<OffsetDateTime> lastLogin;
+
+    private final Optional<OrganizationMemberAccessLevelEnum> accessLevel;
+
+    private final Optional<String> phoneNumber;
+
     private final Optional<String> email;
 
     private final Optional<String> name;
@@ -32,45 +44,88 @@ public final class OrgMember implements IUserAttributes {
 
     private final Optional<String> familyName;
 
-    private final Optional<String> userId;
-
     private final Optional<List<Role>> roles;
-
-    private final Optional<OffsetDateTime> createdAt;
-
-    private final Optional<OffsetDateTime> updatedAt;
-
-    private final Optional<OffsetDateTime> lastLogin;
-
-    private final Optional<String> phoneNumber;
 
     private final Map<String, Object> additionalProperties;
 
     private OrgMember(
+            Optional<String> userId,
+            Optional<OffsetDateTime> createdAt,
+            Optional<OffsetDateTime> updatedAt,
+            Optional<OffsetDateTime> lastLogin,
+            Optional<OrganizationMemberAccessLevelEnum> accessLevel,
+            Optional<String> phoneNumber,
             Optional<String> email,
             Optional<String> name,
             Optional<String> nickname,
             Optional<String> givenName,
             Optional<String> familyName,
-            Optional<String> userId,
             Optional<List<Role>> roles,
-            Optional<OffsetDateTime> createdAt,
-            Optional<OffsetDateTime> updatedAt,
-            Optional<OffsetDateTime> lastLogin,
-            Optional<String> phoneNumber,
             Map<String, Object> additionalProperties) {
+        this.userId = userId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.lastLogin = lastLogin;
+        this.accessLevel = accessLevel;
+        this.phoneNumber = phoneNumber;
         this.email = email;
         this.name = name;
         this.nickname = nickname;
         this.givenName = givenName;
         this.familyName = familyName;
-        this.userId = userId;
         this.roles = roles;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.lastLogin = lastLogin;
-        this.phoneNumber = phoneNumber;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("user_id")
+    @java.lang.Override
+    public Optional<String> getUserId() {
+        return userId;
+    }
+
+    /**
+     * @return Date and time when this user was created (ISO_8601 format).
+     */
+    @JsonProperty("created_at")
+    @java.lang.Override
+    public Optional<OffsetDateTime> getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * @return Date and time when this user was last updated (ISO_8601 format).
+     */
+    @JsonProperty("updated_at")
+    @java.lang.Override
+    public Optional<OffsetDateTime> getUpdatedAt() {
+        return updatedAt;
+    }
+
+    /**
+     * @return Last date and time this user logged in (ISO_8601 format).
+     */
+    @JsonProperty("last_login")
+    @java.lang.Override
+    public Optional<OffsetDateTime> getLastLogin() {
+        return lastLogin;
+    }
+
+    /**
+     * @return The member's effective access level for this organization.
+     */
+    @JsonProperty("access_level")
+    @java.lang.Override
+    public Optional<OrganizationMemberAccessLevelEnum> getAccessLevel() {
+        return accessLevel;
+    }
+
+    /**
+     * @return Phone number associated with the user.
+     */
+    @JsonProperty("phone_number")
+    @java.lang.Override
+    public Optional<String> getPhoneNumber() {
+        return phoneNumber;
     }
 
     /**
@@ -118,46 +173,12 @@ public final class OrgMember implements IUserAttributes {
         return familyName;
     }
 
-    @JsonProperty("user_id")
-    public Optional<String> getUserId() {
-        return userId;
-    }
-
+    /**
+     * @return The member's roles. Only the first 10 roles are returned here; use GET /my-org/v1/members/{user_id}/roles to retrieve the full list. Only included when the token carries the read:my_org:member_roles scope and 'roles' is requested in the fields array.
+     */
     @JsonProperty("roles")
     public Optional<List<Role>> getRoles() {
         return roles;
-    }
-
-    /**
-     * @return Date and time when this user was created (ISO_8601 format).
-     */
-    @JsonProperty("created_at")
-    public Optional<OffsetDateTime> getCreatedAt() {
-        return createdAt;
-    }
-
-    /**
-     * @return Date and time when this user was last updated (ISO_8601 format).
-     */
-    @JsonProperty("updated_at")
-    public Optional<OffsetDateTime> getUpdatedAt() {
-        return updatedAt;
-    }
-
-    /**
-     * @return Last date and time this user logged in (ISO_8601 format).
-     */
-    @JsonProperty("last_login")
-    public Optional<OffsetDateTime> getLastLogin() {
-        return lastLogin;
-    }
-
-    /**
-     * @return Phone number associated with the user.
-     */
-    @JsonProperty("phone_number")
-    public Optional<String> getPhoneNumber() {
-        return phoneNumber;
     }
 
     @java.lang.Override
@@ -172,33 +193,35 @@ public final class OrgMember implements IUserAttributes {
     }
 
     private boolean equalTo(OrgMember other) {
-        return email.equals(other.email)
+        return userId.equals(other.userId)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt)
+                && lastLogin.equals(other.lastLogin)
+                && accessLevel.equals(other.accessLevel)
+                && phoneNumber.equals(other.phoneNumber)
+                && email.equals(other.email)
                 && name.equals(other.name)
                 && nickname.equals(other.nickname)
                 && givenName.equals(other.givenName)
                 && familyName.equals(other.familyName)
-                && userId.equals(other.userId)
-                && roles.equals(other.roles)
-                && createdAt.equals(other.createdAt)
-                && updatedAt.equals(other.updatedAt)
-                && lastLogin.equals(other.lastLogin)
-                && phoneNumber.equals(other.phoneNumber);
+                && roles.equals(other.roles);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
+                this.userId,
+                this.createdAt,
+                this.updatedAt,
+                this.lastLogin,
+                this.accessLevel,
+                this.phoneNumber,
                 this.email,
                 this.name,
                 this.nickname,
                 this.givenName,
                 this.familyName,
-                this.userId,
-                this.roles,
-                this.createdAt,
-                this.updatedAt,
-                this.lastLogin,
-                this.phoneNumber);
+                this.roles);
     }
 
     @java.lang.Override
@@ -212,6 +235,18 @@ public final class OrgMember implements IUserAttributes {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
+        private Optional<String> userId = Optional.empty();
+
+        private Optional<OffsetDateTime> createdAt = Optional.empty();
+
+        private Optional<OffsetDateTime> updatedAt = Optional.empty();
+
+        private Optional<OffsetDateTime> lastLogin = Optional.empty();
+
+        private Optional<OrganizationMemberAccessLevelEnum> accessLevel = Optional.empty();
+
+        private Optional<String> phoneNumber = Optional.empty();
+
         private Optional<String> email = Optional.empty();
 
         private Optional<String> name = Optional.empty();
@@ -222,17 +257,7 @@ public final class OrgMember implements IUserAttributes {
 
         private Optional<String> familyName = Optional.empty();
 
-        private Optional<String> userId = Optional.empty();
-
         private Optional<List<Role>> roles = Optional.empty();
-
-        private Optional<OffsetDateTime> createdAt = Optional.empty();
-
-        private Optional<OffsetDateTime> updatedAt = Optional.empty();
-
-        private Optional<OffsetDateTime> lastLogin = Optional.empty();
-
-        private Optional<String> phoneNumber = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -240,17 +265,99 @@ public final class OrgMember implements IUserAttributes {
         private Builder() {}
 
         public Builder from(OrgMember other) {
+            userId(other.getUserId());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
+            lastLogin(other.getLastLogin());
+            accessLevel(other.getAccessLevel());
+            phoneNumber(other.getPhoneNumber());
             email(other.getEmail());
             name(other.getName());
             nickname(other.getNickname());
             givenName(other.getGivenName());
             familyName(other.getFamilyName());
-            userId(other.getUserId());
             roles(other.getRoles());
-            createdAt(other.getCreatedAt());
-            updatedAt(other.getUpdatedAt());
-            lastLogin(other.getLastLogin());
-            phoneNumber(other.getPhoneNumber());
+            return this;
+        }
+
+        @JsonSetter(value = "user_id", nulls = Nulls.SKIP)
+        public Builder userId(Optional<String> userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder userId(String userId) {
+            this.userId = Optional.ofNullable(userId);
+            return this;
+        }
+
+        /**
+         * <p>Date and time when this user was created (ISO_8601 format).</p>
+         */
+        @JsonSetter(value = "created_at", nulls = Nulls.SKIP)
+        public Builder createdAt(Optional<OffsetDateTime> createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder createdAt(OffsetDateTime createdAt) {
+            this.createdAt = Optional.ofNullable(createdAt);
+            return this;
+        }
+
+        /**
+         * <p>Date and time when this user was last updated (ISO_8601 format).</p>
+         */
+        @JsonSetter(value = "updated_at", nulls = Nulls.SKIP)
+        public Builder updatedAt(Optional<OffsetDateTime> updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public Builder updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = Optional.ofNullable(updatedAt);
+            return this;
+        }
+
+        /**
+         * <p>Last date and time this user logged in (ISO_8601 format).</p>
+         */
+        @JsonSetter(value = "last_login", nulls = Nulls.SKIP)
+        public Builder lastLogin(Optional<OffsetDateTime> lastLogin) {
+            this.lastLogin = lastLogin;
+            return this;
+        }
+
+        public Builder lastLogin(OffsetDateTime lastLogin) {
+            this.lastLogin = Optional.ofNullable(lastLogin);
+            return this;
+        }
+
+        /**
+         * <p>The member's effective access level for this organization.</p>
+         */
+        @JsonSetter(value = "access_level", nulls = Nulls.SKIP)
+        public Builder accessLevel(Optional<OrganizationMemberAccessLevelEnum> accessLevel) {
+            this.accessLevel = accessLevel;
+            return this;
+        }
+
+        public Builder accessLevel(OrganizationMemberAccessLevelEnum accessLevel) {
+            this.accessLevel = Optional.ofNullable(accessLevel);
+            return this;
+        }
+
+        /**
+         * <p>Phone number associated with the user.</p>
+         */
+        @JsonSetter(value = "phone_number", nulls = Nulls.SKIP)
+        public Builder phoneNumber(Optional<String> phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder phoneNumber(String phoneNumber) {
+            this.phoneNumber = Optional.ofNullable(phoneNumber);
             return this;
         }
 
@@ -324,17 +431,9 @@ public final class OrgMember implements IUserAttributes {
             return this;
         }
 
-        @JsonSetter(value = "user_id", nulls = Nulls.SKIP)
-        public Builder userId(Optional<String> userId) {
-            this.userId = userId;
-            return this;
-        }
-
-        public Builder userId(String userId) {
-            this.userId = Optional.ofNullable(userId);
-            return this;
-        }
-
+        /**
+         * <p>The member's roles. Only the first 10 roles are returned here; use GET /my-org/v1/members/{user_id}/roles to retrieve the full list. Only included when the token carries the read:my_org:member_roles scope and 'roles' is requested in the fields array.</p>
+         */
         @JsonSetter(value = "roles", nulls = Nulls.SKIP)
         public Builder roles(Optional<List<Role>> roles) {
             this.roles = roles;
@@ -346,75 +445,20 @@ public final class OrgMember implements IUserAttributes {
             return this;
         }
 
-        /**
-         * <p>Date and time when this user was created (ISO_8601 format).</p>
-         */
-        @JsonSetter(value = "created_at", nulls = Nulls.SKIP)
-        public Builder createdAt(Optional<OffsetDateTime> createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder createdAt(OffsetDateTime createdAt) {
-            this.createdAt = Optional.ofNullable(createdAt);
-            return this;
-        }
-
-        /**
-         * <p>Date and time when this user was last updated (ISO_8601 format).</p>
-         */
-        @JsonSetter(value = "updated_at", nulls = Nulls.SKIP)
-        public Builder updatedAt(Optional<OffsetDateTime> updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
-        public Builder updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = Optional.ofNullable(updatedAt);
-            return this;
-        }
-
-        /**
-         * <p>Last date and time this user logged in (ISO_8601 format).</p>
-         */
-        @JsonSetter(value = "last_login", nulls = Nulls.SKIP)
-        public Builder lastLogin(Optional<OffsetDateTime> lastLogin) {
-            this.lastLogin = lastLogin;
-            return this;
-        }
-
-        public Builder lastLogin(OffsetDateTime lastLogin) {
-            this.lastLogin = Optional.ofNullable(lastLogin);
-            return this;
-        }
-
-        /**
-         * <p>Phone number associated with the user.</p>
-         */
-        @JsonSetter(value = "phone_number", nulls = Nulls.SKIP)
-        public Builder phoneNumber(Optional<String> phoneNumber) {
-            this.phoneNumber = phoneNumber;
-            return this;
-        }
-
-        public Builder phoneNumber(String phoneNumber) {
-            this.phoneNumber = Optional.ofNullable(phoneNumber);
-            return this;
-        }
-
         public OrgMember build() {
             return new OrgMember(
+                    userId,
+                    createdAt,
+                    updatedAt,
+                    lastLogin,
+                    accessLevel,
+                    phoneNumber,
                     email,
                     name,
                     nickname,
                     givenName,
                     familyName,
-                    userId,
                     roles,
-                    createdAt,
-                    updatedAt,
-                    lastLogin,
-                    phoneNumber,
                     additionalProperties);
         }
 

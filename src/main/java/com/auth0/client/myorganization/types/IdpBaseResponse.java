@@ -43,6 +43,12 @@ public final class IdpBaseResponse {
 
     private final Optional<OrganizationAccessLevelEnum> accessLevel;
 
+    private final Optional<OrganizationMemberAccessLevelEnum> memberAccessLevel;
+
+    private final Optional<Boolean> useForThirdPartyClientAccess;
+
+    private final Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp;
+
     private final Map<String, Object> additionalProperties;
 
     private IdpBaseResponse(
@@ -55,6 +61,9 @@ public final class IdpBaseResponse {
             Optional<Boolean> assignMembershipOnLogin,
             Optional<Boolean> isEnabled,
             Optional<OrganizationAccessLevelEnum> accessLevel,
+            Optional<OrganizationMemberAccessLevelEnum> memberAccessLevel,
+            Optional<Boolean> useForThirdPartyClientAccess,
+            Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
@@ -65,6 +74,9 @@ public final class IdpBaseResponse {
         this.assignMembershipOnLogin = assignMembershipOnLogin;
         this.isEnabled = isEnabled;
         this.accessLevel = accessLevel;
+        this.memberAccessLevel = memberAccessLevel;
+        this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
+        this.crossAppAccessResourceApp = crossAppAccessResourceApp;
         this.additionalProperties = additionalProperties;
     }
 
@@ -135,6 +147,30 @@ public final class IdpBaseResponse {
         return accessLevel;
     }
 
+    /**
+     * @return The Organization Member Access Level for this connection.
+     */
+    @JsonProperty("member_access_level")
+    public Optional<OrganizationMemberAccessLevelEnum> getMemberAccessLevel() {
+        return memberAccessLevel;
+    }
+
+    /**
+     * @return True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.
+     */
+    @JsonProperty("use_for_third_party_client_access")
+    public Optional<Boolean> getUseForThirdPartyClientAccess() {
+        return useForThirdPartyClientAccess;
+    }
+
+    /**
+     * @return Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.
+     */
+    @JsonProperty("cross_app_access_resource_app")
+    public Optional<CrossAppAccessResourceApp> getCrossAppAccessResourceApp() {
+        return crossAppAccessResourceApp;
+    }
+
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("name")
     private OptionalNullable<String> _getName() {
@@ -161,7 +197,10 @@ public final class IdpBaseResponse {
                 && showAsButton.equals(other.showAsButton)
                 && assignMembershipOnLogin.equals(other.assignMembershipOnLogin)
                 && isEnabled.equals(other.isEnabled)
-                && accessLevel.equals(other.accessLevel);
+                && accessLevel.equals(other.accessLevel)
+                && memberAccessLevel.equals(other.memberAccessLevel)
+                && useForThirdPartyClientAccess.equals(other.useForThirdPartyClientAccess)
+                && crossAppAccessResourceApp.equals(other.crossAppAccessResourceApp);
     }
 
     @java.lang.Override
@@ -175,7 +214,10 @@ public final class IdpBaseResponse {
                 this.showAsButton,
                 this.assignMembershipOnLogin,
                 this.isEnabled,
-                this.accessLevel);
+                this.accessLevel,
+                this.memberAccessLevel,
+                this.useForThirdPartyClientAccess,
+                this.crossAppAccessResourceApp);
     }
 
     @java.lang.Override
@@ -253,11 +295,38 @@ public final class IdpBaseResponse {
         _FinalStage accessLevel(Optional<OrganizationAccessLevelEnum> accessLevel);
 
         _FinalStage accessLevel(OrganizationAccessLevelEnum accessLevel);
+
+        /**
+         * <p>The Organization Member Access Level for this connection.</p>
+         */
+        _FinalStage memberAccessLevel(Optional<OrganizationMemberAccessLevelEnum> memberAccessLevel);
+
+        _FinalStage memberAccessLevel(OrganizationMemberAccessLevelEnum memberAccessLevel);
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         */
+        _FinalStage useForThirdPartyClientAccess(Optional<Boolean> useForThirdPartyClientAccess);
+
+        _FinalStage useForThirdPartyClientAccess(Boolean useForThirdPartyClientAccess);
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         */
+        _FinalStage crossAppAccessResourceApp(Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp);
+
+        _FinalStage crossAppAccessResourceApp(CrossAppAccessResourceApp crossAppAccessResourceApp);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements StrategyStage, _FinalStage {
         private IdpStrategyEnum strategy;
+
+        private Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp = Optional.empty();
+
+        private Optional<Boolean> useForThirdPartyClientAccess = Optional.empty();
+
+        private Optional<OrganizationMemberAccessLevelEnum> memberAccessLevel = Optional.empty();
 
         private Optional<OrganizationAccessLevelEnum> accessLevel = Optional.empty();
 
@@ -291,6 +360,9 @@ public final class IdpBaseResponse {
             assignMembershipOnLogin(other.getAssignMembershipOnLogin());
             isEnabled(other.getIsEnabled());
             accessLevel(other.getAccessLevel());
+            memberAccessLevel(other.getMemberAccessLevel());
+            useForThirdPartyClientAccess(other.getUseForThirdPartyClientAccess());
+            crossAppAccessResourceApp(other.getCrossAppAccessResourceApp());
             return this;
         }
 
@@ -298,6 +370,66 @@ public final class IdpBaseResponse {
         @JsonSetter("strategy")
         public _FinalStage strategy(@NotNull IdpStrategyEnum strategy) {
             this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage crossAppAccessResourceApp(CrossAppAccessResourceApp crossAppAccessResourceApp) {
+            this.crossAppAccessResourceApp = Optional.ofNullable(crossAppAccessResourceApp);
+            return this;
+        }
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "cross_app_access_resource_app", nulls = Nulls.SKIP)
+        public _FinalStage crossAppAccessResourceApp(Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp) {
+            this.crossAppAccessResourceApp = crossAppAccessResourceApp;
+            return this;
+        }
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage useForThirdPartyClientAccess(Boolean useForThirdPartyClientAccess) {
+            this.useForThirdPartyClientAccess = Optional.ofNullable(useForThirdPartyClientAccess);
+            return this;
+        }
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "use_for_third_party_client_access", nulls = Nulls.SKIP)
+        public _FinalStage useForThirdPartyClientAccess(Optional<Boolean> useForThirdPartyClientAccess) {
+            this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
+            return this;
+        }
+
+        /**
+         * <p>The Organization Member Access Level for this connection.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage memberAccessLevel(OrganizationMemberAccessLevelEnum memberAccessLevel) {
+            this.memberAccessLevel = Optional.ofNullable(memberAccessLevel);
+            return this;
+        }
+
+        /**
+         * <p>The Organization Member Access Level for this connection.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "member_access_level", nulls = Nulls.SKIP)
+        public _FinalStage memberAccessLevel(Optional<OrganizationMemberAccessLevelEnum> memberAccessLevel) {
+            this.memberAccessLevel = memberAccessLevel;
             return this;
         }
 
@@ -489,6 +621,9 @@ public final class IdpBaseResponse {
                     assignMembershipOnLogin,
                     isEnabled,
                     accessLevel,
+                    memberAccessLevel,
+                    useForThirdPartyClientAccess,
+                    crossAppAccessResourceApp,
                     additionalProperties);
         }
 

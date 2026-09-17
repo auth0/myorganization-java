@@ -12,6 +12,8 @@ public class OrganizationClient {
 
     protected final Supplier<ConfigurationClient> configurationClient;
 
+    protected final Supplier<UserStoresClient> userStoresClient;
+
     protected final Supplier<DomainsClient> domainsClient;
 
     protected final Supplier<IdentityProvidersClient> identityProvidersClient;
@@ -27,6 +29,7 @@ public class OrganizationClient {
     public OrganizationClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.configurationClient = Suppliers.memoize(() -> new ConfigurationClient(clientOptions));
+        this.userStoresClient = Suppliers.memoize(() -> new UserStoresClient(clientOptions));
         this.domainsClient = Suppliers.memoize(() -> new DomainsClient(clientOptions));
         this.identityProvidersClient = Suppliers.memoize(() -> new IdentityProvidersClient(clientOptions));
         this.membersClient = Suppliers.memoize(() -> new MembersClient(clientOptions));
@@ -37,6 +40,10 @@ public class OrganizationClient {
 
     public ConfigurationClient configuration() {
         return this.configurationClient.get();
+    }
+
+    public UserStoresClient userStores() {
+        return this.userStoresClient.get();
     }
 
     public DomainsClient domains() {

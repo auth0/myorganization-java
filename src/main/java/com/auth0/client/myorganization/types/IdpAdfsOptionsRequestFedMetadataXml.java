@@ -10,21 +10,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = FedMetadataXml.Builder.class)
-public final class FedMetadataXml {
-    private final Optional<String> fedMetadataXml;
+@JsonDeserialize(builder = IdpAdfsOptionsRequestFedMetadataXml.Builder.class)
+public final class IdpAdfsOptionsRequestFedMetadataXml {
+    private final String fedMetadataXml;
 
     private final Map<String, Object> additionalProperties;
 
-    private FedMetadataXml(Optional<String> fedMetadataXml, Map<String, Object> additionalProperties) {
+    private IdpAdfsOptionsRequestFedMetadataXml(String fedMetadataXml, Map<String, Object> additionalProperties) {
         this.fedMetadataXml = fedMetadataXml;
         this.additionalProperties = additionalProperties;
     }
@@ -33,14 +32,15 @@ public final class FedMetadataXml {
      * @return A Federation Metadata XML file in ADFS is a crucial document that serves as a blueprint for establishing trust between an ADFS server and other relying parties that want to consume identity information from ADFS.
      */
     @JsonProperty("fedMetadataXml")
-    public Optional<String> getFedMetadataXml() {
+    public String getFedMetadataXml() {
         return fedMetadataXml;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof FedMetadataXml && equalTo((FedMetadataXml) other);
+        return other instanceof IdpAdfsOptionsRequestFedMetadataXml
+                && equalTo((IdpAdfsOptionsRequestFedMetadataXml) other);
     }
 
     @JsonAnyGetter
@@ -48,7 +48,7 @@ public final class FedMetadataXml {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(FedMetadataXml other) {
+    private boolean equalTo(IdpAdfsOptionsRequestFedMetadataXml other) {
         return fedMetadataXml.equals(other.fedMetadataXml);
     }
 
@@ -62,47 +62,66 @@ public final class FedMetadataXml {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static FedMetadataXmlStage builder() {
         return new Builder();
     }
 
+    public interface FedMetadataXmlStage {
+        /**
+         * <p>A Federation Metadata XML file in ADFS is a crucial document that serves as a blueprint for establishing trust between an ADFS server and other relying parties that want to consume identity information from ADFS.</p>
+         */
+        _FinalStage fedMetadataXml(@NotNull String fedMetadataXml);
+
+        Builder from(IdpAdfsOptionsRequestFedMetadataXml other);
+    }
+
+    public interface _FinalStage {
+        IdpAdfsOptionsRequestFedMetadataXml build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private Optional<String> fedMetadataXml = Optional.empty();
+    public static final class Builder implements FedMetadataXmlStage, _FinalStage {
+        private String fedMetadataXml;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        public Builder from(FedMetadataXml other) {
+        @java.lang.Override
+        public Builder from(IdpAdfsOptionsRequestFedMetadataXml other) {
             fedMetadataXml(other.getFedMetadataXml());
             return this;
         }
 
         /**
          * <p>A Federation Metadata XML file in ADFS is a crucial document that serves as a blueprint for establishing trust between an ADFS server and other relying parties that want to consume identity information from ADFS.</p>
+         * <p>A Federation Metadata XML file in ADFS is a crucial document that serves as a blueprint for establishing trust between an ADFS server and other relying parties that want to consume identity information from ADFS.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @JsonSetter(value = "fedMetadataXml", nulls = Nulls.SKIP)
-        public Builder fedMetadataXml(Optional<String> fedMetadataXml) {
-            this.fedMetadataXml = fedMetadataXml;
+        @java.lang.Override
+        @JsonSetter("fedMetadataXml")
+        public _FinalStage fedMetadataXml(@NotNull String fedMetadataXml) {
+            this.fedMetadataXml = Objects.requireNonNull(fedMetadataXml, "fedMetadataXml must not be null");
             return this;
         }
 
-        public Builder fedMetadataXml(String fedMetadataXml) {
-            this.fedMetadataXml = Optional.ofNullable(fedMetadataXml);
-            return this;
+        @java.lang.Override
+        public IdpAdfsOptionsRequestFedMetadataXml build() {
+            return new IdpAdfsOptionsRequestFedMetadataXml(fedMetadataXml, additionalProperties);
         }
 
-        public FedMetadataXml build() {
-            return new FedMetadataXml(fedMetadataXml, additionalProperties);
-        }
-
+        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
+        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

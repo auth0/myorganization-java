@@ -18,11 +18,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = Manual.Builder.class)
-public final class Manual {
-    private final Optional<String> signInEndpoint;
-
-    private final Optional<String> cert;
+@JsonDeserialize(builder = IdpSamlpOptionsResponseMetadataUrl.Builder.class)
+public final class IdpSamlpOptionsResponseMetadataUrl {
+    private final Optional<String> metadataUrl;
 
     private final Optional<Boolean> signSamlRequest;
 
@@ -34,49 +32,47 @@ public final class Manual {
 
     private final Optional<String> bindingMethod;
 
+    private final Optional<String> cert;
+
     private final Optional<IdpOptionsIdpInitiated> idpInitiated;
 
     private final Optional<String> iconUrl;
 
+    private final Optional<String> discoveryUrl;
+
     private final Map<String, Object> additionalProperties;
 
-    private Manual(
-            Optional<String> signInEndpoint,
-            Optional<String> cert,
+    private IdpSamlpOptionsResponseMetadataUrl(
+            Optional<String> metadataUrl,
             Optional<Boolean> signSamlRequest,
             Optional<IdpSignAlgTypeEnum> signatureAlgorithm,
             Optional<IdpSignAlgDigestTypeEnum> digestAlgorithm,
             Optional<IdpProtocolBindingTypeEnum> protocolBinding,
             Optional<String> bindingMethod,
+            Optional<String> cert,
             Optional<IdpOptionsIdpInitiated> idpInitiated,
             Optional<String> iconUrl,
+            Optional<String> discoveryUrl,
             Map<String, Object> additionalProperties) {
-        this.signInEndpoint = signInEndpoint;
-        this.cert = cert;
+        this.metadataUrl = metadataUrl;
         this.signSamlRequest = signSamlRequest;
         this.signatureAlgorithm = signatureAlgorithm;
         this.digestAlgorithm = digestAlgorithm;
         this.protocolBinding = protocolBinding;
         this.bindingMethod = bindingMethod;
+        this.cert = cert;
         this.idpInitiated = idpInitiated;
         this.iconUrl = iconUrl;
+        this.discoveryUrl = discoveryUrl;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return The endpoint URL for the IdP sign-in
+     * @return URL provided by SAML provider which returns information used for creating the connection
      */
-    @JsonProperty("signInEndpoint")
-    public Optional<String> getSignInEndpoint() {
-        return signInEndpoint;
-    }
-
-    /**
-     * @return Signing certificate (encoded in PEM or CER) you retrieved from the IdP
-     */
-    @JsonProperty("cert")
-    public Optional<String> getCert() {
-        return cert;
+    @JsonProperty("metadataUrl")
+    public Optional<String> getMetadataUrl() {
+        return metadataUrl;
     }
 
     /**
@@ -110,6 +106,14 @@ public final class Manual {
         return bindingMethod;
     }
 
+    /**
+     * @return Signing certificate (encoded in PEM or CER) you retrieved from the IdP
+     */
+    @JsonProperty("cert")
+    public Optional<String> getCert() {
+        return cert;
+    }
+
     @JsonProperty("idpInitiated")
     public Optional<IdpOptionsIdpInitiated> getIdpInitiated() {
         return idpInitiated;
@@ -123,10 +127,19 @@ public final class Manual {
         return iconUrl;
     }
 
+    /**
+     * @return OIDC discovery URL of the trusted OIDC provider associated with the SAML IdP. Triggers auto-discovery of the OIDC metadata used to validate ID-JAGs for cross-app access.
+     */
+    @JsonProperty("discovery_url")
+    public Optional<String> getDiscoveryUrl() {
+        return discoveryUrl;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof Manual && equalTo((Manual) other);
+        return other instanceof IdpSamlpOptionsResponseMetadataUrl
+                && equalTo((IdpSamlpOptionsResponseMetadataUrl) other);
     }
 
     @JsonAnyGetter
@@ -134,30 +147,32 @@ public final class Manual {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(Manual other) {
-        return signInEndpoint.equals(other.signInEndpoint)
-                && cert.equals(other.cert)
+    private boolean equalTo(IdpSamlpOptionsResponseMetadataUrl other) {
+        return metadataUrl.equals(other.metadataUrl)
                 && signSamlRequest.equals(other.signSamlRequest)
                 && signatureAlgorithm.equals(other.signatureAlgorithm)
                 && digestAlgorithm.equals(other.digestAlgorithm)
                 && protocolBinding.equals(other.protocolBinding)
                 && bindingMethod.equals(other.bindingMethod)
+                && cert.equals(other.cert)
                 && idpInitiated.equals(other.idpInitiated)
-                && iconUrl.equals(other.iconUrl);
+                && iconUrl.equals(other.iconUrl)
+                && discoveryUrl.equals(other.discoveryUrl);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.signInEndpoint,
-                this.cert,
+                this.metadataUrl,
                 this.signSamlRequest,
                 this.signatureAlgorithm,
                 this.digestAlgorithm,
                 this.protocolBinding,
                 this.bindingMethod,
+                this.cert,
                 this.idpInitiated,
-                this.iconUrl);
+                this.iconUrl,
+                this.discoveryUrl);
     }
 
     @java.lang.Override
@@ -171,9 +186,7 @@ public final class Manual {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> signInEndpoint = Optional.empty();
-
-        private Optional<String> cert = Optional.empty();
+        private Optional<String> metadataUrl = Optional.empty();
 
         private Optional<Boolean> signSamlRequest = Optional.empty();
 
@@ -185,53 +198,44 @@ public final class Manual {
 
         private Optional<String> bindingMethod = Optional.empty();
 
+        private Optional<String> cert = Optional.empty();
+
         private Optional<IdpOptionsIdpInitiated> idpInitiated = Optional.empty();
 
         private Optional<String> iconUrl = Optional.empty();
+
+        private Optional<String> discoveryUrl = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        public Builder from(Manual other) {
-            signInEndpoint(other.getSignInEndpoint());
-            cert(other.getCert());
+        public Builder from(IdpSamlpOptionsResponseMetadataUrl other) {
+            metadataUrl(other.getMetadataUrl());
             signSamlRequest(other.getSignSamlRequest());
             signatureAlgorithm(other.getSignatureAlgorithm());
             digestAlgorithm(other.getDigestAlgorithm());
             protocolBinding(other.getProtocolBinding());
             bindingMethod(other.getBindingMethod());
+            cert(other.getCert());
             idpInitiated(other.getIdpInitiated());
             iconUrl(other.getIconUrl());
+            discoveryUrl(other.getDiscoveryUrl());
             return this;
         }
 
         /**
-         * <p>The endpoint URL for the IdP sign-in</p>
+         * <p>URL provided by SAML provider which returns information used for creating the connection</p>
          */
-        @JsonSetter(value = "signInEndpoint", nulls = Nulls.SKIP)
-        public Builder signInEndpoint(Optional<String> signInEndpoint) {
-            this.signInEndpoint = signInEndpoint;
+        @JsonSetter(value = "metadataUrl", nulls = Nulls.SKIP)
+        public Builder metadataUrl(Optional<String> metadataUrl) {
+            this.metadataUrl = metadataUrl;
             return this;
         }
 
-        public Builder signInEndpoint(String signInEndpoint) {
-            this.signInEndpoint = Optional.ofNullable(signInEndpoint);
-            return this;
-        }
-
-        /**
-         * <p>Signing certificate (encoded in PEM or CER) you retrieved from the IdP</p>
-         */
-        @JsonSetter(value = "cert", nulls = Nulls.SKIP)
-        public Builder cert(Optional<String> cert) {
-            this.cert = cert;
-            return this;
-        }
-
-        public Builder cert(String cert) {
-            this.cert = Optional.ofNullable(cert);
+        public Builder metadataUrl(String metadataUrl) {
+            this.metadataUrl = Optional.ofNullable(metadataUrl);
             return this;
         }
 
@@ -296,6 +300,20 @@ public final class Manual {
             return this;
         }
 
+        /**
+         * <p>Signing certificate (encoded in PEM or CER) you retrieved from the IdP</p>
+         */
+        @JsonSetter(value = "cert", nulls = Nulls.SKIP)
+        public Builder cert(Optional<String> cert) {
+            this.cert = cert;
+            return this;
+        }
+
+        public Builder cert(String cert) {
+            this.cert = Optional.ofNullable(cert);
+            return this;
+        }
+
         @JsonSetter(value = "idpInitiated", nulls = Nulls.SKIP)
         public Builder idpInitiated(Optional<IdpOptionsIdpInitiated> idpInitiated) {
             this.idpInitiated = idpInitiated;
@@ -321,17 +339,32 @@ public final class Manual {
             return this;
         }
 
-        public Manual build() {
-            return new Manual(
-                    signInEndpoint,
-                    cert,
+        /**
+         * <p>OIDC discovery URL of the trusted OIDC provider associated with the SAML IdP. Triggers auto-discovery of the OIDC metadata used to validate ID-JAGs for cross-app access.</p>
+         */
+        @JsonSetter(value = "discovery_url", nulls = Nulls.SKIP)
+        public Builder discoveryUrl(Optional<String> discoveryUrl) {
+            this.discoveryUrl = discoveryUrl;
+            return this;
+        }
+
+        public Builder discoveryUrl(String discoveryUrl) {
+            this.discoveryUrl = Optional.ofNullable(discoveryUrl);
+            return this;
+        }
+
+        public IdpSamlpOptionsResponseMetadataUrl build() {
+            return new IdpSamlpOptionsResponseMetadataUrl(
+                    metadataUrl,
                     signSamlRequest,
                     signatureAlgorithm,
                     digestAlgorithm,
                     protocolBinding,
                     bindingMethod,
+                    cert,
                     idpInitiated,
                     iconUrl,
+                    discoveryUrl,
                     additionalProperties);
         }
 

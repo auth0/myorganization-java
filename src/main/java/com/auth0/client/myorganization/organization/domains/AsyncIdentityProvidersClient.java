@@ -28,15 +28,15 @@ public class AsyncIdentityProvidersClient {
     /**
      * Retrieve the list of Identity Providers associated with a domain specified by ID for this Organization.
      */
-    public CompletableFuture<ListDomainIdentityProvidersResponseContent> get(String domainId) {
-        return this.rawClient.get(domainId).thenApply(response -> response.body());
+    public CompletableFuture<ListDomainIdentityProvidersResponseContent> list(String domainId) {
+        return this.rawClient.list(domainId).thenApply(response -> response.body());
     }
 
     /**
      * Retrieve the list of Identity Providers associated with a domain specified by ID for this Organization.
      */
-    public CompletableFuture<ListDomainIdentityProvidersResponseContent> get(
+    public CompletableFuture<ListDomainIdentityProvidersResponseContent> list(
             String domainId, RequestOptions requestOptions) {
-        return this.rawClient.get(domainId, requestOptions).thenApply(response -> response.body());
+        return this.rawClient.list(domainId, requestOptions).thenApply(response -> response.body());
     }
 }

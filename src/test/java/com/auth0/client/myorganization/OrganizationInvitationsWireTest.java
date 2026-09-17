@@ -4,6 +4,7 @@ import com.auth0.client.myorganization.core.ObjectMappers;
 import com.auth0.client.myorganization.core.OptionalNullable;
 import com.auth0.client.myorganization.core.SyncPagingIterable;
 import com.auth0.client.myorganization.organization.types.CreateMemberInvitationRequestContent;
+import com.auth0.client.myorganization.organization.types.DeleteMemberInvitationsRequestContent;
 import com.auth0.client.myorganization.organization.types.GetMemberInvitationRequestParameters;
 import com.auth0.client.myorganization.organization.types.ListMemberInvitationsRequestParameters;
 import com.auth0.client.myorganization.types.CreateMemberInvitationInvitee;
@@ -48,7 +49,7 @@ public class OrganizationInvitationsWireTest {
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"next\":\"next\",\"invitations\":[{\"id\":\"uinv_12345678abcdefgh\",\"organization_id\":\"org_12345678abcdefgh\",\"inviter\":{\"name\":\"Allison the Admin\"},\"invitee\":{\"email\":\"user@example.com\"},\"identity_provider_id\":\"con_2CZPv6IY0gWzDaQJ\",\"created_at\":\"2025-04-11T20:11:45Z\",\"expires_at\":\"2025-04-11T20:11:45Z\",\"roles\":[\"rol_BKW1BKIfBKd0BaI0\"],\"invitation_url\":\"https://example.auth0.com/login?invitation=uinv_12345678abcdefgh&organization=org_12345678abcdefgh\",\"ticket_id\":\"1asdfasd23usjdef\"}]}"));
+                                "{\"next\":\"next\",\"total\":1,\"total_is_capped\":true,\"invitations\":[{\"id\":\"uinv_12345678abcdefgh\",\"organization_id\":\"org_12345678abcdefgh\",\"inviter\":{\"name\":\"Allison the Admin\"},\"invitee\":{\"email\":\"user@example.com\"},\"identity_provider_id\":\"con_2CZPv6IY0gWzDaQJ\",\"user_store_id\":\"user_store_id\",\"created_at\":\"2025-04-11T20:11:45Z\",\"expires_at\":\"2025-04-11T20:11:45Z\",\"roles\":[\"rol_BKW1BKIfBKd0BaI0\"],\"invitation_url\":\"https://example.auth0.com/login?invitation=uinv_12345678abcdefgh&organization=org_12345678abcdefgh\",\"ticket_id\":\"1asdfasd23usjdef\"}]}"));
         SyncPagingIterable<MemberInvitation> response = client.organization()
                 .invitations()
                 .list(ListMemberInvitationsRequestParameters.builder()
@@ -57,6 +58,7 @@ public class OrganizationInvitationsWireTest {
                         .from(OptionalNullable.of("from"))
                         .take(OptionalNullable.of(1))
                         .sort(OptionalNullable.of("sort"))
+                        .includeTotals(OptionalNullable.of(true))
                         .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -74,7 +76,7 @@ public class OrganizationInvitationsWireTest {
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "[{\"id\":\"uinv_12345678abcdefgh\",\"organization_id\":\"org_12345678abcdefgh\",\"inviter\":{\"name\":\"Allison the Admin\"},\"invitee\":{\"email\":\"user@example.com\"},\"identity_provider_id\":\"con_2CZPv6IY0gWzDaQJ\",\"created_at\":\"2025-04-11T20:11:45Z\",\"expires_at\":\"2025-04-11T20:11:45Z\",\"roles\":[\"rol_BKW1BKIfBKd0BaI0\"],\"invitation_url\":\"https://example.auth0.com/login?invitation=uinv_12345678abcdefgh&organization=org_12345678abcdefgh\",\"ticket_id\":\"1asdfasd23usjdef\"}]"));
+                                "[{\"id\":\"uinv_12345678abcdefgh\",\"organization_id\":\"org_12345678abcdefgh\",\"inviter\":{\"name\":\"Allison the Admin\"},\"invitee\":{\"email\":\"user@example.com\"},\"identity_provider_id\":\"con_2CZPv6IY0gWzDaQJ\",\"user_store_id\":\"user_store_id\",\"created_at\":\"2025-04-11T20:11:45Z\",\"expires_at\":\"2025-04-11T20:11:45Z\",\"roles\":[\"rol_BKW1BKIfBKd0BaI0\"],\"invitation_url\":\"https://example.auth0.com/login?invitation=uinv_12345678abcdefgh&organization=org_12345678abcdefgh\",\"ticket_id\":\"1asdfasd23usjdef\"}]"));
         List<MemberInvitation> response = client.organization()
                 .invitations()
                 .create(CreateMemberInvitationRequestContent.builder()
@@ -151,6 +153,7 @@ public class OrganizationInvitationsWireTest {
                 + "      \"email\": \"user@example.com\"\n"
                 + "    },\n"
                 + "    \"identity_provider_id\": \"con_2CZPv6IY0gWzDaQJ\",\n"
+                + "    \"user_store_id\": \"user_store_id\",\n"
                 + "    \"created_at\": \"2025-04-11T20:11:45Z\",\n"
                 + "    \"expires_at\": \"2025-04-11T20:11:45Z\",\n"
                 + "    \"roles\": [\n"
@@ -192,12 +195,62 @@ public class OrganizationInvitationsWireTest {
     }
 
     @Test
+    public void testDelete() throws Exception {
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        client.organization()
+                .invitations()
+                .delete(DeleteMemberInvitationsRequestContent.builder()
+                        .invitations(Arrays.asList(
+                                "uinv_0000000000000001", "uinv_0000000000000002", "uinv_0000000000000003"))
+                        .build());
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = ""
+                + "{\n"
+                + "  \"invitations\": [\n"
+                + "    \"uinv_0000000000000001\",\n"
+                + "    \"uinv_0000000000000002\",\n"
+                + "    \"uinv_0000000000000003\"\n"
+                + "  ]\n"
+                + "}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type"))
+                discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind"))
+                discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(
+                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
+                    "request should be a valid JSON value");
+        }
+
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
+    }
+
+    @Test
     public void testGet() throws Exception {
         server.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"id\":\"uinv_12345678abcdefgh\",\"organization_id\":\"org_12345678abcdefgh\",\"inviter\":{\"name\":\"Allison the Admin\"},\"invitee\":{\"email\":\"user@example.com\"},\"identity_provider_id\":\"con_2CZPv6IY0gWzDaQJ\",\"created_at\":\"2025-04-11T20:11:45Z\",\"expires_at\":\"2025-04-11T20:11:45Z\",\"roles\":[\"rol_BKW1BKIfBKd0BaI0\"],\"invitation_url\":\"https://example.auth0.com/login?invitation=uinv_12345678abcdefgh&organization=org_12345678abcdefgh\",\"ticket_id\":\"1asdfasd23usjdef\"}"));
+                                "{\"id\":\"uinv_12345678abcdefgh\",\"organization_id\":\"org_12345678abcdefgh\",\"inviter\":{\"name\":\"Allison the Admin\"},\"invitee\":{\"email\":\"user@example.com\"},\"identity_provider_id\":\"con_2CZPv6IY0gWzDaQJ\",\"user_store_id\":\"user_store_id\",\"created_at\":\"2025-04-11T20:11:45Z\",\"expires_at\":\"2025-04-11T20:11:45Z\",\"roles\":[\"rol_BKW1BKIfBKd0BaI0\"],\"invitation_url\":\"https://example.auth0.com/login?invitation=uinv_12345678abcdefgh&organization=org_12345678abcdefgh\",\"ticket_id\":\"1asdfasd23usjdef\"}"));
         MemberInvitation response = client.organization()
                 .invitations()
                 .get(
@@ -224,6 +277,7 @@ public class OrganizationInvitationsWireTest {
                 + "    \"email\": \"user@example.com\"\n"
                 + "  },\n"
                 + "  \"identity_provider_id\": \"con_2CZPv6IY0gWzDaQJ\",\n"
+                + "  \"user_store_id\": \"user_store_id\",\n"
                 + "  \"created_at\": \"2025-04-11T20:11:45Z\",\n"
                 + "  \"expires_at\": \"2025-04-11T20:11:45Z\",\n"
                 + "  \"roles\": [\n"
@@ -261,15 +315,6 @@ public class OrganizationInvitationsWireTest {
         if (actualResponseNode.isObject()) {
             Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
         }
-    }
-
-    @Test
-    public void testDelete() throws Exception {
-        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
-        client.organization().invitations().delete("invitation_id");
-        RecordedRequest request = server.takeRequest();
-        Assertions.assertNotNull(request);
-        Assertions.assertEquals("DELETE", request.getMethod());
     }
 
     /**

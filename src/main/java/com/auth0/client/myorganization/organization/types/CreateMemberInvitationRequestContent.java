@@ -33,6 +33,8 @@ public final class CreateMemberInvitationRequestContent {
 
     private final Optional<String> identityProviderId;
 
+    private final Optional<String> userStoreId;
+
     private final Optional<Integer> ttlSec;
 
     private final Map<String, Object> additionalProperties;
@@ -42,12 +44,14 @@ public final class CreateMemberInvitationRequestContent {
             List<CreateMemberInvitationInvitee> invitees,
             Optional<MemberInvitationInviter> inviter,
             Optional<String> identityProviderId,
+            Optional<String> userStoreId,
             Optional<Integer> ttlSec,
             Map<String, Object> additionalProperties) {
         this.auth0CustomDomain = auth0CustomDomain;
         this.invitees = invitees;
         this.inviter = inviter;
         this.identityProviderId = identityProviderId;
+        this.userStoreId = userStoreId;
         this.ttlSec = ttlSec;
         this.additionalProperties = additionalProperties;
     }
@@ -68,11 +72,19 @@ public final class CreateMemberInvitationRequestContent {
     }
 
     /**
-     * @return Identity provider identifier.
+     * @return Identity provider identifier. At least one of identity_provider_id or user_store_id must be provided.
      */
     @JsonProperty("identity_provider_id")
     public Optional<String> getIdentityProviderId() {
         return identityProviderId;
+    }
+
+    /**
+     * @return The user store to route the invitation through. At least one of identity_provider_id or user_store_id must be provided.
+     */
+    @JsonProperty("user_store_id")
+    public Optional<String> getUserStoreId() {
+        return userStoreId;
     }
 
     /**
@@ -100,12 +112,19 @@ public final class CreateMemberInvitationRequestContent {
                 && invitees.equals(other.invitees)
                 && inviter.equals(other.inviter)
                 && identityProviderId.equals(other.identityProviderId)
+                && userStoreId.equals(other.userStoreId)
                 && ttlSec.equals(other.ttlSec);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.auth0CustomDomain, this.invitees, this.inviter, this.identityProviderId, this.ttlSec);
+        return Objects.hash(
+                this.auth0CustomDomain,
+                this.invitees,
+                this.inviter,
+                this.identityProviderId,
+                this.userStoreId,
+                this.ttlSec);
     }
 
     @java.lang.Override
@@ -127,6 +146,8 @@ public final class CreateMemberInvitationRequestContent {
 
         private Optional<String> identityProviderId = Optional.empty();
 
+        private Optional<String> userStoreId = Optional.empty();
+
         private Optional<Integer> ttlSec = Optional.empty();
 
         @JsonAnySetter
@@ -139,6 +160,7 @@ public final class CreateMemberInvitationRequestContent {
             invitees(other.getInvitees());
             inviter(other.getInviter());
             identityProviderId(other.getIdentityProviderId());
+            userStoreId(other.getUserStoreId());
             ttlSec(other.getTtlSec());
             return this;
         }
@@ -186,7 +208,7 @@ public final class CreateMemberInvitationRequestContent {
         }
 
         /**
-         * <p>Identity provider identifier.</p>
+         * <p>Identity provider identifier. At least one of identity_provider_id or user_store_id must be provided.</p>
          */
         @JsonSetter(value = "identity_provider_id", nulls = Nulls.SKIP)
         public Builder identityProviderId(Optional<String> identityProviderId) {
@@ -196,6 +218,20 @@ public final class CreateMemberInvitationRequestContent {
 
         public Builder identityProviderId(String identityProviderId) {
             this.identityProviderId = Optional.ofNullable(identityProviderId);
+            return this;
+        }
+
+        /**
+         * <p>The user store to route the invitation through. At least one of identity_provider_id or user_store_id must be provided.</p>
+         */
+        @JsonSetter(value = "user_store_id", nulls = Nulls.SKIP)
+        public Builder userStoreId(Optional<String> userStoreId) {
+            this.userStoreId = userStoreId;
+            return this;
+        }
+
+        public Builder userStoreId(String userStoreId) {
+            this.userStoreId = Optional.ofNullable(userStoreId);
             return this;
         }
 
@@ -215,7 +251,13 @@ public final class CreateMemberInvitationRequestContent {
 
         public CreateMemberInvitationRequestContent build() {
             return new CreateMemberInvitationRequestContent(
-                    auth0CustomDomain, invitees, inviter, identityProviderId, ttlSec, additionalProperties);
+                    auth0CustomDomain,
+                    invitees,
+                    inviter,
+                    identityProviderId,
+                    userStoreId,
+                    ttlSec,
+                    additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {
