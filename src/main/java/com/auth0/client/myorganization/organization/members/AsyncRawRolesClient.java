@@ -301,7 +301,7 @@ public class AsyncRawRolesClient {
                 .newBuilder()
                 .addPathSegments("members")
                 .addPathSegment(userId)
-                .addPathSegments("roles");
+                .addPathSegments("unassign-roles");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -316,7 +316,7 @@ public class AsyncRawRolesClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("DELETE", body)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")

@@ -31,6 +31,9 @@ public final class OauthScope {
     public static final OauthScope DELETE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING = new OauthScope(
             Value.DELETE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING, "delete:my_org:identity_providers_provisioning");
 
+    public static final OauthScope DELETE_MY_ORG_ORGANIZATIONS =
+            new OauthScope(Value.DELETE_MY_ORG_ORGANIZATIONS, "delete:my_org:organizations");
+
     public static final OauthScope CREATE_MY_ORG_CLIENT_GRANTS =
             new OauthScope(Value.CREATE_MY_ORG_CLIENT_GRANTS, "create:my_org:client_grants");
 
@@ -78,6 +81,9 @@ public final class OauthScope {
 
     public static final OauthScope UPDATE_MY_ORG_IDENTITY_PROVIDERS_DETACH =
             new OauthScope(Value.UPDATE_MY_ORG_IDENTITY_PROVIDERS_DETACH, "update:my_org:identity_providers_detach");
+
+    public static final OauthScope READ_MY_ORG_USER_STORES =
+            new OauthScope(Value.READ_MY_ORG_USER_STORES, "read:my_org:user_stores");
 
     public static final OauthScope CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS =
             new OauthScope(Value.CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS, "create:my_org:identity_providers_domains");
@@ -153,6 +159,8 @@ public final class OauthScope {
                 return visitor.visitReadMyOrgClients();
             case DELETE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING:
                 return visitor.visitDeleteMyOrgIdentityProvidersProvisioning();
+            case DELETE_MY_ORG_ORGANIZATIONS:
+                return visitor.visitDeleteMyOrgOrganizations();
             case CREATE_MY_ORG_CLIENT_GRANTS:
                 return visitor.visitCreateMyOrgClientGrants();
             case DELETE_MY_ORG_IDENTITY_PROVIDERS:
@@ -185,6 +193,8 @@ public final class OauthScope {
                 return visitor.visitReadMyOrgMemberRoles();
             case UPDATE_MY_ORG_IDENTITY_PROVIDERS_DETACH:
                 return visitor.visitUpdateMyOrgIdentityProvidersDetach();
+            case READ_MY_ORG_USER_STORES:
+                return visitor.visitReadMyOrgUserStores();
             case CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS:
                 return visitor.visitCreateMyOrgIdentityProvidersDomains();
             case READ_MY_ORG_CONFIGURATION:
@@ -228,6 +238,8 @@ public final class OauthScope {
                 return READ_MY_ORG_CLIENTS;
             case "delete:my_org:identity_providers_provisioning":
                 return DELETE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING;
+            case "delete:my_org:organizations":
+                return DELETE_MY_ORG_ORGANIZATIONS;
             case "create:my_org:client_grants":
                 return CREATE_MY_ORG_CLIENT_GRANTS;
             case "delete:my_org:identity_providers":
@@ -260,6 +272,8 @@ public final class OauthScope {
                 return READ_MY_ORG_MEMBER_ROLES;
             case "update:my_org:identity_providers_detach":
                 return UPDATE_MY_ORG_IDENTITY_PROVIDERS_DETACH;
+            case "read:my_org:user_stores":
+                return READ_MY_ORG_USER_STORES;
             case "create:my_org:identity_providers_domains":
                 return CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS;
             case "read:my_org:configuration":
@@ -350,6 +364,10 @@ public final class OauthScope {
 
         DELETE_MY_ORG_CLIENTS,
 
+        READ_MY_ORG_USER_STORES,
+
+        DELETE_MY_ORG_ORGANIZATIONS,
+
         UNKNOWN
     }
 
@@ -419,6 +437,10 @@ public final class OauthScope {
         T visitReadMyOrgClients();
 
         T visitDeleteMyOrgClients();
+
+        T visitReadMyOrgUserStores();
+
+        T visitDeleteMyOrgOrganizations();
 
         T visitUnknown(String unknownType);
     }

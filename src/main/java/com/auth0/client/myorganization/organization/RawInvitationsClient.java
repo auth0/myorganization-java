@@ -18,6 +18,7 @@ import com.auth0.client.myorganization.errors.NotFoundError;
 import com.auth0.client.myorganization.errors.TooManyRequestsError;
 import com.auth0.client.myorganization.errors.UnauthorizedError;
 import com.auth0.client.myorganization.organization.types.CreateMemberInvitationRequestContent;
+import com.auth0.client.myorganization.organization.types.DeleteMemberInvitationsRequestContent;
 import com.auth0.client.myorganization.organization.types.GetMemberInvitationRequestParameters;
 import com.auth0.client.myorganization.organization.types.ListMemberInvitationsRequestParameters;
 import com.auth0.client.myorganization.types.ErrorResponseContent;
@@ -86,6 +87,8 @@ public class RawInvitationsClient {
         }
         QueryStringMapper.addQueryParameter(httpUrl, "take", request.getTake().orElse(50), false);
         QueryStringMapper.addQueryParameter(httpUrl, "sort", request.getSort().orElse("created_at:-1"), false);
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "include_totals", request.getIncludeTotals().orElse(false), false);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -238,6 +241,83 @@ public class RawInvitationsClient {
     }
 
     /**
+     * Revoke a set of member invitations specified by IDs for this Organization.
+     */
+    public MyOrganizationApiHttpResponse<Void> delete(DeleteMemberInvitationsRequestContent request) {
+        return delete(request, null);
+    }
+
+    /**
+     * Revoke a set of member invitations specified by IDs for this Organization.
+     */
+    public MyOrganizationApiHttpResponse<Void> delete(
+            DeleteMemberInvitationsRequestContent request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("delete-member-invitations");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new MyOrganizationException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new MyOrganizationApiHttpResponse<>(null, response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
+                    case 401:
+                        throw new UnauthorizedError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponseContent.class),
+                                response);
+                    case 403:
+                        throw new ForbiddenError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponseContent.class),
+                                response);
+                    case 404:
+                        throw new NotFoundError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponseContent.class),
+                                response);
+                    case 429:
+                        throw new TooManyRequestsError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponseContent.class),
+                                response);
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new MyOrganizationApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new MyOrganizationException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
      * Retrieve details of a member invitation specified by ID for this Organization.
      */
     public MyOrganizationApiHttpResponse<MemberInvitation> get(String invitationId) {
@@ -296,75 +376,6 @@ public class RawInvitationsClient {
                 return new MyOrganizationApiHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, MemberInvitation.class), response);
             }
-            try {
-                switch (response.code()) {
-                    case 400:
-                        throw new BadRequestError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
-                    case 401:
-                        throw new UnauthorizedError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponseContent.class),
-                                response);
-                    case 403:
-                        throw new ForbiddenError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponseContent.class),
-                                response);
-                    case 404:
-                        throw new NotFoundError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponseContent.class),
-                                response);
-                    case 429:
-                        throw new TooManyRequestsError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponseContent.class),
-                                response);
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new MyOrganizationApiException(
-                    "Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (IOException e) {
-            throw new MyOrganizationException("Network error executing HTTP request", e);
-        }
-    }
-
-    /**
-     * Revoke a member invitation specified by ID for this Organization.
-     */
-    public MyOrganizationApiHttpResponse<Void> delete(String invitationId) {
-        return delete(invitationId, null);
-    }
-
-    /**
-     * Revoke a member invitation specified by ID for this Organization.
-     */
-    public MyOrganizationApiHttpResponse<Void> delete(String invitationId, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("member-invitations")
-                .addPathSegment(invitationId);
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((_key, _value) -> {
-                httpUrl.addQueryParameter(_key, _value);
-            });
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
-                .method("DELETE", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return new MyOrganizationApiHttpResponse<>(null, response);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 switch (response.code()) {
                     case 400:

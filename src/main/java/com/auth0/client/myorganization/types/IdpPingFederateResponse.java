@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 public final class IdpPingFederateResponse {
     private final IdpPingFederateResponseStrategy strategy;
 
-    private final IdpPingFederateOptionsResponse options;
+    private final Optional<IdpPingFederateOptionsResponse> options;
 
     private final Optional<String> id;
 
@@ -45,11 +45,17 @@ public final class IdpPingFederateResponse {
 
     private final Optional<OrganizationAccessLevelEnum> accessLevel;
 
+    private final Optional<OrganizationMemberAccessLevelEnum> memberAccessLevel;
+
+    private final Optional<Boolean> useForThirdPartyClientAccess;
+
+    private final Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp;
+
     private final Map<String, Object> additionalProperties;
 
     private IdpPingFederateResponse(
             IdpPingFederateResponseStrategy strategy,
-            IdpPingFederateOptionsResponse options,
+            Optional<IdpPingFederateOptionsResponse> options,
             Optional<String> id,
             OptionalNullable<String> name,
             Optional<List<String>> domains,
@@ -58,6 +64,9 @@ public final class IdpPingFederateResponse {
             Optional<Boolean> assignMembershipOnLogin,
             Optional<Boolean> isEnabled,
             Optional<OrganizationAccessLevelEnum> accessLevel,
+            Optional<OrganizationMemberAccessLevelEnum> memberAccessLevel,
+            Optional<Boolean> useForThirdPartyClientAccess,
+            Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp,
             Map<String, Object> additionalProperties) {
         this.strategy = strategy;
         this.options = options;
@@ -69,6 +78,9 @@ public final class IdpPingFederateResponse {
         this.assignMembershipOnLogin = assignMembershipOnLogin;
         this.isEnabled = isEnabled;
         this.accessLevel = accessLevel;
+        this.memberAccessLevel = memberAccessLevel;
+        this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
+        this.crossAppAccessResourceApp = crossAppAccessResourceApp;
         this.additionalProperties = additionalProperties;
     }
 
@@ -81,7 +93,7 @@ public final class IdpPingFederateResponse {
      * @return Identity provider specific options.
      */
     @JsonProperty("options")
-    public IdpPingFederateOptionsResponse getOptions() {
+    public Optional<IdpPingFederateOptionsResponse> getOptions() {
         return options;
     }
 
@@ -147,6 +159,30 @@ public final class IdpPingFederateResponse {
         return accessLevel;
     }
 
+    /**
+     * @return The Organization Member Access Level for this connection.
+     */
+    @JsonProperty("member_access_level")
+    public Optional<OrganizationMemberAccessLevelEnum> getMemberAccessLevel() {
+        return memberAccessLevel;
+    }
+
+    /**
+     * @return True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.
+     */
+    @JsonProperty("use_for_third_party_client_access")
+    public Optional<Boolean> getUseForThirdPartyClientAccess() {
+        return useForThirdPartyClientAccess;
+    }
+
+    /**
+     * @return Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.
+     */
+    @JsonProperty("cross_app_access_resource_app")
+    public Optional<CrossAppAccessResourceApp> getCrossAppAccessResourceApp() {
+        return crossAppAccessResourceApp;
+    }
+
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("name")
     private OptionalNullable<String> _getName() {
@@ -174,7 +210,10 @@ public final class IdpPingFederateResponse {
                 && showAsButton.equals(other.showAsButton)
                 && assignMembershipOnLogin.equals(other.assignMembershipOnLogin)
                 && isEnabled.equals(other.isEnabled)
-                && accessLevel.equals(other.accessLevel);
+                && accessLevel.equals(other.accessLevel)
+                && memberAccessLevel.equals(other.memberAccessLevel)
+                && useForThirdPartyClientAccess.equals(other.useForThirdPartyClientAccess)
+                && crossAppAccessResourceApp.equals(other.crossAppAccessResourceApp);
     }
 
     @java.lang.Override
@@ -189,7 +228,10 @@ public final class IdpPingFederateResponse {
                 this.showAsButton,
                 this.assignMembershipOnLogin,
                 this.isEnabled,
-                this.accessLevel);
+                this.accessLevel,
+                this.memberAccessLevel,
+                this.useForThirdPartyClientAccess,
+                this.crossAppAccessResourceApp);
     }
 
     @java.lang.Override
@@ -202,16 +244,9 @@ public final class IdpPingFederateResponse {
     }
 
     public interface StrategyStage {
-        OptionsStage strategy(@NotNull IdpPingFederateResponseStrategy strategy);
+        _FinalStage strategy(@NotNull IdpPingFederateResponseStrategy strategy);
 
         Builder from(IdpPingFederateResponse other);
-    }
-
-    public interface OptionsStage {
-        /**
-         * <p>Identity provider specific options.</p>
-         */
-        _FinalStage options(@NotNull IdpPingFederateOptionsResponse options);
     }
 
     public interface _FinalStage {
@@ -220,6 +255,13 @@ public final class IdpPingFederateResponse {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>Identity provider specific options.</p>
+         */
+        _FinalStage options(Optional<IdpPingFederateOptionsResponse> options);
+
+        _FinalStage options(IdpPingFederateOptionsResponse options);
 
         _FinalStage id(Optional<String> id);
 
@@ -274,13 +316,38 @@ public final class IdpPingFederateResponse {
         _FinalStage accessLevel(Optional<OrganizationAccessLevelEnum> accessLevel);
 
         _FinalStage accessLevel(OrganizationAccessLevelEnum accessLevel);
+
+        /**
+         * <p>The Organization Member Access Level for this connection.</p>
+         */
+        _FinalStage memberAccessLevel(Optional<OrganizationMemberAccessLevelEnum> memberAccessLevel);
+
+        _FinalStage memberAccessLevel(OrganizationMemberAccessLevelEnum memberAccessLevel);
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         */
+        _FinalStage useForThirdPartyClientAccess(Optional<Boolean> useForThirdPartyClientAccess);
+
+        _FinalStage useForThirdPartyClientAccess(Boolean useForThirdPartyClientAccess);
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         */
+        _FinalStage crossAppAccessResourceApp(Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp);
+
+        _FinalStage crossAppAccessResourceApp(CrossAppAccessResourceApp crossAppAccessResourceApp);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements StrategyStage, OptionsStage, _FinalStage {
+    public static final class Builder implements StrategyStage, _FinalStage {
         private IdpPingFederateResponseStrategy strategy;
 
-        private IdpPingFederateOptionsResponse options;
+        private Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp = Optional.empty();
+
+        private Optional<Boolean> useForThirdPartyClientAccess = Optional.empty();
+
+        private Optional<OrganizationMemberAccessLevelEnum> memberAccessLevel = Optional.empty();
 
         private Optional<OrganizationAccessLevelEnum> accessLevel = Optional.empty();
 
@@ -297,6 +364,8 @@ public final class IdpPingFederateResponse {
         private OptionalNullable<String> name = OptionalNullable.absent();
 
         private Optional<String> id = Optional.empty();
+
+        private Optional<IdpPingFederateOptionsResponse> options = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -315,25 +384,76 @@ public final class IdpPingFederateResponse {
             assignMembershipOnLogin(other.getAssignMembershipOnLogin());
             isEnabled(other.getIsEnabled());
             accessLevel(other.getAccessLevel());
+            memberAccessLevel(other.getMemberAccessLevel());
+            useForThirdPartyClientAccess(other.getUseForThirdPartyClientAccess());
+            crossAppAccessResourceApp(other.getCrossAppAccessResourceApp());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("strategy")
-        public OptionsStage strategy(@NotNull IdpPingFederateResponseStrategy strategy) {
+        public _FinalStage strategy(@NotNull IdpPingFederateResponseStrategy strategy) {
             this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
         /**
-         * <p>Identity provider specific options.</p>
-         * <p>Identity provider specific options.</p>
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("options")
-        public _FinalStage options(@NotNull IdpPingFederateOptionsResponse options) {
-            this.options = Objects.requireNonNull(options, "options must not be null");
+        public _FinalStage crossAppAccessResourceApp(CrossAppAccessResourceApp crossAppAccessResourceApp) {
+            this.crossAppAccessResourceApp = Optional.ofNullable(crossAppAccessResourceApp);
+            return this;
+        }
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "cross_app_access_resource_app", nulls = Nulls.SKIP)
+        public _FinalStage crossAppAccessResourceApp(Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp) {
+            this.crossAppAccessResourceApp = crossAppAccessResourceApp;
+            return this;
+        }
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage useForThirdPartyClientAccess(Boolean useForThirdPartyClientAccess) {
+            this.useForThirdPartyClientAccess = Optional.ofNullable(useForThirdPartyClientAccess);
+            return this;
+        }
+
+        /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "use_for_third_party_client_access", nulls = Nulls.SKIP)
+        public _FinalStage useForThirdPartyClientAccess(Optional<Boolean> useForThirdPartyClientAccess) {
+            this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
+            return this;
+        }
+
+        /**
+         * <p>The Organization Member Access Level for this connection.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage memberAccessLevel(OrganizationMemberAccessLevelEnum memberAccessLevel) {
+            this.memberAccessLevel = Optional.ofNullable(memberAccessLevel);
+            return this;
+        }
+
+        /**
+         * <p>The Organization Member Access Level for this connection.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "member_access_level", nulls = Nulls.SKIP)
+        public _FinalStage memberAccessLevel(Optional<OrganizationMemberAccessLevelEnum> memberAccessLevel) {
+            this.memberAccessLevel = memberAccessLevel;
             return this;
         }
 
@@ -513,6 +633,26 @@ public final class IdpPingFederateResponse {
             return this;
         }
 
+        /**
+         * <p>Identity provider specific options.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage options(IdpPingFederateOptionsResponse options) {
+            this.options = Optional.ofNullable(options);
+            return this;
+        }
+
+        /**
+         * <p>Identity provider specific options.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "options", nulls = Nulls.SKIP)
+        public _FinalStage options(Optional<IdpPingFederateOptionsResponse> options) {
+            this.options = options;
+            return this;
+        }
+
         @java.lang.Override
         public IdpPingFederateResponse build() {
             return new IdpPingFederateResponse(
@@ -526,6 +666,9 @@ public final class IdpPingFederateResponse {
                     assignMembershipOnLogin,
                     isEnabled,
                     accessLevel,
+                    memberAccessLevel,
+                    useForThirdPartyClientAccess,
+                    crossAppAccessResourceApp,
                     additionalProperties);
         }
 

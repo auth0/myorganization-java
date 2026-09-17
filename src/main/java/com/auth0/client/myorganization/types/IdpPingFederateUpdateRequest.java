@@ -28,6 +28,10 @@ public final class IdpPingFederateUpdateRequest implements IIdpUpdateBase {
 
     private final Optional<Boolean> isEnabled;
 
+    private final Optional<Boolean> useForThirdPartyClientAccess;
+
+    private final Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp;
+
     private final Optional<IdpPingFederateOptionsRequest> options;
 
     private final Map<String, Object> additionalProperties;
@@ -37,12 +41,16 @@ public final class IdpPingFederateUpdateRequest implements IIdpUpdateBase {
             Optional<Boolean> showAsButton,
             Optional<Boolean> assignMembershipOnLogin,
             Optional<Boolean> isEnabled,
+            Optional<Boolean> useForThirdPartyClientAccess,
+            Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp,
             Optional<IdpPingFederateOptionsRequest> options,
             Map<String, Object> additionalProperties) {
         this.displayName = displayName;
         this.showAsButton = showAsButton;
         this.assignMembershipOnLogin = assignMembershipOnLogin;
         this.isEnabled = isEnabled;
+        this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
+        this.crossAppAccessResourceApp = crossAppAccessResourceApp;
         this.options = options;
         this.additionalProperties = additionalProperties;
     }
@@ -84,6 +92,24 @@ public final class IdpPingFederateUpdateRequest implements IIdpUpdateBase {
     }
 
     /**
+     * @return True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Requires access_level to be 'full'. Defaults to false.
+     */
+    @JsonProperty("use_for_third_party_client_access")
+    @java.lang.Override
+    public Optional<Boolean> getUseForThirdPartyClientAccess() {
+        return useForThirdPartyClientAccess;
+    }
+
+    /**
+     * @return Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.
+     */
+    @JsonProperty("cross_app_access_resource_app")
+    @java.lang.Override
+    public Optional<CrossAppAccessResourceApp> getCrossAppAccessResourceApp() {
+        return crossAppAccessResourceApp;
+    }
+
+    /**
      * @return Identity provider specific options.  Requires access_level to be 'full'.
      */
     @JsonProperty("options")
@@ -107,13 +133,21 @@ public final class IdpPingFederateUpdateRequest implements IIdpUpdateBase {
                 && showAsButton.equals(other.showAsButton)
                 && assignMembershipOnLogin.equals(other.assignMembershipOnLogin)
                 && isEnabled.equals(other.isEnabled)
+                && useForThirdPartyClientAccess.equals(other.useForThirdPartyClientAccess)
+                && crossAppAccessResourceApp.equals(other.crossAppAccessResourceApp)
                 && options.equals(other.options);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.displayName, this.showAsButton, this.assignMembershipOnLogin, this.isEnabled, this.options);
+                this.displayName,
+                this.showAsButton,
+                this.assignMembershipOnLogin,
+                this.isEnabled,
+                this.useForThirdPartyClientAccess,
+                this.crossAppAccessResourceApp,
+                this.options);
     }
 
     @java.lang.Override
@@ -135,6 +169,10 @@ public final class IdpPingFederateUpdateRequest implements IIdpUpdateBase {
 
         private Optional<Boolean> isEnabled = Optional.empty();
 
+        private Optional<Boolean> useForThirdPartyClientAccess = Optional.empty();
+
+        private Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp = Optional.empty();
+
         private Optional<IdpPingFederateOptionsRequest> options = Optional.empty();
 
         @JsonAnySetter
@@ -147,6 +185,8 @@ public final class IdpPingFederateUpdateRequest implements IIdpUpdateBase {
             showAsButton(other.getShowAsButton());
             assignMembershipOnLogin(other.getAssignMembershipOnLogin());
             isEnabled(other.getIsEnabled());
+            useForThirdPartyClientAccess(other.getUseForThirdPartyClientAccess());
+            crossAppAccessResourceApp(other.getCrossAppAccessResourceApp());
             options(other.getOptions());
             return this;
         }
@@ -208,6 +248,34 @@ public final class IdpPingFederateUpdateRequest implements IIdpUpdateBase {
         }
 
         /**
+         * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Requires access_level to be 'full'. Defaults to false.</p>
+         */
+        @JsonSetter(value = "use_for_third_party_client_access", nulls = Nulls.SKIP)
+        public Builder useForThirdPartyClientAccess(Optional<Boolean> useForThirdPartyClientAccess) {
+            this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
+            return this;
+        }
+
+        public Builder useForThirdPartyClientAccess(Boolean useForThirdPartyClientAccess) {
+            this.useForThirdPartyClientAccess = Optional.ofNullable(useForThirdPartyClientAccess);
+            return this;
+        }
+
+        /**
+         * <p>Cross-app access resource application configuration. Only present when the cross-app access resource application feature is enabled for your organization.</p>
+         */
+        @JsonSetter(value = "cross_app_access_resource_app", nulls = Nulls.SKIP)
+        public Builder crossAppAccessResourceApp(Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp) {
+            this.crossAppAccessResourceApp = crossAppAccessResourceApp;
+            return this;
+        }
+
+        public Builder crossAppAccessResourceApp(CrossAppAccessResourceApp crossAppAccessResourceApp) {
+            this.crossAppAccessResourceApp = Optional.ofNullable(crossAppAccessResourceApp);
+            return this;
+        }
+
+        /**
          * <p>Identity provider specific options.  Requires access_level to be 'full'.</p>
          */
         @JsonSetter(value = "options", nulls = Nulls.SKIP)
@@ -223,7 +291,14 @@ public final class IdpPingFederateUpdateRequest implements IIdpUpdateBase {
 
         public IdpPingFederateUpdateRequest build() {
             return new IdpPingFederateUpdateRequest(
-                    displayName, showAsButton, assignMembershipOnLogin, isEnabled, options, additionalProperties);
+                    displayName,
+                    showAsButton,
+                    assignMembershipOnLogin,
+                    isEnabled,
+                    useForThirdPartyClientAccess,
+                    crossAppAccessResourceApp,
+                    options,
+                    additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -67,42 +67,42 @@ public class DomainsClient {
     }
 
     /**
-     * Create a new domain for this Organization.
+     * Create a domain for an Auth0 Organization and optionally enable Organization Discovery for members during the user login flow
      */
     public OrgDomain create(CreateOrganizationDomainRequestContent request) {
         return this.rawClient.create(request).body();
     }
 
     /**
-     * Create a new domain for this Organization.
+     * Create a domain for an Auth0 Organization and optionally enable Organization Discovery for members during the user login flow
      */
     public OrgDomain create(CreateOrganizationDomainRequestContent request, RequestOptions requestOptions) {
         return this.rawClient.create(request, requestOptions).body();
     }
 
     /**
-     * Retrieve details of a domain specified by ID for this Organization.
+     * Retrieve the details of an Auth0 Organization domain using its unique domain ID, including the domain name and its current verification status.
      */
     public OrgDomain get(String domainId) {
         return this.rawClient.get(domainId).body();
     }
 
     /**
-     * Retrieve details of a domain specified by ID for this Organization.
+     * Retrieve the details of an Auth0 Organization domain using its unique domain ID, including the domain name and its current verification status.
      */
     public OrgDomain get(String domainId, RequestOptions requestOptions) {
         return this.rawClient.get(domainId, requestOptions).body();
     }
 
     /**
-     * Remove a domain specified by ID from this Organization.
+     * Delete an Auth0 Organization domain using its unique domain ID, including all associated details and verification status.
      */
     public void delete(String domainId) {
         this.rawClient.delete(domainId).body();
     }
 
     /**
-     * Remove a domain specified by ID from this Organization.
+     * Delete an Auth0 Organization domain using its unique domain ID, including all associated details and verification status.
      */
     public void delete(String domainId, RequestOptions requestOptions) {
         this.rawClient.delete(domainId, requestOptions).body();

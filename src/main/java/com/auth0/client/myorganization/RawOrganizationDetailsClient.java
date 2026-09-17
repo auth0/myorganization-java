@@ -36,6 +36,67 @@ public class RawOrganizationDetailsClient {
     }
 
     /**
+     * Permanently delete this Organization.
+     */
+    public MyOrganizationApiHttpResponse<Void> delete() {
+        return delete(null);
+    }
+
+    /**
+     * Permanently delete this Organization.
+     */
+    public MyOrganizationApiHttpResponse<Void> delete(RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl =
+                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("DELETE", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new MyOrganizationApiHttpResponse<>(null, response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 401:
+                        throw new UnauthorizedError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponseContent.class),
+                                response);
+                    case 403:
+                        throw new ForbiddenError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponseContent.class),
+                                response);
+                    case 429:
+                        throw new TooManyRequestsError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorResponseContent.class),
+                                response);
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new MyOrganizationApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new MyOrganizationException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
      * Retrieve details for this Organization, including display name and branding options. To learn more about Auth0 Organizations, read <a href="https://auth0.com/docs/manage-users/organizations">Organizations</a>.
      */
     public MyOrganizationApiHttpResponse<OrgDetailsRead> get() {

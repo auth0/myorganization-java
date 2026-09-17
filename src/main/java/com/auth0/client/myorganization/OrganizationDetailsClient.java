@@ -26,6 +26,20 @@ public class OrganizationDetailsClient {
     }
 
     /**
+     * Permanently delete this Organization.
+     */
+    public void delete() {
+        this.rawClient.delete().body();
+    }
+
+    /**
+     * Permanently delete this Organization.
+     */
+    public void delete(RequestOptions requestOptions) {
+        this.rawClient.delete(requestOptions).body();
+    }
+
+    /**
      * Retrieve details for this Organization, including display name and branding options. To learn more about Auth0 Organizations, read <a href="https://auth0.com/docs/manage-users/organizations">Organizations</a>.
      */
     public OrgDetailsRead get() {

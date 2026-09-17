@@ -24,13 +24,13 @@ public final class IdentityProvidersConfigStrategyOverride {
 
     private final Optional<IdentityProvidersConfigStrategyBase> googleapps;
 
-    private final Optional<IdentityProvidersConfigStrategyBase> oidc;
+    private final Optional<IdentityProviderConfigOidc> oidc;
 
-    private final Optional<IdentityProvidersConfigStrategyBase> okta;
+    private final Optional<IdentityProviderConfigOkta> okta;
 
     private final Optional<IdentityProvidersConfigStrategyBase> pingfederate;
 
-    private final Optional<IdentityProvidersConfigStrategyBase> samlp;
+    private final Optional<IdentityProviderConfigSamlp> samlp;
 
     private final Optional<IdentityProvidersConfigStrategyBase> waad;
 
@@ -39,10 +39,10 @@ public final class IdentityProvidersConfigStrategyOverride {
     private IdentityProvidersConfigStrategyOverride(
             Optional<IdentityProvidersConfigStrategyBase> adfs,
             Optional<IdentityProvidersConfigStrategyBase> googleapps,
-            Optional<IdentityProvidersConfigStrategyBase> oidc,
-            Optional<IdentityProvidersConfigStrategyBase> okta,
+            Optional<IdentityProviderConfigOidc> oidc,
+            Optional<IdentityProviderConfigOkta> okta,
             Optional<IdentityProvidersConfigStrategyBase> pingfederate,
-            Optional<IdentityProvidersConfigStrategyBase> samlp,
+            Optional<IdentityProviderConfigSamlp> samlp,
             Optional<IdentityProvidersConfigStrategyBase> waad,
             Map<String, Object> additionalProperties) {
         this.adfs = adfs;
@@ -66,12 +66,12 @@ public final class IdentityProvidersConfigStrategyOverride {
     }
 
     @JsonProperty("oidc")
-    public Optional<IdentityProvidersConfigStrategyBase> getOidc() {
+    public Optional<IdentityProviderConfigOidc> getOidc() {
         return oidc;
     }
 
     @JsonProperty("okta")
-    public Optional<IdentityProvidersConfigStrategyBase> getOkta() {
+    public Optional<IdentityProviderConfigOkta> getOkta() {
         return okta;
     }
 
@@ -81,7 +81,7 @@ public final class IdentityProvidersConfigStrategyOverride {
     }
 
     @JsonProperty("samlp")
-    public Optional<IdentityProvidersConfigStrategyBase> getSamlp() {
+    public Optional<IdentityProviderConfigSamlp> getSamlp() {
         return samlp;
     }
 
@@ -132,13 +132,13 @@ public final class IdentityProvidersConfigStrategyOverride {
 
         private Optional<IdentityProvidersConfigStrategyBase> googleapps = Optional.empty();
 
-        private Optional<IdentityProvidersConfigStrategyBase> oidc = Optional.empty();
+        private Optional<IdentityProviderConfigOidc> oidc = Optional.empty();
 
-        private Optional<IdentityProvidersConfigStrategyBase> okta = Optional.empty();
+        private Optional<IdentityProviderConfigOkta> okta = Optional.empty();
 
         private Optional<IdentityProvidersConfigStrategyBase> pingfederate = Optional.empty();
 
-        private Optional<IdentityProvidersConfigStrategyBase> samlp = Optional.empty();
+        private Optional<IdentityProviderConfigSamlp> samlp = Optional.empty();
 
         private Optional<IdentityProvidersConfigStrategyBase> waad = Optional.empty();
 
@@ -181,23 +181,23 @@ public final class IdentityProvidersConfigStrategyOverride {
         }
 
         @JsonSetter(value = "oidc", nulls = Nulls.SKIP)
-        public Builder oidc(Optional<IdentityProvidersConfigStrategyBase> oidc) {
+        public Builder oidc(Optional<IdentityProviderConfigOidc> oidc) {
             this.oidc = oidc;
             return this;
         }
 
-        public Builder oidc(IdentityProvidersConfigStrategyBase oidc) {
+        public Builder oidc(IdentityProviderConfigOidc oidc) {
             this.oidc = Optional.ofNullable(oidc);
             return this;
         }
 
         @JsonSetter(value = "okta", nulls = Nulls.SKIP)
-        public Builder okta(Optional<IdentityProvidersConfigStrategyBase> okta) {
+        public Builder okta(Optional<IdentityProviderConfigOkta> okta) {
             this.okta = okta;
             return this;
         }
 
-        public Builder okta(IdentityProvidersConfigStrategyBase okta) {
+        public Builder okta(IdentityProviderConfigOkta okta) {
             this.okta = Optional.ofNullable(okta);
             return this;
         }
@@ -214,12 +214,12 @@ public final class IdentityProvidersConfigStrategyOverride {
         }
 
         @JsonSetter(value = "samlp", nulls = Nulls.SKIP)
-        public Builder samlp(Optional<IdentityProvidersConfigStrategyBase> samlp) {
+        public Builder samlp(Optional<IdentityProviderConfigSamlp> samlp) {
             this.samlp = samlp;
             return this;
         }
 
-        public Builder samlp(IdentityProvidersConfigStrategyBase samlp) {
+        public Builder samlp(IdentityProviderConfigSamlp samlp) {
             this.samlp = Optional.ofNullable(samlp);
             return this;
         }

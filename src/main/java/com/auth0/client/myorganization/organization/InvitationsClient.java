@@ -5,21 +5,28 @@ package com.auth0.client.myorganization.organization;
 
 import com.auth0.client.myorganization.core.ClientOptions;
 import com.auth0.client.myorganization.core.RequestOptions;
+import com.auth0.client.myorganization.core.Suppliers;
 import com.auth0.client.myorganization.core.SyncPagingIterable;
+import com.auth0.client.myorganization.organization.invitations.RolesClient;
 import com.auth0.client.myorganization.organization.types.CreateMemberInvitationRequestContent;
+import com.auth0.client.myorganization.organization.types.DeleteMemberInvitationsRequestContent;
 import com.auth0.client.myorganization.organization.types.GetMemberInvitationRequestParameters;
 import com.auth0.client.myorganization.organization.types.ListMemberInvitationsRequestParameters;
 import com.auth0.client.myorganization.types.MemberInvitation;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class InvitationsClient {
     protected final ClientOptions clientOptions;
 
     private final RawInvitationsClient rawClient;
 
+    protected final Supplier<RolesClient> rolesClient;
+
     public InvitationsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new RawInvitationsClient(clientOptions);
+        this.rolesClient = Suppliers.memoize(() -> new RolesClient(clientOptions));
     }
 
     /**
@@ -73,6 +80,20 @@ public class InvitationsClient {
     }
 
     /**
+     * Revoke a set of member invitations specified by IDs for this Organization.
+     */
+    public void delete(DeleteMemberInvitationsRequestContent request) {
+        this.rawClient.delete(request).body();
+    }
+
+    /**
+     * Revoke a set of member invitations specified by IDs for this Organization.
+     */
+    public void delete(DeleteMemberInvitationsRequestContent request, RequestOptions requestOptions) {
+        this.rawClient.delete(request, requestOptions).body();
+    }
+
+    /**
      * Retrieve details of a member invitation specified by ID for this Organization.
      */
     public MemberInvitation get(String invitationId) {
@@ -101,17 +122,7 @@ public class InvitationsClient {
         return this.rawClient.get(invitationId, request, requestOptions).body();
     }
 
-    /**
-     * Revoke a member invitation specified by ID for this Organization.
-     */
-    public void delete(String invitationId) {
-        this.rawClient.delete(invitationId).body();
-    }
-
-    /**
-     * Revoke a member invitation specified by ID for this Organization.
-     */
-    public void delete(String invitationId, RequestOptions requestOptions) {
-        this.rawClient.delete(invitationId, requestOptions).body();
+    public RolesClient roles() {
+        return this.rolesClient.get();
     }
 }

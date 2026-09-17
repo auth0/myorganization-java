@@ -6,6 +6,7 @@ import com.auth0.client.myorganization.core.SyncPagingIterable;
 import com.auth0.client.myorganization.organization.types.GetOrganizationMemberRequestParameters;
 import com.auth0.client.myorganization.organization.types.ListOrganizationMembersRequestParameters;
 import com.auth0.client.myorganization.types.OrgMember;
+import com.auth0.client.myorganization.types.OrgMemberBase;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockResponse;
@@ -42,7 +43,7 @@ public class OrganizationMembersWireTest {
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"next\":\"next\",\"members\":[{\"email\":\"roadrunner@acme.com\",\"name\":\"name\",\"nickname\":\"nickname\",\"given_name\":\"given_name\",\"family_name\":\"family_name\",\"user_id\":\"auth0|123234235\",\"roles\":[{\"id\":\"rol_BKI0BKI0BKI0BKI0\",\"name\":\"role1\"},{\"id\":\"rol_BKW1BKIfBKd0BaI0\",\"name\":\"role2\"}],\"created_at\":\"2024-01-15T09:30:00Z\",\"updated_at\":\"2024-01-15T09:30:00Z\",\"last_login\":\"2024-01-15T09:30:00Z\",\"phone_number\":\"phone_number\"}]}"));
+                                "{\"next\":\"next\",\"total\":1,\"total_is_capped\":true,\"members\":[{\"email\":\"roadrunner@acme.com\",\"name\":\"name\",\"nickname\":\"nickname\",\"given_name\":\"given_name\",\"family_name\":\"family_name\",\"user_id\":\"auth0|123234235\",\"created_at\":\"2024-01-15T09:30:00Z\",\"updated_at\":\"2024-01-15T09:30:00Z\",\"last_login\":\"2024-01-15T09:30:00Z\",\"access_level\":\"none\",\"phone_number\":\"phone_number\",\"roles\":[{\"id\":\"rol_BKI0BKI0BKI0BKI0\",\"name\":\"role1\"},{\"id\":\"rol_BKW1BKIfBKd0BaI0\",\"name\":\"role2\"}]}]}"));
         SyncPagingIterable<OrgMember> response = client.organization()
                 .members()
                 .list(ListOrganizationMembersRequestParameters.builder()
@@ -50,6 +51,7 @@ public class OrganizationMembersWireTest {
                         .includeFields(OptionalNullable.of(true))
                         .from(OptionalNullable.of("from"))
                         .take(OptionalNullable.of(1))
+                        .includeTotals(OptionalNullable.of(true))
                         .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -67,8 +69,8 @@ public class OrganizationMembersWireTest {
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"email\":\"roadrunner@acme.com\",\"name\":\"roadrunner\",\"nickname\":\"beepbeep\",\"given_name\":\"Road\",\"family_name\":\"Runner\",\"user_id\":\"auth0|123234235\",\"roles\":[{\"id\":\"rol_BKI0BKI0BKI0BKI0\",\"name\":\"role1\",\"description\":\"description\"},{\"id\":\"rol_BKW1BKIfBKd0BaI0\",\"name\":\"role2\",\"description\":\"description\"}],\"created_at\":\"2025-05-01T12:00:00Z\",\"updated_at\":\"2025-05-02T12:00:00Z\",\"last_login\":\"2025-05-03T12:00:00Z\",\"phone_number\":\"phone_number\"}"));
-        OrgMember response = client.organization()
+                                "{\"email\":\"roadrunner@acme.com\",\"name\":\"roadrunner\",\"nickname\":\"beepbeep\",\"given_name\":\"Road\",\"family_name\":\"Runner\",\"user_id\":\"auth0|123234235\",\"created_at\":\"2025-05-01T12:00:00Z\",\"updated_at\":\"2025-05-02T12:00:00Z\",\"last_login\":\"2025-05-03T12:00:00Z\",\"access_level\":\"none\",\"phone_number\":\"phone_number\"}"));
+        OrgMemberBase response = client.organization()
                 .members()
                 .get(
                         "user_id",
@@ -91,21 +93,10 @@ public class OrganizationMembersWireTest {
                 + "  \"given_name\": \"Road\",\n"
                 + "  \"family_name\": \"Runner\",\n"
                 + "  \"user_id\": \"auth0|123234235\",\n"
-                + "  \"roles\": [\n"
-                + "    {\n"
-                + "      \"id\": \"rol_BKI0BKI0BKI0BKI0\",\n"
-                + "      \"name\": \"role1\",\n"
-                + "      \"description\": \"description\"\n"
-                + "    },\n"
-                + "    {\n"
-                + "      \"id\": \"rol_BKW1BKIfBKd0BaI0\",\n"
-                + "      \"name\": \"role2\",\n"
-                + "      \"description\": \"description\"\n"
-                + "    }\n"
-                + "  ],\n"
                 + "  \"created_at\": \"2025-05-01T12:00:00Z\",\n"
                 + "  \"updated_at\": \"2025-05-02T12:00:00Z\",\n"
                 + "  \"last_login\": \"2025-05-03T12:00:00Z\",\n"
+                + "  \"access_level\": \"none\",\n"
                 + "  \"phone_number\": \"phone_number\"\n"
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);

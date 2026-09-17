@@ -34,7 +34,7 @@ public final class IdpAdfsOptionsResponse {
         if (this.type == 0) {
             return visitor.visit((IdpAdfsOptionsResponseAdfsServer) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((FedMetadataXml) this.value);
+            return visitor.visit((IdpAdfsOptionsResponseFedMetadataXml) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -63,14 +63,14 @@ public final class IdpAdfsOptionsResponse {
         return new IdpAdfsOptionsResponse(value, 0);
     }
 
-    public static IdpAdfsOptionsResponse of(FedMetadataXml value) {
+    public static IdpAdfsOptionsResponse of(IdpAdfsOptionsResponseFedMetadataXml value) {
         return new IdpAdfsOptionsResponse(value, 1);
     }
 
     public interface Visitor<T> {
         T visit(IdpAdfsOptionsResponseAdfsServer value);
 
-        T visit(FedMetadataXml value);
+        T visit(IdpAdfsOptionsResponseFedMetadataXml value);
     }
 
     static final class Deserializer extends StdDeserializer<IdpAdfsOptionsResponse> {
@@ -86,7 +86,7 @@ public final class IdpAdfsOptionsResponse {
             } catch (RuntimeException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, FedMetadataXml.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpAdfsOptionsResponseFedMetadataXml.class));
             } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

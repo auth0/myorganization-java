@@ -23,13 +23,23 @@ import java.util.Optional;
 public final class ListOrganizationMembersResponseContent {
     private final Optional<String> next;
 
+    private final Optional<Integer> total;
+
+    private final Optional<Boolean> totalIsCapped;
+
     private final Optional<List<OrgMember>> members;
 
     private final Map<String, Object> additionalProperties;
 
     private ListOrganizationMembersResponseContent(
-            Optional<String> next, Optional<List<OrgMember>> members, Map<String, Object> additionalProperties) {
+            Optional<String> next,
+            Optional<Integer> total,
+            Optional<Boolean> totalIsCapped,
+            Optional<List<OrgMember>> members,
+            Map<String, Object> additionalProperties) {
         this.next = next;
+        this.total = total;
+        this.totalIsCapped = totalIsCapped;
         this.members = members;
         this.additionalProperties = additionalProperties;
     }
@@ -40,6 +50,22 @@ public final class ListOrganizationMembersResponseContent {
     @JsonProperty("next")
     public Optional<String> getNext() {
         return next;
+    }
+
+    /**
+     * @return Best-effort count of members in the result set (reflecting any active filters). Only present when include_totals=true. Capped at 1000.
+     */
+    @JsonProperty("total")
+    public Optional<Integer> getTotal() {
+        return total;
+    }
+
+    /**
+     * @return Whether counting stopped before reaching the true size of the result set. When true, 'total' is a lower bound (the true size is 'total' or greater); when false, 'total' reflects the full result set as counted. Only present when 'total' is present.
+     */
+    @JsonProperty("total_is_capped")
+    public Optional<Boolean> getTotalIsCapped() {
+        return totalIsCapped;
     }
 
     @JsonProperty("members")
@@ -60,12 +86,15 @@ public final class ListOrganizationMembersResponseContent {
     }
 
     private boolean equalTo(ListOrganizationMembersResponseContent other) {
-        return next.equals(other.next) && members.equals(other.members);
+        return next.equals(other.next)
+                && total.equals(other.total)
+                && totalIsCapped.equals(other.totalIsCapped)
+                && members.equals(other.members);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.next, this.members);
+        return Objects.hash(this.next, this.total, this.totalIsCapped, this.members);
     }
 
     @java.lang.Override
@@ -81,6 +110,10 @@ public final class ListOrganizationMembersResponseContent {
     public static final class Builder {
         private Optional<String> next = Optional.empty();
 
+        private Optional<Integer> total = Optional.empty();
+
+        private Optional<Boolean> totalIsCapped = Optional.empty();
+
         private Optional<List<OrgMember>> members = Optional.empty();
 
         @JsonAnySetter
@@ -90,6 +123,8 @@ public final class ListOrganizationMembersResponseContent {
 
         public Builder from(ListOrganizationMembersResponseContent other) {
             next(other.getNext());
+            total(other.getTotal());
+            totalIsCapped(other.getTotalIsCapped());
             members(other.getMembers());
             return this;
         }
@@ -108,6 +143,34 @@ public final class ListOrganizationMembersResponseContent {
             return this;
         }
 
+        /**
+         * <p>Best-effort count of members in the result set (reflecting any active filters). Only present when include_totals=true. Capped at 1000.</p>
+         */
+        @JsonSetter(value = "total", nulls = Nulls.SKIP)
+        public Builder total(Optional<Integer> total) {
+            this.total = total;
+            return this;
+        }
+
+        public Builder total(Integer total) {
+            this.total = Optional.ofNullable(total);
+            return this;
+        }
+
+        /**
+         * <p>Whether counting stopped before reaching the true size of the result set. When true, 'total' is a lower bound (the true size is 'total' or greater); when false, 'total' reflects the full result set as counted. Only present when 'total' is present.</p>
+         */
+        @JsonSetter(value = "total_is_capped", nulls = Nulls.SKIP)
+        public Builder totalIsCapped(Optional<Boolean> totalIsCapped) {
+            this.totalIsCapped = totalIsCapped;
+            return this;
+        }
+
+        public Builder totalIsCapped(Boolean totalIsCapped) {
+            this.totalIsCapped = Optional.ofNullable(totalIsCapped);
+            return this;
+        }
+
         @JsonSetter(value = "members", nulls = Nulls.SKIP)
         public Builder members(Optional<List<OrgMember>> members) {
             this.members = members;
@@ -120,7 +183,8 @@ public final class ListOrganizationMembersResponseContent {
         }
 
         public ListOrganizationMembersResponseContent build() {
-            return new ListOrganizationMembersResponseContent(next, members, additionalProperties);
+            return new ListOrganizationMembersResponseContent(
+                    next, total, totalIsCapped, members, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

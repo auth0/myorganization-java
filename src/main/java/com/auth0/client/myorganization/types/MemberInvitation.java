@@ -32,6 +32,8 @@ public final class MemberInvitation {
 
     private final Optional<String> identityProviderId;
 
+    private final Optional<String> userStoreId;
+
     private final Optional<OffsetDateTime> createdAt;
 
     private final Optional<OffsetDateTime> expiresAt;
@@ -50,6 +52,7 @@ public final class MemberInvitation {
             Optional<MemberInvitationInviter> inviter,
             Optional<MemberInvitationInvitee> invitee,
             Optional<String> identityProviderId,
+            Optional<String> userStoreId,
             Optional<OffsetDateTime> createdAt,
             Optional<OffsetDateTime> expiresAt,
             Optional<List<String>> roles,
@@ -61,6 +64,7 @@ public final class MemberInvitation {
         this.inviter = inviter;
         this.invitee = invitee;
         this.identityProviderId = identityProviderId;
+        this.userStoreId = userStoreId;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.roles = roles;
@@ -92,6 +96,11 @@ public final class MemberInvitation {
     @JsonProperty("identity_provider_id")
     public Optional<String> getIdentityProviderId() {
         return identityProviderId;
+    }
+
+    @JsonProperty("user_store_id")
+    public Optional<String> getUserStoreId() {
+        return userStoreId;
     }
 
     /**
@@ -148,6 +157,7 @@ public final class MemberInvitation {
                 && inviter.equals(other.inviter)
                 && invitee.equals(other.invitee)
                 && identityProviderId.equals(other.identityProviderId)
+                && userStoreId.equals(other.userStoreId)
                 && createdAt.equals(other.createdAt)
                 && expiresAt.equals(other.expiresAt)
                 && roles.equals(other.roles)
@@ -163,6 +173,7 @@ public final class MemberInvitation {
                 this.inviter,
                 this.invitee,
                 this.identityProviderId,
+                this.userStoreId,
                 this.createdAt,
                 this.expiresAt,
                 this.roles,
@@ -191,6 +202,8 @@ public final class MemberInvitation {
 
         private Optional<String> identityProviderId = Optional.empty();
 
+        private Optional<String> userStoreId = Optional.empty();
+
         private Optional<OffsetDateTime> createdAt = Optional.empty();
 
         private Optional<OffsetDateTime> expiresAt = Optional.empty();
@@ -212,6 +225,7 @@ public final class MemberInvitation {
             inviter(other.getInviter());
             invitee(other.getInvitee());
             identityProviderId(other.getIdentityProviderId());
+            userStoreId(other.getUserStoreId());
             createdAt(other.getCreatedAt());
             expiresAt(other.getExpiresAt());
             roles(other.getRoles());
@@ -272,6 +286,17 @@ public final class MemberInvitation {
 
         public Builder identityProviderId(String identityProviderId) {
             this.identityProviderId = Optional.ofNullable(identityProviderId);
+            return this;
+        }
+
+        @JsonSetter(value = "user_store_id", nulls = Nulls.SKIP)
+        public Builder userStoreId(Optional<String> userStoreId) {
+            this.userStoreId = userStoreId;
+            return this;
+        }
+
+        public Builder userStoreId(String userStoreId) {
+            this.userStoreId = Optional.ofNullable(userStoreId);
             return this;
         }
 
@@ -349,6 +374,7 @@ public final class MemberInvitation {
                     inviter,
                     invitee,
                     identityProviderId,
+                    userStoreId,
                     createdAt,
                     expiresAt,
                     roles,

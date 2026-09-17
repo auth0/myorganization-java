@@ -37,12 +37,21 @@ public class OrganizationDetailsWireTest {
     }
 
     @Test
+    public void testDelete() throws Exception {
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        client.organizationDetails().delete();
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("DELETE", request.getMethod());
+    }
+
+    @Test
     public void testGet() throws Exception {
         server.enqueue(
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"id\":\"org_zW1UHutvkVWSWdCC\",\"name\":\"testorg\",\"display_name\":\"Test Organization\",\"branding\":{\"logo_url\":\"https://example.com/logo.png\",\"colors\":{\"primary\":\"#000000\",\"page_background\":\"#FFFFFF\"}}}"));
+                                "{\"id\":\"org_zW1UHutvkVWSWdCC\",\"name\":\"testorg\",\"display_name\":\"Test Organization\",\"branding\":{\"logo_url\":\"https://example.com/logo.png\",\"colors\":{\"primary\":\"#000000\",\"page_background\":\"#FFFFFF\"}},\"third_party_client_access\":\"allow\"}"));
         OrgDetailsRead response = client.organizationDetails().get();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -62,7 +71,8 @@ public class OrganizationDetailsWireTest {
                 + "      \"primary\": \"#000000\",\n"
                 + "      \"page_background\": \"#FFFFFF\"\n"
                 + "    }\n"
-                + "  }\n"
+                + "  },\n"
+                + "  \"third_party_client_access\": \"allow\"\n"
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
@@ -101,7 +111,7 @@ public class OrganizationDetailsWireTest {
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"id\":\"org_zW1UHutvkVWSWdCC\",\"name\":\"testorg\",\"display_name\":\"Test Organization\",\"branding\":{\"logo_url\":\"https://example.com/logo.png\",\"colors\":{\"primary\":\"#000000\",\"page_background\":\"#FFFFFF\"}}}"));
+                                "{\"id\":\"org_zW1UHutvkVWSWdCC\",\"name\":\"testorg\",\"display_name\":\"Test Organization\",\"branding\":{\"logo_url\":\"https://example.com/logo.png\",\"colors\":{\"primary\":\"#000000\",\"page_background\":\"#FFFFFF\"}},\"third_party_client_access\":\"allow\"}"));
         OrgDetailsRead response = client.organizationDetails()
                 .update(OrgDetails.builder()
                         .name("testorg")
@@ -172,7 +182,8 @@ public class OrganizationDetailsWireTest {
                 + "      \"primary\": \"#000000\",\n"
                 + "      \"page_background\": \"#FFFFFF\"\n"
                 + "    }\n"
-                + "  }\n"
+                + "  },\n"
+                + "  \"third_party_client_access\": \"allow\"\n"
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);

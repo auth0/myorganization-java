@@ -26,16 +26,20 @@ public final class OrgDetails {
 
     private final Optional<OrgBranding> branding;
 
+    private final Optional<OrgThirdPartyClientAccessEnum> thirdPartyClientAccess;
+
     private final Map<String, Object> additionalProperties;
 
     private OrgDetails(
             Optional<String> name,
             Optional<String> displayName,
             Optional<OrgBranding> branding,
+            Optional<OrgThirdPartyClientAccessEnum> thirdPartyClientAccess,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.displayName = displayName;
         this.branding = branding;
+        this.thirdPartyClientAccess = thirdPartyClientAccess;
         this.additionalProperties = additionalProperties;
     }
 
@@ -60,6 +64,11 @@ public final class OrgDetails {
         return branding;
     }
 
+    @JsonProperty("third_party_client_access")
+    public Optional<OrgThirdPartyClientAccessEnum> getThirdPartyClientAccess() {
+        return thirdPartyClientAccess;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -72,12 +81,15 @@ public final class OrgDetails {
     }
 
     private boolean equalTo(OrgDetails other) {
-        return name.equals(other.name) && displayName.equals(other.displayName) && branding.equals(other.branding);
+        return name.equals(other.name)
+                && displayName.equals(other.displayName)
+                && branding.equals(other.branding)
+                && thirdPartyClientAccess.equals(other.thirdPartyClientAccess);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.displayName, this.branding);
+        return Objects.hash(this.name, this.displayName, this.branding, this.thirdPartyClientAccess);
     }
 
     @java.lang.Override
@@ -97,6 +109,8 @@ public final class OrgDetails {
 
         private Optional<OrgBranding> branding = Optional.empty();
 
+        private Optional<OrgThirdPartyClientAccessEnum> thirdPartyClientAccess = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -106,6 +120,7 @@ public final class OrgDetails {
             name(other.getName());
             displayName(other.getDisplayName());
             branding(other.getBranding());
+            thirdPartyClientAccess(other.getThirdPartyClientAccess());
             return this;
         }
 
@@ -148,8 +163,19 @@ public final class OrgDetails {
             return this;
         }
 
+        @JsonSetter(value = "third_party_client_access", nulls = Nulls.SKIP)
+        public Builder thirdPartyClientAccess(Optional<OrgThirdPartyClientAccessEnum> thirdPartyClientAccess) {
+            this.thirdPartyClientAccess = thirdPartyClientAccess;
+            return this;
+        }
+
+        public Builder thirdPartyClientAccess(OrgThirdPartyClientAccessEnum thirdPartyClientAccess) {
+            this.thirdPartyClientAccess = Optional.ofNullable(thirdPartyClientAccess);
+            return this;
+        }
+
         public OrgDetails build() {
-            return new OrgDetails(name, displayName, branding, additionalProperties);
+            return new OrgDetails(name, displayName, branding, thirdPartyClientAccess, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

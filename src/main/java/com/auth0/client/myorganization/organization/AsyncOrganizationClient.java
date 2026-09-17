@@ -12,6 +12,8 @@ public class AsyncOrganizationClient {
 
     protected final Supplier<AsyncConfigurationClient> configurationClient;
 
+    protected final Supplier<AsyncUserStoresClient> userStoresClient;
+
     protected final Supplier<AsyncDomainsClient> domainsClient;
 
     protected final Supplier<AsyncIdentityProvidersClient> identityProvidersClient;
@@ -27,6 +29,7 @@ public class AsyncOrganizationClient {
     public AsyncOrganizationClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.configurationClient = Suppliers.memoize(() -> new AsyncConfigurationClient(clientOptions));
+        this.userStoresClient = Suppliers.memoize(() -> new AsyncUserStoresClient(clientOptions));
         this.domainsClient = Suppliers.memoize(() -> new AsyncDomainsClient(clientOptions));
         this.identityProvidersClient = Suppliers.memoize(() -> new AsyncIdentityProvidersClient(clientOptions));
         this.membersClient = Suppliers.memoize(() -> new AsyncMembersClient(clientOptions));
@@ -37,6 +40,10 @@ public class AsyncOrganizationClient {
 
     public AsyncConfigurationClient configuration() {
         return this.configurationClient.get();
+    }
+
+    public AsyncUserStoresClient userStores() {
+        return this.userStoresClient.get();
     }
 
     public AsyncDomainsClient domains() {

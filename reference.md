@@ -1,5 +1,44 @@
 # Reference
 ## OrganizationDetails
+<details><summary><code>client.organizationDetails.delete()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently delete this Organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organizationDetails().delete();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.organizationDetails.get() -> OrgDetailsRead</code></summary>
 <dl>
 <dd>
@@ -154,6 +193,79 @@ client.organization().configuration().get();
 </dl>
 </details>
 
+## Organization UserStores
+<details><summary><code>client.organization.userStores.list() -> ListUserStoresResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the user stores for the associated Organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organization().userStores().list(
+    ListOrganizationUserStoresRequestParameters
+        .builder()
+        .isEnabled(
+            OptionalNullable.of(true)
+        )
+        .memberAccessLevel(
+            Arrays.asList(Optional.of(OrganizationAccessLevelEnum.NONE))
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**memberAccessLevel:** `Optional<OrganizationAccessLevelEnum>` — When present, only connections whose Organization Member Access Level matches one of the provided values are returned. Accepted values are full, limited, readonly and none.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isEnabled:** `Optional<Boolean>` — Filter the returned list by enabled status. When `true`, only enabled items are returned; when `false`, only disabled items; when omitted, all items are returned.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Organization Domains
 <details><summary><code>client.organization.domains.list() -> SyncPagingIterable&amp;lt;OrgDomain&amp;gt;</code></summary>
 <dl>
@@ -239,7 +351,7 @@ client.organization().domains().list(
 <dl>
 <dd>
 
-Create a new domain for this Organization.
+Create a domain for an Auth0 Organization and optionally enable Organization Discovery for members during the user login flow
 </dd>
 </dl>
 </dd>
@@ -298,7 +410,7 @@ client.organization().domains().create(
 <dl>
 <dd>
 
-Retrieve details of a domain specified by ID for this Organization.
+Retrieve the details of an Auth0 Organization domain using its unique domain ID, including the domain name and its current verification status.
 </dd>
 </dl>
 </dd>
@@ -352,7 +464,7 @@ client.organization().domains().get("domain_id");
 <dl>
 <dd>
 
-Remove a domain specified by ID from this Organization.
+Delete an Auth0 Organization domain using its unique domain ID, including all associated details and verification status.
 </dd>
 </dl>
 </dd>
@@ -407,7 +519,7 @@ client.organization().domains().delete("domain_id");
 <dl>
 <dd>
 
-Retrieve a list of all Identity Providers for this Organization.
+Retrieve the comprehensive list of identity providers and their respective configurations associated with an Auth0 Organization.
 </dd>
 </dl>
 </dd>
@@ -422,8 +534,41 @@ Retrieve a list of all Identity Providers for this Organization.
 <dd>
 
 ```java
-client.organization().identityProviders().list();
+client.organization().identityProviders().list(
+    ListOrganizationIdentityProvidersRequestParameters
+        .builder()
+        .isEnabled(
+            OptionalNullable.of(true)
+        )
+        .memberAccessLevel(
+            Arrays.asList(Optional.of(OrganizationAccessLevelEnum.NONE))
+        )
+        .build()
+);
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**memberAccessLevel:** `Optional<OrganizationAccessLevelEnum>` — When present, only connections whose Organization Member Access Level matches one of the provided values are returned. Accepted values are full, limited, readonly and none.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isEnabled:** `Optional<Boolean>` — Filter the returned list by enabled status. When `true`, only enabled items are returned; when `false`, only disabled items; when omitted, all items are returned.
+    
 </dd>
 </dl>
 </dd>
@@ -446,7 +591,7 @@ client.organization().identityProviders().list();
 <dl>
 <dd>
 
-Create a new Identity Provider for this Organization.
+Create a new enterprise Identity Provider utilizing the specified configuration settings and details for this Auth0 Organization.
 </dd>
 </dl>
 </dd>
@@ -466,16 +611,18 @@ client.organization().identityProviders().create(
         IdpOidcRequest
             .builder()
             .strategy(IdpOidcRequestStrategy.OIDC)
-            .options(
-                IdpOidcOptionsRequest
-                    .builder()
-                    .type(IdpOidcOptionsTypeEnum.FRONT_CHANNEL)
-                    .clientId("a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d")
-                    .discoveryUrl("https://{yourDomain}/.well-known/openid-configuration")
-                    .clientSecret(Optional.of("KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp"))
-                    .build()
-            )
             .name("oidcIdp")
+            .options(
+                Optional.of(
+                    IdpOidcOptionsRequest
+                        .builder()
+                        .type(IdpOidcOptionsTypeEnum.FRONT_CHANNEL)
+                        .clientId("a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d")
+                        .discoveryUrl("https://{yourDomain}/.well-known/openid-configuration")
+                        .clientSecret(Optional.of("KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp"))
+                        .build()
+                )
+            )
             .domains(
                 Optional.of(
                     Arrays.asList("mydomain.com")
@@ -652,7 +799,7 @@ Update the details of an Identity Provider specified by ID for this Organization
 client.organization().identityProviders().update(
     "idp_id",
     IdpUpdateKnownRequest.of(
-        IdpAdfsUpdateRequest
+        IdpOidcUpdateRequest
             .builder()
             .displayName(Optional.of("OIDC IdP"))
             .showAsButton(Optional.of(true))
@@ -660,11 +807,13 @@ client.organization().identityProviders().update(
             .isEnabled(Optional.of(true))
             .options(
                 Optional.of(
-                    IdpAdfsOptionsRequest.of(
-                        FedMetadataXml
-                            .builder()
-                            .build()
-                    )
+                    IdpOidcOptionsRequest
+                        .builder()
+                        .type(IdpOidcOptionsTypeEnum.FRONT_CHANNEL)
+                        .clientId("a8f3b2e7-5d1c-4f9a-8b0d-2e1c3a5b6f7d")
+                        .discoveryUrl("https://{yourDomain}/.well-known/openid-configuration")
+                        .clientSecret(Optional.of("KzQp2sVxR8nTgMjFhYcEWuLoIbDvUoC6A9B1zX7yWqFjHkGrP5sQdLmNp"))
+                        .build()
                 )
             )
             .build()
@@ -868,6 +1017,9 @@ client.organization().members().list(
         .take(
             OptionalNullable.of(1)
         )
+        .includeTotals(
+            OptionalNullable.of(true)
+        )
         .build()
 );
 ```
@@ -912,6 +1064,14 @@ client.organization().members().list(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `Optional<Boolean>` — When true, the response includes a 'total' count of items in the result set (reflecting any active filters), along with a 'total_is_capped' flag. The count is best-effort and capped at 1000; when the true size may be larger, 'total_is_capped' is true and 'total' is a lower bound. Omitted when not requested.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -920,7 +1080,7 @@ client.organization().members().list(
 </dl>
 </details>
 
-<details><summary><code>client.organization.members.get(userId) -> OrgMember</code></summary>
+<details><summary><code>client.organization.members.get(userId) -> OrgMemberBase</code></summary>
 <dl>
 <dd>
 
@@ -1109,6 +1269,9 @@ client.organization().invitations().list(
         .sort(
             OptionalNullable.of("sort")
         )
+        .includeTotals(
+            OptionalNullable.of(true)
+        )
         .build()
 );
 ```
@@ -1158,6 +1321,14 @@ client.organization().invitations().list(
 <dd>
 
 **sort:** `Optional<String>` — Field to sort by. Use field:order where order is 1 for ascending and -1 for descending. Defaults to created_at:-1
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeTotals:** `Optional<Boolean>` — When true, the response includes a 'total' count of items in the result set (reflecting any active filters), along with a 'total_is_capped' flag. The count is best-effort and capped at 1000; when the true size may be larger, 'total_is_capped' is true and 'total' is a lower bound. Omitted when not requested.
     
 </dd>
 </dl>
@@ -1260,7 +1431,15 @@ client.organization().invitations().create(
 <dl>
 <dd>
 
-**identityProviderId:** `Optional<String>` — Identity provider identifier.
+**identityProviderId:** `Optional<String>` — Identity provider identifier. At least one of identity_provider_id or user_store_id must be provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userStoreId:** `Optional<String>` — The user store to route the invitation through. At least one of identity_provider_id or user_store_id must be provided.
     
 </dd>
 </dl>
@@ -1269,6 +1448,67 @@ client.organization().invitations().create(
 <dd>
 
 **ttlSec:** `Optional<Integer>` — Number of seconds for which the invitation is valid before expiration. If unspecified or set to 0, this value defaults to 604800 seconds (7 days). Max value: 2592000 seconds (30 days).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.organization.invitations.delete(request)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Revoke a set of member invitations specified by IDs for this Organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organization().invitations().delete(
+    DeleteMemberInvitationsRequestContent
+        .builder()
+        .invitations(
+            Arrays.asList("uinv_0000000000000001", "uinv_0000000000000002", "uinv_0000000000000003")
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**invitations:** `List<String>` 
     
 </dd>
 </dl>
@@ -1350,60 +1590,6 @@ client.organization().invitations().get(
 <dd>
 
 **includeFields:** `Optional<Boolean>` — Whether specified fields are to be included (true) or excluded (false). Defaults to true
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organization.invitations.delete(invitationId)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Revoke a member invitation specified by ID for this Organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.organization().invitations().delete("invitation_id");
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**invitationId:** `String` 
     
 </dd>
 </dl>
@@ -1595,7 +1781,7 @@ client.organization().domains().verify().create("domain_id");
 </details>
 
 ## Organization Domains IdentityProviders
-<details><summary><code>client.organization.domains.identityProviders.get(domainId) -> ListDomainIdentityProvidersResponseContent</code></summary>
+<details><summary><code>client.organization.domains.identityProviders.list(domainId) -> ListDomainIdentityProvidersResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -1622,7 +1808,7 @@ Retrieve the list of Identity Providers associated with a domain specified by ID
 <dd>
 
 ```java
-client.organization().domains().identityProviders().get("domain_id");
+client.organization().domains().identityProviders().list("domain_id");
 ```
 </dd>
 </dl>
@@ -2184,6 +2370,61 @@ client.organization().identityProviders().provisioning().scimTokens().delete("id
 <dd>
 
 **idpScimTokenId:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Organization Invitations Roles
+<details><summary><code>client.organization.invitations.roles.list(invitationId) -> GetMemberInvitationRolesResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the roles assigned to a member invitation specified by ID for this Organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.organization().invitations().roles().list("invitation_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**invitationId:** `String` 
     
 </dd>
 </dl>

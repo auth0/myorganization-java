@@ -32,6 +32,8 @@ public final class ListMemberInvitationsRequestParameters {
 
     private final OptionalNullable<String> sort;
 
+    private final OptionalNullable<Boolean> includeTotals;
+
     private final Map<String, Object> additionalProperties;
 
     private ListMemberInvitationsRequestParameters(
@@ -40,12 +42,14 @@ public final class ListMemberInvitationsRequestParameters {
             OptionalNullable<String> from,
             OptionalNullable<Integer> take,
             OptionalNullable<String> sort,
+            OptionalNullable<Boolean> includeTotals,
             Map<String, Object> additionalProperties) {
         this.fields = fields;
         this.includeFields = includeFields;
         this.from = from;
         this.take = take;
         this.sort = sort;
+        this.includeTotals = includeTotals;
         this.additionalProperties = additionalProperties;
     }
 
@@ -95,6 +99,14 @@ public final class ListMemberInvitationsRequestParameters {
         return sort;
     }
 
+    /**
+     * @return When true, the response includes a 'total' count of items in the result set (reflecting any active filters), along with a 'total_is_capped' flag. The count is best-effort and capped at 1000; when the true size may be larger, 'total_is_capped' is true and 'total' is a lower bound. Omitted when not requested.
+     */
+    @JsonIgnore
+    public OptionalNullable<Boolean> getIncludeTotals() {
+        return includeTotals;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -112,12 +124,13 @@ public final class ListMemberInvitationsRequestParameters {
                 && includeFields.equals(other.includeFields)
                 && from.equals(other.from)
                 && take.equals(other.take)
-                && sort.equals(other.sort);
+                && sort.equals(other.sort)
+                && includeTotals.equals(other.includeTotals);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.fields, this.includeFields, this.from, this.take, this.sort);
+        return Objects.hash(this.fields, this.includeFields, this.from, this.take, this.sort, this.includeTotals);
     }
 
     @java.lang.Override
@@ -141,6 +154,8 @@ public final class ListMemberInvitationsRequestParameters {
 
         private OptionalNullable<String> sort = OptionalNullable.absent();
 
+        private OptionalNullable<Boolean> includeTotals = OptionalNullable.absent();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -152,6 +167,7 @@ public final class ListMemberInvitationsRequestParameters {
             from(other.getFrom());
             take(other.getTake());
             sort(other.getSort());
+            includeTotals(other.getIncludeTotals());
             return this;
         }
 
@@ -325,9 +341,43 @@ public final class ListMemberInvitationsRequestParameters {
             return this;
         }
 
+        /**
+         * <p>When true, the response includes a 'total' count of items in the result set (reflecting any active filters), along with a 'total_is_capped' flag. The count is best-effort and capped at 1000; when the true size may be larger, 'total_is_capped' is true and 'total' is a lower bound. Omitted when not requested.</p>
+         */
+        @JsonSetter(value = "include_totals", nulls = Nulls.SKIP)
+        public Builder includeTotals(OptionalNullable<Boolean> includeTotals) {
+            this.includeTotals = includeTotals;
+            return this;
+        }
+
+        public Builder includeTotals(Boolean includeTotals) {
+            this.includeTotals = OptionalNullable.of(includeTotals);
+            return this;
+        }
+
+        public Builder includeTotals(Optional<Boolean> includeTotals) {
+            if (includeTotals.isPresent()) {
+                this.includeTotals = OptionalNullable.of(includeTotals.get());
+            } else {
+                this.includeTotals = OptionalNullable.absent();
+            }
+            return this;
+        }
+
+        public Builder includeTotals(com.auth0.client.myorganization.core.Nullable<Boolean> includeTotals) {
+            if (includeTotals.isNull()) {
+                this.includeTotals = OptionalNullable.ofNull();
+            } else if (includeTotals.isEmpty()) {
+                this.includeTotals = OptionalNullable.absent();
+            } else {
+                this.includeTotals = OptionalNullable.of(includeTotals.get());
+            }
+            return this;
+        }
+
         public ListMemberInvitationsRequestParameters build() {
             return new ListMemberInvitationsRequestParameters(
-                    fields, includeFields, from, take, sort, additionalProperties);
+                    fields, includeFields, from, take, sort, includeTotals, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

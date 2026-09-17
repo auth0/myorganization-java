@@ -122,7 +122,7 @@ public class OrganizationMembersRolesWireTest {
                                 .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
-        Assertions.assertEquals("DELETE", request.getMethod());
+        Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody =

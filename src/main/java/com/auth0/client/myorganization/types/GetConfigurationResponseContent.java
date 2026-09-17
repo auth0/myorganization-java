@@ -25,14 +25,18 @@ public final class GetConfigurationResponseContent {
 
     private final Optional<IdpConnectionDeletionBehaviorEnum> connectionDeletionBehavior;
 
+    private final Optional<OrgThirdPartyClientAccessConfig> thirdPartyClientAccess;
+
     private final Map<String, Object> additionalProperties;
 
     private GetConfigurationResponseContent(
             Optional<List<IdpStrategyEnum>> allowedStrategies,
             Optional<IdpConnectionDeletionBehaviorEnum> connectionDeletionBehavior,
+            Optional<OrgThirdPartyClientAccessConfig> thirdPartyClientAccess,
             Map<String, Object> additionalProperties) {
         this.allowedStrategies = allowedStrategies;
         this.connectionDeletionBehavior = connectionDeletionBehavior;
+        this.thirdPartyClientAccess = thirdPartyClientAccess;
         this.additionalProperties = additionalProperties;
     }
 
@@ -49,6 +53,11 @@ public final class GetConfigurationResponseContent {
         return connectionDeletionBehavior;
     }
 
+    @JsonProperty("third_party_client_access")
+    public Optional<OrgThirdPartyClientAccessConfig> getThirdPartyClientAccess() {
+        return thirdPartyClientAccess;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -62,12 +71,13 @@ public final class GetConfigurationResponseContent {
 
     private boolean equalTo(GetConfigurationResponseContent other) {
         return allowedStrategies.equals(other.allowedStrategies)
-                && connectionDeletionBehavior.equals(other.connectionDeletionBehavior);
+                && connectionDeletionBehavior.equals(other.connectionDeletionBehavior)
+                && thirdPartyClientAccess.equals(other.thirdPartyClientAccess);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.allowedStrategies, this.connectionDeletionBehavior);
+        return Objects.hash(this.allowedStrategies, this.connectionDeletionBehavior, this.thirdPartyClientAccess);
     }
 
     @java.lang.Override
@@ -85,6 +95,8 @@ public final class GetConfigurationResponseContent {
 
         private Optional<IdpConnectionDeletionBehaviorEnum> connectionDeletionBehavior = Optional.empty();
 
+        private Optional<OrgThirdPartyClientAccessConfig> thirdPartyClientAccess = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -93,6 +105,7 @@ public final class GetConfigurationResponseContent {
         public Builder from(GetConfigurationResponseContent other) {
             allowedStrategies(other.getAllowedStrategies());
             connectionDeletionBehavior(other.getConnectionDeletionBehavior());
+            thirdPartyClientAccess(other.getThirdPartyClientAccess());
             return this;
         }
 
@@ -122,9 +135,20 @@ public final class GetConfigurationResponseContent {
             return this;
         }
 
+        @JsonSetter(value = "third_party_client_access", nulls = Nulls.SKIP)
+        public Builder thirdPartyClientAccess(Optional<OrgThirdPartyClientAccessConfig> thirdPartyClientAccess) {
+            this.thirdPartyClientAccess = thirdPartyClientAccess;
+            return this;
+        }
+
+        public Builder thirdPartyClientAccess(OrgThirdPartyClientAccessConfig thirdPartyClientAccess) {
+            this.thirdPartyClientAccess = Optional.ofNullable(thirdPartyClientAccess);
+            return this;
+        }
+
         public GetConfigurationResponseContent build() {
             return new GetConfigurationResponseContent(
-                    allowedStrategies, connectionDeletionBehavior, additionalProperties);
+                    allowedStrategies, connectionDeletionBehavior, thirdPartyClientAccess, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

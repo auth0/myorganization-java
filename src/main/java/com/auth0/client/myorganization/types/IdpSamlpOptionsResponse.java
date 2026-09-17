@@ -32,9 +32,9 @@ public final class IdpSamlpOptionsResponse {
     @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((Automatic) this.value);
+            return visitor.visit((IdpSamlpOptionsResponseMetadataUrl) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((Manual) this.value);
+            return visitor.visit((IdpSamlpOptionsResponseSignInEndpoint) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -59,18 +59,18 @@ public final class IdpSamlpOptionsResponse {
         return this.value.toString();
     }
 
-    public static IdpSamlpOptionsResponse of(Automatic value) {
+    public static IdpSamlpOptionsResponse of(IdpSamlpOptionsResponseMetadataUrl value) {
         return new IdpSamlpOptionsResponse(value, 0);
     }
 
-    public static IdpSamlpOptionsResponse of(Manual value) {
+    public static IdpSamlpOptionsResponse of(IdpSamlpOptionsResponseSignInEndpoint value) {
         return new IdpSamlpOptionsResponse(value, 1);
     }
 
     public interface Visitor<T> {
-        T visit(Automatic value);
+        T visit(IdpSamlpOptionsResponseMetadataUrl value);
 
-        T visit(Manual value);
+        T visit(IdpSamlpOptionsResponseSignInEndpoint value);
     }
 
     static final class Deserializer extends StdDeserializer<IdpSamlpOptionsResponse> {
@@ -82,11 +82,11 @@ public final class IdpSamlpOptionsResponse {
         public IdpSamlpOptionsResponse deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Automatic.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpSamlpOptionsResponseMetadataUrl.class));
             } catch (RuntimeException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Manual.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpSamlpOptionsResponseSignInEndpoint.class));
             } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

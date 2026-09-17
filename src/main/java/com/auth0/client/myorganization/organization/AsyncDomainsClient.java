@@ -68,14 +68,14 @@ public class AsyncDomainsClient {
     }
 
     /**
-     * Create a new domain for this Organization.
+     * Create a domain for an Auth0 Organization and optionally enable Organization Discovery for members during the user login flow
      */
     public CompletableFuture<OrgDomain> create(CreateOrganizationDomainRequestContent request) {
         return this.rawClient.create(request).thenApply(response -> response.body());
     }
 
     /**
-     * Create a new domain for this Organization.
+     * Create a domain for an Auth0 Organization and optionally enable Organization Discovery for members during the user login flow
      */
     public CompletableFuture<OrgDomain> create(
             CreateOrganizationDomainRequestContent request, RequestOptions requestOptions) {
@@ -83,28 +83,28 @@ public class AsyncDomainsClient {
     }
 
     /**
-     * Retrieve details of a domain specified by ID for this Organization.
+     * Retrieve the details of an Auth0 Organization domain using its unique domain ID, including the domain name and its current verification status.
      */
     public CompletableFuture<OrgDomain> get(String domainId) {
         return this.rawClient.get(domainId).thenApply(response -> response.body());
     }
 
     /**
-     * Retrieve details of a domain specified by ID for this Organization.
+     * Retrieve the details of an Auth0 Organization domain using its unique domain ID, including the domain name and its current verification status.
      */
     public CompletableFuture<OrgDomain> get(String domainId, RequestOptions requestOptions) {
         return this.rawClient.get(domainId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
-     * Remove a domain specified by ID from this Organization.
+     * Delete an Auth0 Organization domain using its unique domain ID, including all associated details and verification status.
      */
     public CompletableFuture<Void> delete(String domainId) {
         return this.rawClient.delete(domainId).thenApply(response -> response.body());
     }
 
     /**
-     * Remove a domain specified by ID from this Organization.
+     * Delete an Auth0 Organization domain using its unique domain ID, including all associated details and verification status.
      */
     public CompletableFuture<Void> delete(String domainId, RequestOptions requestOptions) {
         return this.rawClient.delete(domainId, requestOptions).thenApply(response -> response.body());

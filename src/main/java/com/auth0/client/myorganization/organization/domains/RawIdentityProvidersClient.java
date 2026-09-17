@@ -35,14 +35,14 @@ public class RawIdentityProvidersClient {
     /**
      * Retrieve the list of Identity Providers associated with a domain specified by ID for this Organization.
      */
-    public MyOrganizationApiHttpResponse<ListDomainIdentityProvidersResponseContent> get(String domainId) {
-        return get(domainId, null);
+    public MyOrganizationApiHttpResponse<ListDomainIdentityProvidersResponseContent> list(String domainId) {
+        return list(domainId, null);
     }
 
     /**
      * Retrieve the list of Identity Providers associated with a domain specified by ID for this Organization.
      */
-    public MyOrganizationApiHttpResponse<ListDomainIdentityProvidersResponseContent> get(
+    public MyOrganizationApiHttpResponse<ListDomainIdentityProvidersResponseContent> list(
             String domainId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

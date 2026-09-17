@@ -3,7 +3,9 @@
  */
 package com.auth0.client.myorganization.types;
 
+import com.auth0.client.myorganization.core.NullableNonemptyFilter;
 import com.auth0.client.myorganization.core.ObjectMappers;
+import com.auth0.client.myorganization.core.OptionalNullable;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,22 +19,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import org.jetbrains.annotations.Nullable;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = IdentityProvidersConfigStrategyBase.Builder.class)
-public final class IdentityProvidersConfigStrategyBase {
+public final class IdentityProvidersConfigStrategyBase implements IIdentityProvidersConfigStrategyBase {
     private final List<IdentityProvidersConfigEnabledFeaturesEnum> enabledFeatures;
 
     private final List<IdentityProvidersConfigProvisioningMethodsEnum> provisioningMethods;
+
+    private final OptionalNullable<IdentityProvidersConfigProvisioningConfiguration> provisioning;
 
     private final Map<String, Object> additionalProperties;
 
     private IdentityProvidersConfigStrategyBase(
             List<IdentityProvidersConfigEnabledFeaturesEnum> enabledFeatures,
             List<IdentityProvidersConfigProvisioningMethodsEnum> provisioningMethods,
+            OptionalNullable<IdentityProvidersConfigProvisioningConfiguration> provisioning,
             Map<String, Object> additionalProperties) {
         this.enabledFeatures = enabledFeatures;
         this.provisioningMethods = provisioningMethods;
+        this.provisioning = provisioning;
         this.additionalProperties = additionalProperties;
     }
 
@@ -40,13 +48,31 @@ public final class IdentityProvidersConfigStrategyBase {
      * @return Enabled features for a connections profile strategy override.
      */
     @JsonProperty("enabled_features")
+    @java.lang.Override
     public List<IdentityProvidersConfigEnabledFeaturesEnum> getEnabledFeatures() {
         return enabledFeatures;
     }
 
     @JsonProperty("provisioning_methods")
+    @java.lang.Override
     public List<IdentityProvidersConfigProvisioningMethodsEnum> getProvisioningMethods() {
         return provisioningMethods;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provisioning")
+    @java.lang.Override
+    public OptionalNullable<IdentityProvidersConfigProvisioningConfiguration> getProvisioning() {
+        if (provisioning == null) {
+            return OptionalNullable.absent();
+        }
+        return provisioning;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provisioning")
+    private OptionalNullable<IdentityProvidersConfigProvisioningConfiguration> _getProvisioning() {
+        return provisioning;
     }
 
     @java.lang.Override
@@ -62,12 +88,14 @@ public final class IdentityProvidersConfigStrategyBase {
     }
 
     private boolean equalTo(IdentityProvidersConfigStrategyBase other) {
-        return enabledFeatures.equals(other.enabledFeatures) && provisioningMethods.equals(other.provisioningMethods);
+        return enabledFeatures.equals(other.enabledFeatures)
+                && provisioningMethods.equals(other.provisioningMethods)
+                && provisioning.equals(other.provisioning);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.enabledFeatures, this.provisioningMethods);
+        return Objects.hash(this.enabledFeatures, this.provisioningMethods, this.provisioning);
     }
 
     @java.lang.Override
@@ -85,6 +113,9 @@ public final class IdentityProvidersConfigStrategyBase {
 
         private List<IdentityProvidersConfigProvisioningMethodsEnum> provisioningMethods = new ArrayList<>();
 
+        private OptionalNullable<IdentityProvidersConfigProvisioningConfiguration> provisioning =
+                OptionalNullable.absent();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -93,6 +124,7 @@ public final class IdentityProvidersConfigStrategyBase {
         public Builder from(IdentityProvidersConfigStrategyBase other) {
             enabledFeatures(other.getEnabledFeatures());
             provisioningMethods(other.getProvisioningMethods());
+            provisioning(other.getProvisioning());
             return this;
         }
 
@@ -142,8 +174,43 @@ public final class IdentityProvidersConfigStrategyBase {
             return this;
         }
 
+        @JsonSetter(value = "provisioning", nulls = Nulls.SKIP)
+        public Builder provisioning(
+                @Nullable OptionalNullable<IdentityProvidersConfigProvisioningConfiguration> provisioning) {
+            this.provisioning = provisioning;
+            return this;
+        }
+
+        public Builder provisioning(IdentityProvidersConfigProvisioningConfiguration provisioning) {
+            this.provisioning = OptionalNullable.of(provisioning);
+            return this;
+        }
+
+        public Builder provisioning(Optional<IdentityProvidersConfigProvisioningConfiguration> provisioning) {
+            if (provisioning.isPresent()) {
+                this.provisioning = OptionalNullable.of(provisioning.get());
+            } else {
+                this.provisioning = OptionalNullable.absent();
+            }
+            return this;
+        }
+
+        public Builder provisioning(
+                com.auth0.client.myorganization.core.Nullable<IdentityProvidersConfigProvisioningConfiguration>
+                        provisioning) {
+            if (provisioning.isNull()) {
+                this.provisioning = OptionalNullable.ofNull();
+            } else if (provisioning.isEmpty()) {
+                this.provisioning = OptionalNullable.absent();
+            } else {
+                this.provisioning = OptionalNullable.of(provisioning.get());
+            }
+            return this;
+        }
+
         public IdentityProvidersConfigStrategyBase build() {
-            return new IdentityProvidersConfigStrategyBase(enabledFeatures, provisioningMethods, additionalProperties);
+            return new IdentityProvidersConfigStrategyBase(
+                    enabledFeatures, provisioningMethods, provisioning, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

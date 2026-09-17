@@ -5,22 +5,29 @@ package com.auth0.client.myorganization.organization;
 
 import com.auth0.client.myorganization.core.ClientOptions;
 import com.auth0.client.myorganization.core.RequestOptions;
+import com.auth0.client.myorganization.core.Suppliers;
 import com.auth0.client.myorganization.core.SyncPagingIterable;
+import com.auth0.client.myorganization.organization.invitations.AsyncRolesClient;
 import com.auth0.client.myorganization.organization.types.CreateMemberInvitationRequestContent;
+import com.auth0.client.myorganization.organization.types.DeleteMemberInvitationsRequestContent;
 import com.auth0.client.myorganization.organization.types.GetMemberInvitationRequestParameters;
 import com.auth0.client.myorganization.organization.types.ListMemberInvitationsRequestParameters;
 import com.auth0.client.myorganization.types.MemberInvitation;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 public class AsyncInvitationsClient {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawInvitationsClient rawClient;
 
+    protected final Supplier<AsyncRolesClient> rolesClient;
+
     public AsyncInvitationsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new AsyncRawInvitationsClient(clientOptions);
+        this.rolesClient = Suppliers.memoize(() -> new AsyncRolesClient(clientOptions));
     }
 
     /**
@@ -76,6 +83,21 @@ public class AsyncInvitationsClient {
     }
 
     /**
+     * Revoke a set of member invitations specified by IDs for this Organization.
+     */
+    public CompletableFuture<Void> delete(DeleteMemberInvitationsRequestContent request) {
+        return this.rawClient.delete(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Revoke a set of member invitations specified by IDs for this Organization.
+     */
+    public CompletableFuture<Void> delete(
+            DeleteMemberInvitationsRequestContent request, RequestOptions requestOptions) {
+        return this.rawClient.delete(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
      * Retrieve details of a member invitation specified by ID for this Organization.
      */
     public CompletableFuture<MemberInvitation> get(String invitationId) {
@@ -104,17 +126,7 @@ public class AsyncInvitationsClient {
         return this.rawClient.get(invitationId, request, requestOptions).thenApply(response -> response.body());
     }
 
-    /**
-     * Revoke a member invitation specified by ID for this Organization.
-     */
-    public CompletableFuture<Void> delete(String invitationId) {
-        return this.rawClient.delete(invitationId).thenApply(response -> response.body());
-    }
-
-    /**
-     * Revoke a member invitation specified by ID for this Organization.
-     */
-    public CompletableFuture<Void> delete(String invitationId, RequestOptions requestOptions) {
-        return this.rawClient.delete(invitationId, requestOptions).thenApply(response -> response.body());
+    public AsyncRolesClient roles() {
+        return this.rolesClient.get();
     }
 }

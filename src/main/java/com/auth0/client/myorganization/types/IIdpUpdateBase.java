@@ -13,4 +13,8 @@ public interface IIdpUpdateBase {
     Optional<Boolean> getAssignMembershipOnLogin();
 
     Optional<Boolean> getIsEnabled();
+
+    Optional<Boolean> getUseForThirdPartyClientAccess();
+
+    Optional<CrossAppAccessResourceApp> getCrossAppAccessResourceApp();
 }
