@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.0.0](https://github.com/auth0/myorganization-java/tree/2.0.0) (2026-09-17)
+[Full Changelog](https://github.com/auth0/myorganization-java/compare/1.0.0...2.0.0)
+
+**Added**
+- feat: add user stores, cross-app access, and SCIM provisioning [\#59](https://github.com/auth0/myorganization-java/pull/59) ([fern-api[bot]](https://github.com/apps/fern-api))
+    - User Stores: `organization().userStores().list()`
+    - Invitation Roles: `organization().invitations().roles().list()`
+    - Delete Organization: `organizationDetails().delete()`
+    - Cross-App Access: `CrossAppAccessResourceApp` and related config/status types
+    - Third-party client access: `OrgThirdPartyClientAccessConfig` and related types
+    - SCIM provisioning: `IdentityProvidersConfigProvisioningConfiguration` and per-strategy IdP config types
+    - Member access levels: `OrganizationMemberAccessLevelEnum` (`none`, `readonly`, `limited`, `full`)
+    - Pagination: `includeTotals` request param, plus `total` and `totalIsCapped` on paginated responses
+
+**Breaking changes**
+- feat: add user stores, cross-app access, and SCIM provisioning [\#59](https://github.com/auth0/myorganization-java/pull/59) ([fern-api[bot]](https://github.com/apps/fern-api))
+    - Removed `Automatic`, `Manual`, and `FedMetadataXml` types; ADFS metadata type is now `IdpAdfsOptionsRequestFedMetadataXml`
+    - `domains().identityProviders().get()` renamed to `list()`
+    - `invitations().delete()` resignatured to a batch shape
+    - `members().get()` now returns `OrgMemberBase` without `roles` — fetch roles via `members().roles().list()`
+    - SAML IdP: `cert` renamed to `signingCert`, and additional fields are now required
+    - ADFS IdP: `fedMetadataXml` is now required
+    - `members().roles().unassign()` now calls `POST .../unassign-roles`
+
 ## [1.0.0](https://github.com/auth0/myorganization-java/tree/1.0.0) (2026-06-16)
 [Full Changelog](https://github.com/auth0/myorganization-java/compare/1.0.0-beta.0...1.0.0)
 
