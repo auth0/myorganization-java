@@ -125,7 +125,6 @@ public final class IdentityProvidersConfigOrganization {
 
         /**
          * <p>If Org Admin can set show_as_button</p>
-         * <p>If Org Admin can set show_as_button</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -136,7 +135,6 @@ public final class IdentityProvidersConfigOrganization {
         }
 
         /**
-         * <p>If Org Admin can set assign_membership_on_login</p>
          * <p>If Org Admin can set assign_membership_on_login</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

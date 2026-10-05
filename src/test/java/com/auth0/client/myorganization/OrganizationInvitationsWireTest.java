@@ -1,7 +1,6 @@
 package com.auth0.client.myorganization;
 
 import com.auth0.client.myorganization.core.ObjectMappers;
-import com.auth0.client.myorganization.core.OptionalNullable;
 import com.auth0.client.myorganization.core.SyncPagingIterable;
 import com.auth0.client.myorganization.organization.types.CreateMemberInvitationRequestContent;
 import com.auth0.client.myorganization.organization.types.DeleteMemberInvitationsRequestContent;
@@ -53,12 +52,12 @@ public class OrganizationInvitationsWireTest {
         SyncPagingIterable<MemberInvitation> response = client.organization()
                 .invitations()
                 .list(ListMemberInvitationsRequestParameters.builder()
-                        .fields(OptionalNullable.of("fields"))
-                        .includeFields(OptionalNullable.of(true))
-                        .from(OptionalNullable.of("from"))
-                        .take(OptionalNullable.of(1))
-                        .sort(OptionalNullable.of("sort"))
-                        .includeTotals(OptionalNullable.of(true))
+                        .fields("fields")
+                        .includeFields(true)
+                        .from("from")
+                        .take(1)
+                        .sort("sort")
+                        .includeTotals(true)
                         .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -256,8 +255,8 @@ public class OrganizationInvitationsWireTest {
                 .get(
                         "invitation_id",
                         GetMemberInvitationRequestParameters.builder()
-                                .fields(OptionalNullable.of("fields"))
-                                .includeFields(OptionalNullable.of(true))
+                                .fields("fields")
+                                .includeFields(true)
                                 .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -333,7 +332,9 @@ public class OrganizationInvitationsWireTest {
             while (iter.hasNext()) {
                 java.util.Map.Entry<String, JsonNode> entry = iter.next();
                 JsonNode actualValue = actual.get(entry.getKey());
-                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+                if (actualValue == null) {
+                    if (!entry.getValue().isNull()) return false;
+                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
             }
             return true;
         }

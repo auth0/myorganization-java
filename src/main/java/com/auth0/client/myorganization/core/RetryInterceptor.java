@@ -10,44 +10,100 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.Random;
+import okhttp3.Call;
 import okhttp3.Interceptor;
+import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
+import okio.AsyncTimeout;
+import okio.Timeout;
 
 public class RetryInterceptor implements Interceptor {
 
-    private static final Duration INITIAL_RETRY_DELAY = Duration.ofMillis(1000);
-    private static final Duration MAX_RETRY_DELAY = Duration.ofMillis(60000);
-    private static final double JITTER_FACTOR = 0.2;
+    private static final Duration DEFAULT_INITIAL_RETRY_DELAY = Duration.ofMillis(1000);
+    private static final Duration DEFAULT_MAX_RETRY_DELAY = Duration.ofMillis(60000);
+    private static final double DEFAULT_JITTER_FACTOR = 0.2;
 
     private final int maxRetries;
+    private final Duration initialRetryDelay;
+    private final Duration maxRetryDelay;
+    private final double jitterFactor;
     private final Random random = new Random();
 
     public RetryInterceptor(int maxRetries) {
+        this(maxRetries, Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
+    public RetryInterceptor(
+            int maxRetries,
+            Optional<Long> initialRetryDelayMillis,
+            Optional<Long> maxRetryDelayMillis,
+            Optional<Double> jitterFactor) {
+        initialRetryDelayMillis.ifPresent(delay -> {
+            if (delay < 0) {
+                throw new IllegalArgumentException("initialRetryDelayMillis must be non-negative");
+            }
+        });
+        maxRetryDelayMillis.ifPresent(delay -> {
+            if (delay < 0) {
+                throw new IllegalArgumentException("maxRetryDelayMillis must be non-negative");
+            }
+        });
+        jitterFactor.ifPresent(factor -> {
+            if (factor < 0 || factor > 1) {
+                throw new IllegalArgumentException("jitterFactor must be between 0 and 1");
+            }
+        });
         this.maxRetries = maxRetries;
+        this.initialRetryDelay = initialRetryDelayMillis.map(Duration::ofMillis).orElse(DEFAULT_INITIAL_RETRY_DELAY);
+        this.maxRetryDelay = maxRetryDelayMillis.map(Duration::ofMillis).orElse(DEFAULT_MAX_RETRY_DELAY);
+        this.jitterFactor = jitterFactor.orElse(DEFAULT_JITTER_FACTOR);
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Response response = chain.proceed(chain.request());
+        Request request = chain.request();
+        int effectiveMaxRetries = resolveMaxRetries(request);
+        Response response = chain.proceed(request);
 
         if (shouldRetry(response.code())) {
-            return retryChain(response, chain);
+            return retryChain(response, chain, effectiveMaxRetries);
         }
 
         return response;
     }
 
-    private Response retryChain(Response response, Chain chain) throws IOException {
-        ExponentialBackoff backoff = new ExponentialBackoff(this.maxRetries);
+    private int resolveMaxRetries(Request request) {
+        MaxRetriesOverride override = request.tag(MaxRetriesOverride.class);
+        return override != null ? override.getValue() : this.maxRetries;
+    }
+
+    private Response retryChain(Response response, Chain chain, int maxRetries) throws IOException {
+        ExponentialBackoff backoff = new ExponentialBackoff(maxRetries);
         Optional<Duration> nextBackoff = backoff.nextBackoff(response);
         while (nextBackoff.isPresent()) {
+            response = bufferResponse(response);
+            Optional<AsyncTimeout> callTimeout = suspendCallTimeout(chain);
             try {
                 Thread.sleep(nextBackoff.get().toMillis());
             } catch (InterruptedException e) {
+                response.close();
                 throw new IOException("Interrupted while trying request", e);
+            } finally {
+                callTimeout.ifPresent(AsyncTimeout::enter);
+            }
+            Response nextResponse;
+            try {
+                nextResponse = chain.proceed(chain.request());
+            } catch (IOException e) {
+                // A retry attempt failed with a transport error (connection reset, unreachable host, ...). The
+                // error is intentionally dropped: the response already received from the API is more actionable.
+                // Note that a call-timeout expiry or an explicit cancel() also ends up here, but OkHttp then
+                // discards whatever the interceptor chain returns and reports the cancellation itself.
+                return response;
             }
             response.close();
-            response = chain.proceed(chain.request());
+            response = nextResponse;
             if (shouldRetry(response.code())) {
                 nextBackoff = backoff.nextBackoff(response);
             } else {
@@ -56,6 +112,51 @@ public class RetryInterceptor implements Interceptor {
         }
 
         return response;
+    }
+
+    /**
+     * Pauses the OkHttp call timeout so that it applies to each attempt individually rather than to the whole
+     * retry loop: the backoff wait (e.g. a {@code Retry-After} the size of the call timeout) does not consume the
+     * budget of the next attempt, and each attempt starts with a fresh budget once {@link AsyncTimeout#enter()}
+     * is called again.
+     *
+     * <p>{@link AsyncTimeout#exit()} and {@link AsyncTimeout#enter()} must stay strictly paired: {@code exit()} on
+     * a timeout that is not armed is a no-op, but {@code enter()} on one that is already armed throws
+     * {@code IllegalStateException}. Every caller must re-enter the returned timeout exactly once, on all paths.
+     */
+    private static Optional<AsyncTimeout> suspendCallTimeout(Chain chain) {
+        Call call = chain.call();
+        if (call == null) {
+            return Optional.empty();
+        }
+        Timeout timeout = call.timeout();
+        if (!(timeout instanceof AsyncTimeout)) {
+            return Optional.empty();
+        }
+        AsyncTimeout callTimeout = (AsyncTimeout) timeout;
+        callTimeout.exit();
+        return Optional.of(callTimeout);
+    }
+
+    /**
+     * Reads the body into memory so the response stays usable after the underlying connection
+     * is released or cancelled by a later attempt.
+     */
+    private static Response bufferResponse(Response response) {
+        ResponseBody body = response.body();
+        if (body == null) {
+            return response;
+        }
+        try {
+            byte[] bytes = body.bytes();
+            Response buffered = response.newBuilder()
+                    .body(ResponseBody.create(bytes, body.contentType()))
+                    .build();
+            response.close();
+            return buffered;
+        } catch (IOException e) {
+            return response;
+        }
     }
 
     /**
@@ -70,7 +171,7 @@ public class RetryInterceptor implements Interceptor {
             Optional<Duration> secondsDelay = tryParseLong(retryAfter)
                     .map(seconds -> seconds * 1000)
                     .filter(delayMs -> delayMs > 0)
-                    .map(delayMs -> Math.min(delayMs, MAX_RETRY_DELAY.toMillis()))
+                    .map(delayMs -> Math.min(delayMs, maxRetryDelay.toMillis()))
                     .map(Duration::ofMillis);
             if (secondsDelay.isPresent()) {
                 return secondsDelay.get();
@@ -80,7 +181,7 @@ public class RetryInterceptor implements Interceptor {
             Optional<Duration> dateDelay = tryParseHttpDate(retryAfter)
                     .map(resetTime -> resetTime.toInstant().toEpochMilli() - System.currentTimeMillis())
                     .filter(delayMs -> delayMs > 0)
-                    .map(delayMs -> Math.min(delayMs, MAX_RETRY_DELAY.toMillis()))
+                    .map(delayMs -> Math.min(delayMs, maxRetryDelay.toMillis()))
                     .map(Duration::ofMillis);
             if (dateDelay.isPresent()) {
                 return dateDelay.get();
@@ -94,7 +195,7 @@ public class RetryInterceptor implements Interceptor {
             Optional<Duration> rateLimitDelay = tryParseLong(rateLimitReset)
                     .map(resetTimeSeconds -> (resetTimeSeconds * 1000) - System.currentTimeMillis())
                     .filter(delayMs -> delayMs > 0)
-                    .map(delayMs -> Math.min(delayMs, MAX_RETRY_DELAY.toMillis()))
+                    .map(delayMs -> Math.min(delayMs, maxRetryDelay.toMillis()))
                     .map(this::addPositiveJitter)
                     .map(Duration::ofMillis);
             if (rateLimitDelay.isPresent()) {
@@ -103,8 +204,15 @@ public class RetryInterceptor implements Interceptor {
         }
 
         // Fall back to exponential backoff, with symmetric jitter
-        long baseDelay = INITIAL_RETRY_DELAY.toMillis() * (1L << retryAttempt); // 2^retryAttempt
-        long cappedDelay = Math.min(baseDelay, MAX_RETRY_DELAY.toMillis());
+        long initialDelayMillis = initialRetryDelay.toMillis();
+        long maxDelayMillis = maxRetryDelay.toMillis();
+        long cappedDelay;
+        if (retryAttempt >= Long.SIZE - 1 || initialDelayMillis > (maxDelayMillis >> retryAttempt)) {
+            // initialDelayMillis * 2^retryAttempt would exceed maxDelayMillis (or overflow)
+            cappedDelay = maxDelayMillis;
+        } else {
+            cappedDelay = Math.min(initialDelayMillis << retryAttempt, maxDelayMillis); // 2^retryAttempt
+        }
         return Duration.ofMillis(addSymmetricJitter(cappedDelay));
     }
 
@@ -141,7 +249,7 @@ public class RetryInterceptor implements Interceptor {
      * Used for X-RateLimit-Reset header delays.
      */
     private long addPositiveJitter(long delayMs) {
-        double jitterMultiplier = 1.0 + (random.nextDouble() * JITTER_FACTOR);
+        double jitterMultiplier = 1.0 + (random.nextDouble() * jitterFactor);
         return (long) (delayMs * jitterMultiplier);
     }
 
@@ -150,12 +258,29 @@ public class RetryInterceptor implements Interceptor {
      * Used for exponential backoff delays.
      */
     private long addSymmetricJitter(long delayMs) {
-        double jitterMultiplier = 1.0 + ((random.nextDouble() - 0.5) * JITTER_FACTOR);
+        double jitterMultiplier = 1.0 + ((random.nextDouble() - 0.5) * jitterFactor);
         return (long) (delayMs * jitterMultiplier);
     }
 
     private static boolean shouldRetry(int statusCode) {
         return statusCode == 408 || statusCode == 429 || statusCode >= 500;
+    }
+
+    /**
+     * Per-request override carried on the OkHttp {@link Request} as a tag.
+     * When present, the interceptor uses this value instead of the client-wide
+     * {@code maxRetries} configured at construction time.
+     */
+    public static final class MaxRetriesOverride {
+        private final int value;
+
+        public MaxRetriesOverride(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 
     private final class ExponentialBackoff {

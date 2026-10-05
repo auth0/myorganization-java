@@ -11,6 +11,7 @@ import com.auth0.client.myorganization.core.MyOrganizationException;
 import com.auth0.client.myorganization.core.ObjectMappers;
 import com.auth0.client.myorganization.core.QueryStringMapper;
 import com.auth0.client.myorganization.core.RequestOptions;
+import com.auth0.client.myorganization.core.RetryInterceptor;
 import com.auth0.client.myorganization.core.SyncPagingIterable;
 import com.auth0.client.myorganization.errors.BadRequestError;
 import com.auth0.client.myorganization.errors.ConflictError;
@@ -92,6 +93,15 @@ public class RawDomainsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -139,6 +149,8 @@ public class RawDomainsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new MyOrganizationApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new MyOrganizationException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new MyOrganizationException("Network error executing HTTP request", e);
         }
@@ -182,6 +194,15 @@ public class RawDomainsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -221,6 +242,8 @@ public class RawDomainsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new MyOrganizationApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new MyOrganizationException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new MyOrganizationException("Network error executing HTTP request", e);
         }
@@ -255,6 +278,15 @@ public class RawDomainsClient {
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
@@ -291,6 +323,8 @@ public class RawDomainsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new MyOrganizationApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new MyOrganizationException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new MyOrganizationException("Network error executing HTTP request", e);
         }
@@ -326,6 +360,15 @@ public class RawDomainsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -360,6 +403,8 @@ public class RawDomainsClient {
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new MyOrganizationApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (JsonProcessingException e) {
+            throw new MyOrganizationException("Failed to deserialize response: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new MyOrganizationException("Network error executing HTTP request", e);
         }

@@ -166,7 +166,6 @@ public final class ErrorResponseContent {
 
         /**
          * <p>A URI that describes the error.</p>
-         * <p>A URI that describes the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -177,7 +176,6 @@ public final class ErrorResponseContent {
         }
 
         /**
-         * <p>The HTTP status code result of the request.</p>
          * <p>The HTTP status code result of the request.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -190,7 +188,6 @@ public final class ErrorResponseContent {
 
         /**
          * <p>A brief description of the error.</p>
-         * <p>A brief description of the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -201,7 +198,6 @@ public final class ErrorResponseContent {
         }
 
         /**
-         * <p>A detailed description of the error.</p>
          * <p>A detailed description of the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

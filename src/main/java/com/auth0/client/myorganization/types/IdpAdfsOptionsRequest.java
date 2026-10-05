@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(using = IdpAdfsOptionsRequest.Deserializer.class)
@@ -81,13 +82,17 @@ public final class IdpAdfsOptionsRequest {
         @java.lang.Override
         public IdpAdfsOptionsRequest deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpAdfsOptionsRequestAdfsServer.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("adfs_server")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpAdfsOptionsRequestAdfsServer.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpAdfsOptionsRequestFedMetadataXml.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("fedMetadataXml")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpAdfsOptionsRequestFedMetadataXml.class));
+                } catch (RuntimeException e) {
+                }
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

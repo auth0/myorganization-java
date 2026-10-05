@@ -3,13 +3,14 @@
  */
 package com.auth0.client.myorganization.organization.types;
 
+import com.auth0.client.myorganization.core.NullableNonemptyFilter;
 import com.auth0.client.myorganization.core.ObjectMappers;
 import com.auth0.client.myorganization.core.OptionalNullable;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -56,7 +57,8 @@ public final class ListMemberInvitationsRequestParameters {
     /**
      * @return Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields. Note: you cannot filter on ticket_id and this value will only be returned when fields are not filtered.
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("fields")
     public OptionalNullable<String> getFields() {
         if (fields == null) {
             return OptionalNullable.absent();
@@ -67,15 +69,20 @@ public final class ListMemberInvitationsRequestParameters {
     /**
      * @return Whether specified fields are to be included (true) or excluded (false). Defaults to true
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("include_fields")
     public OptionalNullable<Boolean> getIncludeFields() {
+        if (includeFields == null) {
+            return OptionalNullable.absent();
+        }
         return includeFields;
     }
 
     /**
      * @return An optional cursor from which to start the selection (exclusive).
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("from")
     public OptionalNullable<String> getFrom() {
         if (from == null) {
             return OptionalNullable.absent();
@@ -86,24 +93,72 @@ public final class ListMemberInvitationsRequestParameters {
     /**
      * @return Number of results per page. Defaults to 50.
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("take")
     public OptionalNullable<Integer> getTake() {
+        if (take == null) {
+            return OptionalNullable.absent();
+        }
         return take;
     }
 
     /**
      * @return Field to sort by. Use field:order where order is 1 for ascending and -1 for descending. Defaults to created_at:-1
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sort")
     public OptionalNullable<String> getSort() {
+        if (sort == null) {
+            return OptionalNullable.absent();
+        }
         return sort;
     }
 
     /**
      * @return When true, the response includes a 'total' count of items in the result set (reflecting any active filters), along with a 'total_is_capped' flag. The count is best-effort and capped at 1000; when the true size may be larger, 'total_is_capped' is true and 'total' is a lower bound. Omitted when not requested.
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("include_totals")
     public OptionalNullable<Boolean> getIncludeTotals() {
+        if (includeTotals == null) {
+            return OptionalNullable.absent();
+        }
+        return includeTotals;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("fields")
+    private OptionalNullable<String> _getFields() {
+        return fields;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("include_fields")
+    private OptionalNullable<Boolean> _getIncludeFields() {
+        return includeFields;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("from")
+    private OptionalNullable<String> _getFrom() {
+        return from;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("take")
+    private OptionalNullable<Integer> _getTake() {
+        return take;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sort")
+    private OptionalNullable<String> _getSort() {
+        return sort;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("include_totals")
+    private OptionalNullable<Boolean> _getIncludeTotals() {
         return includeTotals;
     }
 
@@ -209,7 +264,7 @@ public final class ListMemberInvitationsRequestParameters {
          * <p>Whether specified fields are to be included (true) or excluded (false). Defaults to true</p>
          */
         @JsonSetter(value = "include_fields", nulls = Nulls.SKIP)
-        public Builder includeFields(OptionalNullable<Boolean> includeFields) {
+        public Builder includeFields(@Nullable OptionalNullable<Boolean> includeFields) {
             this.includeFields = includeFields;
             return this;
         }
@@ -277,7 +332,7 @@ public final class ListMemberInvitationsRequestParameters {
          * <p>Number of results per page. Defaults to 50.</p>
          */
         @JsonSetter(value = "take", nulls = Nulls.SKIP)
-        public Builder take(OptionalNullable<Integer> take) {
+        public Builder take(@Nullable OptionalNullable<Integer> take) {
             this.take = take;
             return this;
         }
@@ -311,7 +366,7 @@ public final class ListMemberInvitationsRequestParameters {
          * <p>Field to sort by. Use field:order where order is 1 for ascending and -1 for descending. Defaults to created_at:-1</p>
          */
         @JsonSetter(value = "sort", nulls = Nulls.SKIP)
-        public Builder sort(OptionalNullable<String> sort) {
+        public Builder sort(@Nullable OptionalNullable<String> sort) {
             this.sort = sort;
             return this;
         }
@@ -345,7 +400,7 @@ public final class ListMemberInvitationsRequestParameters {
          * <p>When true, the response includes a 'total' count of items in the result set (reflecting any active filters), along with a 'total_is_capped' flag. The count is best-effort and capped at 1000; when the true size may be larger, 'total_is_capped' is true and 'total' is a lower bound. Omitted when not requested.</p>
          */
         @JsonSetter(value = "include_totals", nulls = Nulls.SKIP)
-        public Builder includeTotals(OptionalNullable<Boolean> includeTotals) {
+        public Builder includeTotals(@Nullable OptionalNullable<Boolean> includeTotals) {
             this.includeTotals = includeTotals;
             return this;
         }

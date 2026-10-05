@@ -250,7 +250,6 @@ public final class IdpPingFederateOptionsRequest {
 
         /**
          * <p>Indicates whether PingFederate should digitally sign outgoing SAML authentication requests to relying parties</p>
-         * <p>Indicates whether PingFederate should digitally sign outgoing SAML authentication requests to relying parties</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -261,7 +260,6 @@ public final class IdpPingFederateOptionsRequest {
         }
 
         /**
-         * <p>URL provided by PingFederate which returns information used for creating the connection</p>
          * <p>URL provided by PingFederate which returns information used for creating the connection</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -274,7 +272,6 @@ public final class IdpPingFederateOptionsRequest {
         }
 
         /**
-         * <p>PingFederate Server public key (encoded in PEM or CER) you retrieved from the IdP</p>
          * <p>PingFederate Server public key (encoded in PEM or CER) you retrieved from the IdP</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
