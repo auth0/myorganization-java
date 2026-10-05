@@ -172,7 +172,6 @@ public final class ValidationErrorDetail {
 
         /**
          * <p>A detailed description of the error.</p>
-         * <p>A detailed description of the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

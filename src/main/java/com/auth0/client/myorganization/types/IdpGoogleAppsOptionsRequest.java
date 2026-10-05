@@ -172,7 +172,6 @@ public final class IdpGoogleAppsOptionsRequest {
 
         /**
          * <p>Google Workspace domain name for your organization.</p>
-         * <p>Google Workspace domain name for your organization.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -184,7 +183,6 @@ public final class IdpGoogleAppsOptionsRequest {
 
         /**
          * <p>Unique identifier for your registered Google application.</p>
-         * <p>Unique identifier for your registered Google application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -195,7 +193,6 @@ public final class IdpGoogleAppsOptionsRequest {
         }
 
         /**
-         * <p>String used to gain access to your registered Google application</p>
          * <p>String used to gain access to your registered Google application</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

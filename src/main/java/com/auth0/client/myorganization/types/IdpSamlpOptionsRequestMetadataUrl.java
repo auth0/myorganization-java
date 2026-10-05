@@ -296,7 +296,6 @@ public final class IdpSamlpOptionsRequestMetadataUrl {
 
         /**
          * <p>URL provided by SAML provider which returns information used for creating the connection</p>
-         * <p>URL provided by SAML provider which returns information used for creating the connection</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -307,7 +306,6 @@ public final class IdpSamlpOptionsRequestMetadataUrl {
         }
 
         /**
-         * <p>When enabled, the SAML authentication request will be signed.</p>
          * <p>When enabled, the SAML authentication request will be signed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

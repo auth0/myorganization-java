@@ -144,7 +144,6 @@ public final class DomainIdp {
 
         /**
          * <p>The name of the identity provider</p>
-         * <p>The name of the identity provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

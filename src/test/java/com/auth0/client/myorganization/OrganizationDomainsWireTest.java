@@ -1,7 +1,6 @@
 package com.auth0.client.myorganization;
 
 import com.auth0.client.myorganization.core.ObjectMappers;
-import com.auth0.client.myorganization.core.OptionalNullable;
 import com.auth0.client.myorganization.core.SyncPagingIterable;
 import com.auth0.client.myorganization.organization.types.CreateOrganizationDomainRequestContent;
 import com.auth0.client.myorganization.organization.types.ListOrganizationDomainsRequestParameters;
@@ -46,8 +45,8 @@ public class OrganizationDomainsWireTest {
         SyncPagingIterable<OrgDomain> response = client.organization()
                 .domains()
                 .list(ListOrganizationDomainsRequestParameters.builder()
-                        .from(OptionalNullable.of("from"))
-                        .take(OptionalNullable.of(1))
+                        .from("from")
+                        .take(1)
                         .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -227,7 +226,9 @@ public class OrganizationDomainsWireTest {
             while (iter.hasNext()) {
                 java.util.Map.Entry<String, JsonNode> entry = iter.next();
                 JsonNode actualValue = actual.get(entry.getKey());
-                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+                if (actualValue == null) {
+                    if (!entry.getValue().isNull()) return false;
+                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
             }
             return true;
         }

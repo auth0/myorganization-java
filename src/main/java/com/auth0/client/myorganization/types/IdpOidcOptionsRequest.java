@@ -173,7 +173,6 @@ public final class IdpOidcOptionsRequest {
 
         /**
          * <p>The identifier given to you by your provider. Unique identifier for your registered application.</p>
-         * <p>The identifier given to you by your provider. Unique identifier for your registered application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -184,7 +183,6 @@ public final class IdpOidcOptionsRequest {
         }
 
         /**
-         * <p>The URL where the OIDC Identity Provider publishes its OpenID Provider Configuration Information</p>
          * <p>The URL where the OIDC Identity Provider publishes its OpenID Provider Configuration Information</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

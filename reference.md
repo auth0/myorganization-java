@@ -113,9 +113,7 @@ client.organizationDetails().update(
         .branding(
             OrgBranding
                 .builder()
-                .logoUrl(
-                    OptionalNullable.of("https://example.com/logo.png")
-                )
+                .logoUrl("https://example.com/logo.png")
                 .colors(
                     OrgBrandingColors
                         .builder()
@@ -224,11 +222,9 @@ Retrieve the user stores for the associated Organization.
 client.organization().userStores().list(
     ListOrganizationUserStoresRequestParameters
         .builder()
-        .isEnabled(
-            OptionalNullable.of(true)
-        )
+        .isEnabled(true)
         .memberAccessLevel(
-            Arrays.asList(Optional.of(OrganizationAccessLevelEnum.NONE))
+            Arrays.asList(OrganizationAccessLevelEnum.NONE)
         )
         .build()
 );
@@ -297,12 +293,8 @@ Retrieve a list of all pending and verified domains for this Organization.
 client.organization().domains().list(
     ListOrganizationDomainsRequestParameters
         .builder()
-        .from(
-            OptionalNullable.of("from")
-        )
-        .take(
-            OptionalNullable.of(1)
-        )
+        .from("from")
+        .take(1)
         .build()
 );
 ```
@@ -537,11 +529,9 @@ Retrieve the comprehensive list of identity providers and their respective confi
 client.organization().identityProviders().list(
     ListOrganizationIdentityProvidersRequestParameters
         .builder()
-        .isEnabled(
-            OptionalNullable.of(true)
-        )
+        .isEnabled(true)
         .memberAccessLevel(
-            Arrays.asList(Optional.of(OrganizationAccessLevelEnum.NONE))
+            Arrays.asList(OrganizationAccessLevelEnum.NONE)
         )
         .build()
 );
@@ -1005,21 +995,11 @@ Retrieve a list of all members for this Organization. The `roles` field is only 
 client.organization().members().list(
     ListOrganizationMembersRequestParameters
         .builder()
-        .fields(
-            OptionalNullable.of("fields")
-        )
-        .includeFields(
-            OptionalNullable.of(true)
-        )
-        .from(
-            OptionalNullable.of("from")
-        )
-        .take(
-            OptionalNullable.of(1)
-        )
-        .includeTotals(
-            OptionalNullable.of(true)
-        )
+        .fields("fields")
+        .includeFields(true)
+        .from("from")
+        .take(1)
+        .includeTotals(true)
         .build()
 );
 ```
@@ -1111,12 +1091,8 @@ client.organization().members().get(
     "user_id",
     GetOrganizationMemberRequestParameters
         .builder()
-        .fields(
-            OptionalNullable.of("fields")
-        )
-        .includeFields(
-            OptionalNullable.of(true)
-        )
+        .fields("fields")
+        .includeFields(true)
         .build()
 );
 ```
@@ -1254,24 +1230,12 @@ Retrieve a list of all member invitations for this Organization.
 client.organization().invitations().list(
     ListMemberInvitationsRequestParameters
         .builder()
-        .fields(
-            OptionalNullable.of("fields")
-        )
-        .includeFields(
-            OptionalNullable.of(true)
-        )
-        .from(
-            OptionalNullable.of("from")
-        )
-        .take(
-            OptionalNullable.of(1)
-        )
-        .sort(
-            OptionalNullable.of("sort")
-        )
-        .includeTotals(
-            OptionalNullable.of(true)
-        )
+        .fields("fields")
+        .includeFields(true)
+        .from("from")
+        .take(1)
+        .sort("sort")
+        .includeTotals(true)
         .build()
 );
 ```
@@ -1551,12 +1515,8 @@ client.organization().invitations().get(
     "invitation_id",
     GetMemberInvitationRequestParameters
         .builder()
-        .fields(
-            OptionalNullable.of("fields")
-        )
-        .includeFields(
-            OptionalNullable.of(true)
-        )
+        .fields("fields")
+        .includeFields(true)
         .build()
 );
 ```
@@ -1632,15 +1592,9 @@ Retrieve the list of roles available for binding to members and invitations for 
 client.organization().roles().list(
     ListRolesRequestParameters
         .builder()
-        .from(
-            OptionalNullable.of("from")
-        )
-        .take(
-            OptionalNullable.of(1)
-        )
-        .name(
-            OptionalNullable.of("name")
-        )
+        .from("from")
+        .take(1)
+        .name("name")
         .build()
 );
 ```
@@ -2468,12 +2422,8 @@ client.organization().members().roles().list(
     "user_id",
     ListOrgMemberRolesRequestParameters
         .builder()
-        .from(
-            OptionalNullable.of("from")
-        )
-        .take(
-            OptionalNullable.of(1)
-        )
+        .from("from")
+        .take(1)
         .build()
 );
 ```
