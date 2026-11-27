@@ -13,13 +13,13 @@ public final class IdpStrategyEnum {
 
     public static final IdpStrategyEnum SAMLP = new IdpStrategyEnum(Value.SAMLP, "samlp");
 
-    public static final IdpStrategyEnum GOOGLE_APPS = new IdpStrategyEnum(Value.GOOGLE_APPS, "google-apps");
-
     public static final IdpStrategyEnum WAAD = new IdpStrategyEnum(Value.WAAD, "waad");
 
     public static final IdpStrategyEnum ADFS = new IdpStrategyEnum(Value.ADFS, "adfs");
 
     public static final IdpStrategyEnum OIDC = new IdpStrategyEnum(Value.OIDC, "oidc");
+
+    public static final IdpStrategyEnum GOOGLE_APPS = new IdpStrategyEnum(Value.GOOGLE_APPS, "google-apps");
 
     private final Value value;
 
@@ -59,14 +59,14 @@ public final class IdpStrategyEnum {
                 return visitor.visitOkta();
             case SAMLP:
                 return visitor.visitSamlp();
-            case GOOGLE_APPS:
-                return visitor.visitGoogleApps();
             case WAAD:
                 return visitor.visitWaad();
             case ADFS:
                 return visitor.visitAdfs();
             case OIDC:
                 return visitor.visitOidc();
+            case GOOGLE_APPS:
+                return visitor.visitGoogleApps();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -82,14 +82,14 @@ public final class IdpStrategyEnum {
                 return OKTA;
             case "samlp":
                 return SAMLP;
-            case "google-apps":
-                return GOOGLE_APPS;
             case "waad":
                 return WAAD;
             case "adfs":
                 return ADFS;
             case "oidc":
                 return OIDC;
+            case "google-apps":
+                return GOOGLE_APPS;
             default:
                 return new IdpStrategyEnum(Value.UNKNOWN, value);
         }

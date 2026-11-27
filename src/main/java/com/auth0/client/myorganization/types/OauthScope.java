@@ -7,38 +7,40 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class OauthScope {
-    public static final OauthScope CREATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING = new OauthScope(
-            Value.CREATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING, "create:my_org:identity_providers_provisioning");
-
     public static final OauthScope CREATE_MY_ORG_CLIENTS =
             new OauthScope(Value.CREATE_MY_ORG_CLIENTS, "create:my_org:clients");
-
-    public static final OauthScope CREATE_MY_ORG_MEMBER_INVITATIONS =
-            new OauthScope(Value.CREATE_MY_ORG_MEMBER_INVITATIONS, "create:my_org:member_invitations");
-
-    public static final OauthScope DELETE_MY_ORG_DOMAINS =
-            new OauthScope(Value.DELETE_MY_ORG_DOMAINS, "delete:my_org:domains");
 
     public static final OauthScope UPDATE_MY_ORG_DOMAINS =
             new OauthScope(Value.UPDATE_MY_ORG_DOMAINS, "update:my_org:domains");
 
+    public static final OauthScope READ_MY_ORG_GROUP_ROLES =
+            new OauthScope(Value.READ_MY_ORG_GROUP_ROLES, "read:my_org:group_roles");
+
+    public static final OauthScope READ_MY_ORG_GROUPS = new OauthScope(Value.READ_MY_ORG_GROUPS, "read:my_org:groups");
+
+    public static final OauthScope CREATE_MY_ORG_IDENTITY_PROVIDERS =
+            new OauthScope(Value.CREATE_MY_ORG_IDENTITY_PROVIDERS, "create:my_org:identity_providers");
+
+    public static final OauthScope DELETE_MY_ORG_DOMAINS =
+            new OauthScope(Value.DELETE_MY_ORG_DOMAINS, "delete:my_org:domains");
+
     public static final OauthScope READ_MY_ORG_IDENTITY_PROVIDERS =
             new OauthScope(Value.READ_MY_ORG_IDENTITY_PROVIDERS, "read:my_org:identity_providers");
 
-    public static final OauthScope READ_MY_ORG_CLIENTS =
-            new OauthScope(Value.READ_MY_ORG_CLIENTS, "read:my_org:clients");
+    public static final OauthScope CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS =
+            new OauthScope(Value.CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS, "create:my_org:identity_providers_domains");
 
     public static final OauthScope DELETE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING = new OauthScope(
             Value.DELETE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING, "delete:my_org:identity_providers_provisioning");
 
-    public static final OauthScope DELETE_MY_ORG_ORGANIZATIONS =
-            new OauthScope(Value.DELETE_MY_ORG_ORGANIZATIONS, "delete:my_org:organizations");
+    public static final OauthScope READ_MY_ORG_CLIENTS =
+            new OauthScope(Value.READ_MY_ORG_CLIENTS, "read:my_org:clients");
 
     public static final OauthScope CREATE_MY_ORG_CLIENT_GRANTS =
             new OauthScope(Value.CREATE_MY_ORG_CLIENT_GRANTS, "create:my_org:client_grants");
 
-    public static final OauthScope DELETE_MY_ORG_IDENTITY_PROVIDERS =
-            new OauthScope(Value.DELETE_MY_ORG_IDENTITY_PROVIDERS, "delete:my_org:identity_providers");
+    public static final OauthScope CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS = new OauthScope(
+            Value.CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS, "create:my_org:identity_providers_scim_tokens");
 
     public static final OauthScope READ_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS = new OauthScope(
             Value.READ_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS, "read:my_org:identity_providers_scim_tokens");
@@ -46,11 +48,26 @@ public final class OauthScope {
     public static final OauthScope READ_MY_ORG_MEMBERS =
             new OauthScope(Value.READ_MY_ORG_MEMBERS, "read:my_org:members");
 
-    public static final OauthScope CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS = new OauthScope(
-            Value.CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS, "create:my_org:identity_providers_scim_tokens");
+    public static final OauthScope DELETE_MY_ORG_ORGANIZATIONS =
+            new OauthScope(Value.DELETE_MY_ORG_ORGANIZATIONS, "delete:my_org:organizations");
+
+    public static final OauthScope DELETE_MY_ORG_IDENTITY_PROVIDERS =
+            new OauthScope(Value.DELETE_MY_ORG_IDENTITY_PROVIDERS, "delete:my_org:identity_providers");
+
+    public static final OauthScope CREATE_MY_ORG_MEMBER_INVITATIONS =
+            new OauthScope(Value.CREATE_MY_ORG_MEMBER_INVITATIONS, "create:my_org:member_invitations");
 
     public static final OauthScope CREATE_MY_ORG_DOMAINS =
             new OauthScope(Value.CREATE_MY_ORG_DOMAINS, "create:my_org:domains");
+
+    public static final OauthScope CREATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING = new OauthScope(
+            Value.CREATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING, "create:my_org:identity_providers_provisioning");
+
+    public static final OauthScope UPDATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING = new OauthScope(
+            Value.UPDATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING, "update:my_org:identity_providers_provisioning");
+
+    public static final OauthScope READ_MY_ORG_MEMBER_ROLES =
+            new OauthScope(Value.READ_MY_ORG_MEMBER_ROLES, "read:my_org:member_roles");
 
     public static final OauthScope UPDATE_MY_ORG_IDENTITY_PROVIDERS =
             new OauthScope(Value.UPDATE_MY_ORG_IDENTITY_PROVIDERS, "update:my_org:identity_providers");
@@ -61,35 +78,29 @@ public final class OauthScope {
     public static final OauthScope UPDATE_MY_ORG_DETAILS =
             new OauthScope(Value.UPDATE_MY_ORG_DETAILS, "update:my_org:details");
 
-    public static final OauthScope DELETE_MY_ORG_MEMBER_ROLES =
-            new OauthScope(Value.DELETE_MY_ORG_MEMBER_ROLES, "delete:my_org:member_roles");
+    public static final OauthScope CREATE_MY_ORG_GROUP_ROLES =
+            new OauthScope(Value.CREATE_MY_ORG_GROUP_ROLES, "create:my_org:group_roles");
+
+    public static final OauthScope DELETE_MY_ORG_GROUP_ROLES =
+            new OauthScope(Value.DELETE_MY_ORG_GROUP_ROLES, "delete:my_org:group_roles");
 
     public static final OauthScope READ_MY_ORG_DOMAINS =
             new OauthScope(Value.READ_MY_ORG_DOMAINS, "read:my_org:domains");
 
-    public static final OauthScope DELETE_MY_ORG_CLIENTS =
-            new OauthScope(Value.DELETE_MY_ORG_CLIENTS, "delete:my_org:clients");
-
-    public static final OauthScope UPDATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING = new OauthScope(
-            Value.UPDATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING, "update:my_org:identity_providers_provisioning");
+    public static final OauthScope READ_MY_ORG_USER_STORES =
+            new OauthScope(Value.READ_MY_ORG_USER_STORES, "read:my_org:user_stores");
 
     public static final OauthScope READ_MY_ORG_MEMBER_INVITATIONS =
             new OauthScope(Value.READ_MY_ORG_MEMBER_INVITATIONS, "read:my_org:member_invitations");
 
-    public static final OauthScope READ_MY_ORG_MEMBER_ROLES =
-            new OauthScope(Value.READ_MY_ORG_MEMBER_ROLES, "read:my_org:member_roles");
+    public static final OauthScope DELETE_MY_ORG_CLIENTS =
+            new OauthScope(Value.DELETE_MY_ORG_CLIENTS, "delete:my_org:clients");
+
+    public static final OauthScope DELETE_MY_ORG_MEMBER_ROLES =
+            new OauthScope(Value.DELETE_MY_ORG_MEMBER_ROLES, "delete:my_org:member_roles");
 
     public static final OauthScope UPDATE_MY_ORG_IDENTITY_PROVIDERS_DETACH =
             new OauthScope(Value.UPDATE_MY_ORG_IDENTITY_PROVIDERS_DETACH, "update:my_org:identity_providers_detach");
-
-    public static final OauthScope READ_MY_ORG_USER_STORES =
-            new OauthScope(Value.READ_MY_ORG_USER_STORES, "read:my_org:user_stores");
-
-    public static final OauthScope CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS =
-            new OauthScope(Value.CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS, "create:my_org:identity_providers_domains");
-
-    public static final OauthScope READ_MY_ORG_CONFIGURATION =
-            new OauthScope(Value.READ_MY_ORG_CONFIGURATION, "read:my_org:configuration");
 
     public static final OauthScope READ_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING = new OauthScope(
             Value.READ_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING, "read:my_org:identity_providers_provisioning");
@@ -97,11 +108,8 @@ public final class OauthScope {
     public static final OauthScope DELETE_MY_ORG_MEMBERSHIPS =
             new OauthScope(Value.DELETE_MY_ORG_MEMBERSHIPS, "delete:my_org:memberships");
 
-    public static final OauthScope CREATE_MY_ORG_IDENTITY_PROVIDERS =
-            new OauthScope(Value.CREATE_MY_ORG_IDENTITY_PROVIDERS, "create:my_org:identity_providers");
-
-    public static final OauthScope DELETE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS = new OauthScope(
-            Value.DELETE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS, "delete:my_org:identity_providers_scim_tokens");
+    public static final OauthScope READ_MY_ORG_CONFIGURATION =
+            new OauthScope(Value.READ_MY_ORG_CONFIGURATION, "read:my_org:configuration");
 
     public static final OauthScope DELETE_MY_ORG_MEMBER_INVITATIONS =
             new OauthScope(Value.DELETE_MY_ORG_MEMBER_INVITATIONS, "delete:my_org:member_invitations");
@@ -111,6 +119,9 @@ public final class OauthScope {
 
     public static final OauthScope READ_MY_ORG_DETAILS =
             new OauthScope(Value.READ_MY_ORG_DETAILS, "read:my_org:details");
+
+    public static final OauthScope DELETE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS = new OauthScope(
+            Value.DELETE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS, "delete:my_org:identity_providers_scim_tokens");
 
     private final Value value;
 
@@ -143,76 +154,84 @@ public final class OauthScope {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case CREATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING:
-                return visitor.visitCreateMyOrgIdentityProvidersProvisioning();
             case CREATE_MY_ORG_CLIENTS:
                 return visitor.visitCreateMyOrgClients();
-            case CREATE_MY_ORG_MEMBER_INVITATIONS:
-                return visitor.visitCreateMyOrgMemberInvitations();
-            case DELETE_MY_ORG_DOMAINS:
-                return visitor.visitDeleteMyOrgDomains();
             case UPDATE_MY_ORG_DOMAINS:
                 return visitor.visitUpdateMyOrgDomains();
+            case READ_MY_ORG_GROUP_ROLES:
+                return visitor.visitReadMyOrgGroupRoles();
+            case READ_MY_ORG_GROUPS:
+                return visitor.visitReadMyOrgGroups();
+            case CREATE_MY_ORG_IDENTITY_PROVIDERS:
+                return visitor.visitCreateMyOrgIdentityProviders();
+            case DELETE_MY_ORG_DOMAINS:
+                return visitor.visitDeleteMyOrgDomains();
             case READ_MY_ORG_IDENTITY_PROVIDERS:
                 return visitor.visitReadMyOrgIdentityProviders();
-            case READ_MY_ORG_CLIENTS:
-                return visitor.visitReadMyOrgClients();
+            case CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS:
+                return visitor.visitCreateMyOrgIdentityProvidersDomains();
             case DELETE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING:
                 return visitor.visitDeleteMyOrgIdentityProvidersProvisioning();
-            case DELETE_MY_ORG_ORGANIZATIONS:
-                return visitor.visitDeleteMyOrgOrganizations();
+            case READ_MY_ORG_CLIENTS:
+                return visitor.visitReadMyOrgClients();
             case CREATE_MY_ORG_CLIENT_GRANTS:
                 return visitor.visitCreateMyOrgClientGrants();
-            case DELETE_MY_ORG_IDENTITY_PROVIDERS:
-                return visitor.visitDeleteMyOrgIdentityProviders();
+            case CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS:
+                return visitor.visitCreateMyOrgIdentityProvidersScimTokens();
             case READ_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS:
                 return visitor.visitReadMyOrgIdentityProvidersScimTokens();
             case READ_MY_ORG_MEMBERS:
                 return visitor.visitReadMyOrgMembers();
-            case CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS:
-                return visitor.visitCreateMyOrgIdentityProvidersScimTokens();
+            case DELETE_MY_ORG_ORGANIZATIONS:
+                return visitor.visitDeleteMyOrgOrganizations();
+            case DELETE_MY_ORG_IDENTITY_PROVIDERS:
+                return visitor.visitDeleteMyOrgIdentityProviders();
+            case CREATE_MY_ORG_MEMBER_INVITATIONS:
+                return visitor.visitCreateMyOrgMemberInvitations();
             case CREATE_MY_ORG_DOMAINS:
                 return visitor.visitCreateMyOrgDomains();
+            case CREATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING:
+                return visitor.visitCreateMyOrgIdentityProvidersProvisioning();
+            case UPDATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING:
+                return visitor.visitUpdateMyOrgIdentityProvidersProvisioning();
+            case READ_MY_ORG_MEMBER_ROLES:
+                return visitor.visitReadMyOrgMemberRoles();
             case UPDATE_MY_ORG_IDENTITY_PROVIDERS:
                 return visitor.visitUpdateMyOrgIdentityProviders();
             case DELETE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS:
                 return visitor.visitDeleteMyOrgIdentityProvidersDomains();
             case UPDATE_MY_ORG_DETAILS:
                 return visitor.visitUpdateMyOrgDetails();
-            case DELETE_MY_ORG_MEMBER_ROLES:
-                return visitor.visitDeleteMyOrgMemberRoles();
+            case CREATE_MY_ORG_GROUP_ROLES:
+                return visitor.visitCreateMyOrgGroupRoles();
+            case DELETE_MY_ORG_GROUP_ROLES:
+                return visitor.visitDeleteMyOrgGroupRoles();
             case READ_MY_ORG_DOMAINS:
                 return visitor.visitReadMyOrgDomains();
-            case DELETE_MY_ORG_CLIENTS:
-                return visitor.visitDeleteMyOrgClients();
-            case UPDATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING:
-                return visitor.visitUpdateMyOrgIdentityProvidersProvisioning();
-            case READ_MY_ORG_MEMBER_INVITATIONS:
-                return visitor.visitReadMyOrgMemberInvitations();
-            case READ_MY_ORG_MEMBER_ROLES:
-                return visitor.visitReadMyOrgMemberRoles();
-            case UPDATE_MY_ORG_IDENTITY_PROVIDERS_DETACH:
-                return visitor.visitUpdateMyOrgIdentityProvidersDetach();
             case READ_MY_ORG_USER_STORES:
                 return visitor.visitReadMyOrgUserStores();
-            case CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS:
-                return visitor.visitCreateMyOrgIdentityProvidersDomains();
-            case READ_MY_ORG_CONFIGURATION:
-                return visitor.visitReadMyOrgConfiguration();
+            case READ_MY_ORG_MEMBER_INVITATIONS:
+                return visitor.visitReadMyOrgMemberInvitations();
+            case DELETE_MY_ORG_CLIENTS:
+                return visitor.visitDeleteMyOrgClients();
+            case DELETE_MY_ORG_MEMBER_ROLES:
+                return visitor.visitDeleteMyOrgMemberRoles();
+            case UPDATE_MY_ORG_IDENTITY_PROVIDERS_DETACH:
+                return visitor.visitUpdateMyOrgIdentityProvidersDetach();
             case READ_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING:
                 return visitor.visitReadMyOrgIdentityProvidersProvisioning();
             case DELETE_MY_ORG_MEMBERSHIPS:
                 return visitor.visitDeleteMyOrgMemberships();
-            case CREATE_MY_ORG_IDENTITY_PROVIDERS:
-                return visitor.visitCreateMyOrgIdentityProviders();
-            case DELETE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS:
-                return visitor.visitDeleteMyOrgIdentityProvidersScimTokens();
+            case READ_MY_ORG_CONFIGURATION:
+                return visitor.visitReadMyOrgConfiguration();
             case DELETE_MY_ORG_MEMBER_INVITATIONS:
                 return visitor.visitDeleteMyOrgMemberInvitations();
             case CREATE_MY_ORG_MEMBER_ROLES:
                 return visitor.visitCreateMyOrgMemberRoles();
             case READ_MY_ORG_DETAILS:
                 return visitor.visitReadMyOrgDetails();
+            case DELETE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS:
+                return visitor.visitDeleteMyOrgIdentityProvidersScimTokens();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -222,76 +241,84 @@ public final class OauthScope {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static OauthScope valueOf(String value) {
         switch (value) {
-            case "create:my_org:identity_providers_provisioning":
-                return CREATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING;
             case "create:my_org:clients":
                 return CREATE_MY_ORG_CLIENTS;
-            case "create:my_org:member_invitations":
-                return CREATE_MY_ORG_MEMBER_INVITATIONS;
-            case "delete:my_org:domains":
-                return DELETE_MY_ORG_DOMAINS;
             case "update:my_org:domains":
                 return UPDATE_MY_ORG_DOMAINS;
+            case "read:my_org:group_roles":
+                return READ_MY_ORG_GROUP_ROLES;
+            case "read:my_org:groups":
+                return READ_MY_ORG_GROUPS;
+            case "create:my_org:identity_providers":
+                return CREATE_MY_ORG_IDENTITY_PROVIDERS;
+            case "delete:my_org:domains":
+                return DELETE_MY_ORG_DOMAINS;
             case "read:my_org:identity_providers":
                 return READ_MY_ORG_IDENTITY_PROVIDERS;
-            case "read:my_org:clients":
-                return READ_MY_ORG_CLIENTS;
+            case "create:my_org:identity_providers_domains":
+                return CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS;
             case "delete:my_org:identity_providers_provisioning":
                 return DELETE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING;
-            case "delete:my_org:organizations":
-                return DELETE_MY_ORG_ORGANIZATIONS;
+            case "read:my_org:clients":
+                return READ_MY_ORG_CLIENTS;
             case "create:my_org:client_grants":
                 return CREATE_MY_ORG_CLIENT_GRANTS;
-            case "delete:my_org:identity_providers":
-                return DELETE_MY_ORG_IDENTITY_PROVIDERS;
+            case "create:my_org:identity_providers_scim_tokens":
+                return CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS;
             case "read:my_org:identity_providers_scim_tokens":
                 return READ_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS;
             case "read:my_org:members":
                 return READ_MY_ORG_MEMBERS;
-            case "create:my_org:identity_providers_scim_tokens":
-                return CREATE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS;
+            case "delete:my_org:organizations":
+                return DELETE_MY_ORG_ORGANIZATIONS;
+            case "delete:my_org:identity_providers":
+                return DELETE_MY_ORG_IDENTITY_PROVIDERS;
+            case "create:my_org:member_invitations":
+                return CREATE_MY_ORG_MEMBER_INVITATIONS;
             case "create:my_org:domains":
                 return CREATE_MY_ORG_DOMAINS;
+            case "create:my_org:identity_providers_provisioning":
+                return CREATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING;
+            case "update:my_org:identity_providers_provisioning":
+                return UPDATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING;
+            case "read:my_org:member_roles":
+                return READ_MY_ORG_MEMBER_ROLES;
             case "update:my_org:identity_providers":
                 return UPDATE_MY_ORG_IDENTITY_PROVIDERS;
             case "delete:my_org:identity_providers_domains":
                 return DELETE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS;
             case "update:my_org:details":
                 return UPDATE_MY_ORG_DETAILS;
-            case "delete:my_org:member_roles":
-                return DELETE_MY_ORG_MEMBER_ROLES;
+            case "create:my_org:group_roles":
+                return CREATE_MY_ORG_GROUP_ROLES;
+            case "delete:my_org:group_roles":
+                return DELETE_MY_ORG_GROUP_ROLES;
             case "read:my_org:domains":
                 return READ_MY_ORG_DOMAINS;
-            case "delete:my_org:clients":
-                return DELETE_MY_ORG_CLIENTS;
-            case "update:my_org:identity_providers_provisioning":
-                return UPDATE_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING;
-            case "read:my_org:member_invitations":
-                return READ_MY_ORG_MEMBER_INVITATIONS;
-            case "read:my_org:member_roles":
-                return READ_MY_ORG_MEMBER_ROLES;
-            case "update:my_org:identity_providers_detach":
-                return UPDATE_MY_ORG_IDENTITY_PROVIDERS_DETACH;
             case "read:my_org:user_stores":
                 return READ_MY_ORG_USER_STORES;
-            case "create:my_org:identity_providers_domains":
-                return CREATE_MY_ORG_IDENTITY_PROVIDERS_DOMAINS;
-            case "read:my_org:configuration":
-                return READ_MY_ORG_CONFIGURATION;
+            case "read:my_org:member_invitations":
+                return READ_MY_ORG_MEMBER_INVITATIONS;
+            case "delete:my_org:clients":
+                return DELETE_MY_ORG_CLIENTS;
+            case "delete:my_org:member_roles":
+                return DELETE_MY_ORG_MEMBER_ROLES;
+            case "update:my_org:identity_providers_detach":
+                return UPDATE_MY_ORG_IDENTITY_PROVIDERS_DETACH;
             case "read:my_org:identity_providers_provisioning":
                 return READ_MY_ORG_IDENTITY_PROVIDERS_PROVISIONING;
             case "delete:my_org:memberships":
                 return DELETE_MY_ORG_MEMBERSHIPS;
-            case "create:my_org:identity_providers":
-                return CREATE_MY_ORG_IDENTITY_PROVIDERS;
-            case "delete:my_org:identity_providers_scim_tokens":
-                return DELETE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS;
+            case "read:my_org:configuration":
+                return READ_MY_ORG_CONFIGURATION;
             case "delete:my_org:member_invitations":
                 return DELETE_MY_ORG_MEMBER_INVITATIONS;
             case "create:my_org:member_roles":
                 return CREATE_MY_ORG_MEMBER_ROLES;
             case "read:my_org:details":
                 return READ_MY_ORG_DETAILS;
+            case "delete:my_org:identity_providers_scim_tokens":
+                return DELETE_MY_ORG_IDENTITY_PROVIDERS_SCIM_TOKENS;
             default:
                 return new OauthScope(Value.UNKNOWN, value);
         }
@@ -368,6 +395,14 @@ public final class OauthScope {
 
         DELETE_MY_ORG_ORGANIZATIONS,
 
+        READ_MY_ORG_GROUPS,
+
+        READ_MY_ORG_GROUP_ROLES,
+
+        CREATE_MY_ORG_GROUP_ROLES,
+
+        DELETE_MY_ORG_GROUP_ROLES,
+
         UNKNOWN
     }
 
@@ -441,6 +476,14 @@ public final class OauthScope {
         T visitReadMyOrgUserStores();
 
         T visitDeleteMyOrgOrganizations();
+
+        T visitReadMyOrgGroups();
+
+        T visitReadMyOrgGroupRoles();
+
+        T visitCreateMyOrgGroupRoles();
+
+        T visitDeleteMyOrgGroupRoles();
 
         T visitUnknown(String unknownType);
     }

@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(using = BadRequestErrorBody.Deserializer.class)
@@ -81,13 +82,25 @@ public final class BadRequestErrorBody {
         @java.lang.Override
         public BadRequestErrorBody deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, ErrorResponseContent.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("type")
+                    && ((Map<?, ?>) value).containsKey("status")
+                    && ((Map<?, ?>) value).containsKey("title")
+                    && ((Map<?, ?>) value).containsKey("detail")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, ErrorResponseContent.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, ValidationErrorResponseContent.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?>
+                    && ((Map<?, ?>) value).containsKey("type")
+                    && ((Map<?, ?>) value).containsKey("status")
+                    && ((Map<?, ?>) value).containsKey("title")
+                    && ((Map<?, ?>) value).containsKey("validation_errors")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, ValidationErrorResponseContent.class));
+                } catch (RuntimeException e) {
+                }
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

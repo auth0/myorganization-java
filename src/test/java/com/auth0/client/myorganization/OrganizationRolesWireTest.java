@@ -1,7 +1,6 @@
 package com.auth0.client.myorganization;
 
 import com.auth0.client.myorganization.core.ObjectMappers;
-import com.auth0.client.myorganization.core.OptionalNullable;
 import com.auth0.client.myorganization.core.SyncPagingIterable;
 import com.auth0.client.myorganization.organization.types.ListRolesRequestParameters;
 import com.auth0.client.myorganization.types.Role;
@@ -45,9 +44,9 @@ public class OrganizationRolesWireTest {
         SyncPagingIterable<Role> response = client.organization()
                 .roles()
                 .list(ListRolesRequestParameters.builder()
-                        .from(OptionalNullable.of("from"))
-                        .take(OptionalNullable.of(1))
-                        .name(OptionalNullable.of("name"))
+                        .from("from")
+                        .take(1)
+                        .name("name")
                         .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -75,7 +74,9 @@ public class OrganizationRolesWireTest {
             while (iter.hasNext()) {
                 java.util.Map.Entry<String, JsonNode> entry = iter.next();
                 JsonNode actualValue = actual.get(entry.getKey());
-                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+                if (actualValue == null) {
+                    if (!entry.getValue().isNull()) return false;
+                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
             }
             return true;
         }

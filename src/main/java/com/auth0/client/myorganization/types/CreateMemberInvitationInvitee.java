@@ -124,7 +124,6 @@ public final class CreateMemberInvitationInvitee {
 
         /**
          * <p>The invitee's email.</p>
-         * <p>The invitee's email.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

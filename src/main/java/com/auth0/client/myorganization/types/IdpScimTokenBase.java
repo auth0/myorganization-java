@@ -178,7 +178,6 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
 
         /**
          * <p>The token identifier.</p>
-         * <p>The token identifier.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -189,7 +188,6 @@ public final class IdpScimTokenBase implements IIdpScimTokenBase {
         }
 
         /**
-         * <p>The token's created at timestamp.</p>
          * <p>The token's created at timestamp.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

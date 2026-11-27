@@ -298,7 +298,6 @@ public final class IdpSamlpOptionsRequestSignInEndpoint {
 
         /**
          * <p>The endpoint URL for the IdP sign-in</p>
-         * <p>The endpoint URL for the IdP sign-in</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -310,7 +309,6 @@ public final class IdpSamlpOptionsRequestSignInEndpoint {
 
         /**
          * <p>Signing certificate (encoded in PEM or CER) you retrieved from the IdP</p>
-         * <p>Signing certificate (encoded in PEM or CER) you retrieved from the IdP</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -321,7 +319,6 @@ public final class IdpSamlpOptionsRequestSignInEndpoint {
         }
 
         /**
-         * <p>When enabled, the SAML authentication request will be signed.</p>
          * <p>When enabled, the SAML authentication request will be signed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

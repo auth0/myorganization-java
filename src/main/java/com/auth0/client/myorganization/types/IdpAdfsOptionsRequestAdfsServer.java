@@ -99,7 +99,6 @@ public final class IdpAdfsOptionsRequestAdfsServer {
 
         /**
          * <p>The adfs_server is the public-facing URL that relying parties and internal clients use to communicate with an ADFS server for authentication and token issuance</p>
-         * <p>The adfs_server is the public-facing URL that relying parties and internal clients use to communicate with an ADFS server for authentication and token issuance</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

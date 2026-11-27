@@ -1,7 +1,6 @@
 package com.auth0.client.myorganization;
 
 import com.auth0.client.myorganization.core.ObjectMappers;
-import com.auth0.client.myorganization.core.OptionalNullable;
 import com.auth0.client.myorganization.organization.types.ListOrganizationUserStoresRequestParameters;
 import com.auth0.client.myorganization.types.ListUserStoresResponseContent;
 import com.auth0.client.myorganization.types.OrganizationAccessLevelEnum;
@@ -46,7 +45,7 @@ public class OrganizationUserStoresWireTest {
         ListUserStoresResponseContent response = client.organization()
                 .userStores()
                 .list(ListOrganizationUserStoresRequestParameters.builder()
-                        .isEnabled(OptionalNullable.of(true))
+                        .isEnabled(true)
                         .memberAccessLevel(Arrays.asList(OrganizationAccessLevelEnum.NONE))
                         .build());
         RecordedRequest request = server.takeRequest();
@@ -116,7 +115,9 @@ public class OrganizationUserStoresWireTest {
             while (iter.hasNext()) {
                 java.util.Map.Entry<String, JsonNode> entry = iter.next();
                 JsonNode actualValue = actual.get(entry.getKey());
-                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+                if (actualValue == null) {
+                    if (!entry.getValue().isNull()) return false;
+                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
             }
             return true;
         }

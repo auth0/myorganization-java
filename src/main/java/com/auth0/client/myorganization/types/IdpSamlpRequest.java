@@ -358,7 +358,6 @@ public final class IdpSamlpRequest {
 
         /**
          * <p>Identity provider specific options.</p>
-         * <p>Identity provider specific options.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -369,7 +368,6 @@ public final class IdpSamlpRequest {
         }
 
         /**
-         * <p>The name of the identity provider</p>
          * <p>The name of the identity provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

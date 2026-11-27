@@ -169,7 +169,6 @@ public final class ValidationErrorResponseContent {
 
         /**
          * <p>A URI that describes the error.</p>
-         * <p>A URI that describes the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -181,7 +180,6 @@ public final class ValidationErrorResponseContent {
 
         /**
          * <p>The HTTP status code result of the request.</p>
-         * <p>The HTTP status code result of the request.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -192,7 +190,6 @@ public final class ValidationErrorResponseContent {
         }
 
         /**
-         * <p>A brief description of the error.</p>
          * <p>A brief description of the error.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

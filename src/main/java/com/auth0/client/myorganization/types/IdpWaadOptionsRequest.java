@@ -172,7 +172,6 @@ public final class IdpWaadOptionsRequest {
 
         /**
          * <p>Your Azure AD domain name. You can find this on your Azure AD directory's overview page in the Microsoft Azure portal.</p>
-         * <p>Your Azure AD domain name. You can find this on your Azure AD directory's overview page in the Microsoft Azure portal.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -184,7 +183,6 @@ public final class IdpWaadOptionsRequest {
 
         /**
          * <p>Unique identifier for your registered Azure AD application.</p>
-         * <p>Unique identifier for your registered Azure AD application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -195,7 +193,6 @@ public final class IdpWaadOptionsRequest {
         }
 
         /**
-         * <p>String used to gain access to your registered Azure AD application.</p>
          * <p>String used to gain access to your registered Azure AD application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

@@ -1,7 +1,6 @@
 package com.auth0.client.myorganization;
 
 import com.auth0.client.myorganization.core.ObjectMappers;
-import com.auth0.client.myorganization.core.OptionalNullable;
 import com.auth0.client.myorganization.types.OrgBranding;
 import com.auth0.client.myorganization.types.OrgBrandingColors;
 import com.auth0.client.myorganization.types.OrgDetails;
@@ -117,7 +116,7 @@ public class OrganizationDetailsWireTest {
                         .name("testorg")
                         .displayName("Test Organization")
                         .branding(OrgBranding.builder()
-                                .logoUrl(OptionalNullable.of("https://example.com/logo.png"))
+                                .logoUrl("https://example.com/logo.png")
                                 .colors(OrgBrandingColors.builder()
                                         .primary("#000000")
                                         .pageBackground("#FFFFFF")
@@ -232,7 +231,9 @@ public class OrganizationDetailsWireTest {
             while (iter.hasNext()) {
                 java.util.Map.Entry<String, JsonNode> entry = iter.next();
                 JsonNode actualValue = actual.get(entry.getKey());
-                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+                if (actualValue == null) {
+                    if (!entry.getValue().isNull()) return false;
+                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
             }
             return true;
         }

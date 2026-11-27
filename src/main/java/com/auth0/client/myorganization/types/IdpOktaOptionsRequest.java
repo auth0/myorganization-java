@@ -172,7 +172,6 @@ public final class IdpOktaOptionsRequest {
 
         /**
          * <p>Okta's domain name for your organization.</p>
-         * <p>Okta's domain name for your organization.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -184,7 +183,6 @@ public final class IdpOktaOptionsRequest {
 
         /**
          * <p>Unique identifier for your registered Okta application</p>
-         * <p>Unique identifier for your registered Okta application</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -195,7 +193,6 @@ public final class IdpOktaOptionsRequest {
         }
 
         /**
-         * <p>String used to gain access to your registered Okta application.</p>
          * <p>String used to gain access to your registered Okta application.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

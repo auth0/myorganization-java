@@ -100,7 +100,6 @@ public final class IdpAdfsOptionsRequestFedMetadataXml {
 
         /**
          * <p>A Federation Metadata XML file in ADFS is a crucial document that serves as a blueprint for establishing trust between an ADFS server and other relying parties that want to consume identity information from ADFS.</p>
-         * <p>A Federation Metadata XML file in ADFS is a crucial document that serves as a blueprint for establishing trust between an ADFS server and other relying parties that want to consume identity information from ADFS.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

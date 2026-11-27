@@ -127,7 +127,6 @@ public final class CrossAppAccessResourceAppStatusConfig {
 
         /**
          * <p>The value applied to <code>cross_app_access_resource_app.status</code> when an identity provider is created and no other value is specified.</p>
-         * <p>The value applied to <code>cross_app_access_resource_app.status</code> when an identity provider is created and no other value is specified.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

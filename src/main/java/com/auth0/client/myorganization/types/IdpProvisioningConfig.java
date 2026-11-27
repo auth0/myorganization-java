@@ -222,7 +222,6 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
 
         /**
          * <p>The name of the identity provider</p>
-         * <p>The name of the identity provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -248,7 +247,6 @@ public final class IdpProvisioningConfig implements IIdpProvisioningConfig {
         }
 
         /**
-         * <p>The ID of the user</p>
          * <p>The ID of the user</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

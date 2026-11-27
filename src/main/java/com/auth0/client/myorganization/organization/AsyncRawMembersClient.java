@@ -10,6 +10,7 @@ import com.auth0.client.myorganization.core.MyOrganizationException;
 import com.auth0.client.myorganization.core.ObjectMappers;
 import com.auth0.client.myorganization.core.QueryStringMapper;
 import com.auth0.client.myorganization.core.RequestOptions;
+import com.auth0.client.myorganization.core.RetryInterceptor;
 import com.auth0.client.myorganization.core.SyncPagingIterable;
 import com.auth0.client.myorganization.errors.BadRequestError;
 import com.auth0.client.myorganization.errors.ForbiddenError;
@@ -105,6 +106,15 @@ public class AsyncRawMembersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<MyOrganizationApiHttpResponse<SyncPagingIterable<OrgMember>>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
@@ -175,6 +185,9 @@ public class AsyncRawMembersClient {
                     future.completeExceptionally(new MyOrganizationApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new MyOrganizationException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new MyOrganizationException("Network error executing HTTP request", e));
@@ -242,6 +255,15 @@ public class AsyncRawMembersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
         CompletableFuture<MyOrganizationApiHttpResponse<OrgMemberBase>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -293,6 +315,9 @@ public class AsyncRawMembersClient {
                     future.completeExceptionally(new MyOrganizationApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(
+                            new MyOrganizationException("Failed to deserialize response: " + e.getMessage(), e));
                 } catch (IOException e) {
                     future.completeExceptionally(
                             new MyOrganizationException("Network error executing HTTP request", e));

@@ -3,6 +3,7 @@
  */
 package com.auth0.client.myorganization.organization.types;
 
+import com.auth0.client.myorganization.core.NullableNonemptyFilter;
 import com.auth0.client.myorganization.core.ObjectMappers;
 import com.auth0.client.myorganization.core.OptionalNullable;
 import com.auth0.client.myorganization.types.OrganizationAccessLevelEnum;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -54,11 +56,24 @@ public final class ListOrganizationUserStoresRequestParameters {
     /**
      * @return Filter the returned list by enabled status. When <code>true</code>, only enabled items are returned; when <code>false</code>, only disabled items; when omitted, all items are returned.
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("is_enabled")
     public OptionalNullable<Boolean> getIsEnabled() {
         if (isEnabled == null) {
             return OptionalNullable.absent();
         }
+        return isEnabled;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("member_access_level")
+    private Optional<List<OrganizationAccessLevelEnum>> _getMemberAccessLevel() {
+        return memberAccessLevel;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("is_enabled")
+    private OptionalNullable<Boolean> _getIsEnabled() {
         return isEnabled;
     }
 

@@ -8,7 +8,7 @@ import com.auth0.client.myorganization.core.Suppliers;
 import com.auth0.client.myorganization.organization.AsyncOrganizationClient;
 import java.util.function.Supplier;
 
-public class AsyncMyOrganizationApi {
+public class AsyncMyOrganizationApi implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncOrganizationDetailsClient> organizationDetailsClient;
@@ -27,6 +27,16 @@ public class AsyncMyOrganizationApi {
 
     public AsyncOrganizationClient organization() {
         return this.organizationClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncMyOrganizationApiBuilder builder() {

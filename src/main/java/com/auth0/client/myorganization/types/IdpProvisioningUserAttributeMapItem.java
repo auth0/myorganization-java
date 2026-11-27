@@ -256,7 +256,6 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
 
         /**
          * <p>Indicates if the attribute is required.</p>
-         * <p>Indicates if the attribute is required.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -267,7 +266,6 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
         }
 
         /**
-         * <p>Indicates whether this attribute is not part of the admin defined schema but is provided by the source. The property will be removed when a refresh operation is performed.</p>
          * <p>Indicates whether this attribute is not part of the admin defined schema but is provided by the source. The property will be removed when a refresh operation is performed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -280,7 +278,6 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
 
         /**
          * <p>Indicates whether this attribute is expected but not provided by the admin defined schema. The property will be added when a refresh operation is performed.</p>
-         * <p>Indicates whether this attribute is expected but not provided by the admin defined schema. The property will be added when a refresh operation is performed.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -291,7 +288,6 @@ public final class IdpProvisioningUserAttributeMapItem implements IBaseUserAttri
         }
 
         /**
-         * <p>The name of the provisioning field.</p>
          * <p>The name of the provisioning field.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

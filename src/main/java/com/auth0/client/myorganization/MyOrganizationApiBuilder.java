@@ -16,6 +16,12 @@ public class MyOrganizationApiBuilder {
 
     private Optional<Integer> maxRetries = Optional.empty();
 
+    private Optional<Long> initialRetryDelayMillis = Optional.empty();
+
+    private Optional<Long> maxRetryDelayMillis = Optional.empty();
+
+    private Optional<Double> retryJitterFactor = Optional.empty();
+
     private final Map<String, String> customHeaders = new HashMap<>();
 
     private String token = null;
@@ -59,6 +65,30 @@ public class MyOrganizationApiBuilder {
      */
     public MyOrganizationApiBuilder maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
+     */
+    public MyOrganizationApiBuilder initialRetryDelayMillis(long initialRetryDelayMillis) {
+        this.initialRetryDelayMillis = Optional.of(initialRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the maximum delay (in milliseconds) between retries. Defaults to 60000 milliseconds.
+     */
+    public MyOrganizationApiBuilder maxRetryDelayMillis(long maxRetryDelayMillis) {
+        this.maxRetryDelayMillis = Optional.of(maxRetryDelayMillis);
+        return this;
+    }
+
+    /**
+     * Sets the jitter factor (between 0 and 1) applied to retry delays. Defaults to 0.2.
+     */
+    public MyOrganizationApiBuilder retryJitterFactor(double retryJitterFactor) {
+        this.retryJitterFactor = Optional.of(retryJitterFactor);
         return this;
     }
 
@@ -120,8 +150,15 @@ public class MyOrganizationApiBuilder {
     protected void setEnvironment(ClientOptions.Builder builder) {
         if (this.tenantDomain != null) {
             String _tenantDomain = this.tenantDomain != null ? this.tenantDomain : "{TENANT}.auth0.com";
-            this.environment =
-                    Environment.custom("https://{tenantDomain}/my-org/v1".replace("{tenantDomain}", _tenantDomain));
+            String _urlTemplate = null;
+            if (this.environment == null) {
+                _urlTemplate = "https://{tenantDomain}/my-org/v1";
+            } else if (this.environment.equals(Environment.DEFAULT)) {
+                _urlTemplate = "https://{tenantDomain}/my-org/v1";
+            }
+            if (_urlTemplate != null) {
+                this.environment = Environment.custom(_urlTemplate.replace("{tenantDomain}", _tenantDomain));
+            }
         }
         builder.environment(this.environment);
     }
@@ -168,6 +205,15 @@ public class MyOrganizationApiBuilder {
     protected void setRetries(ClientOptions.Builder builder) {
         if (this.maxRetries.isPresent()) {
             builder.maxRetries(this.maxRetries.get());
+        }
+        if (this.initialRetryDelayMillis.isPresent()) {
+            builder.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
+        }
+        if (this.maxRetryDelayMillis.isPresent()) {
+            builder.maxRetryDelayMillis(this.maxRetryDelayMillis.get());
+        }
+        if (this.retryJitterFactor.isPresent()) {
+            builder.retryJitterFactor(this.retryJitterFactor.get());
         }
     }
 

@@ -7,9 +7,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class IdentityProvidersConfigProvisioningConfigurationScimTokensScopesEnum {
-    public static final IdentityProvidersConfigProvisioningConfigurationScimTokensScopesEnum PATCH_USERS =
-            new IdentityProvidersConfigProvisioningConfigurationScimTokensScopesEnum(Value.PATCH_USERS, "patch:users");
-
     public static final IdentityProvidersConfigProvisioningConfigurationScimTokensScopesEnum DELETE_USERS =
             new IdentityProvidersConfigProvisioningConfigurationScimTokensScopesEnum(
                     Value.DELETE_USERS, "delete:users");
@@ -22,6 +19,9 @@ public final class IdentityProvidersConfigProvisioningConfigurationScimTokensSco
 
     public static final IdentityProvidersConfigProvisioningConfigurationScimTokensScopesEnum POST_USERS =
             new IdentityProvidersConfigProvisioningConfigurationScimTokensScopesEnum(Value.POST_USERS, "post:users");
+
+    public static final IdentityProvidersConfigProvisioningConfigurationScimTokensScopesEnum PATCH_USERS =
+            new IdentityProvidersConfigProvisioningConfigurationScimTokensScopesEnum(Value.PATCH_USERS, "patch:users");
 
     private final Value value;
 
@@ -57,8 +57,6 @@ public final class IdentityProvidersConfigProvisioningConfigurationScimTokensSco
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case PATCH_USERS:
-                return visitor.visitPatchUsers();
             case DELETE_USERS:
                 return visitor.visitDeleteUsers();
             case GET_USERS:
@@ -67,6 +65,8 @@ public final class IdentityProvidersConfigProvisioningConfigurationScimTokensSco
                 return visitor.visitPutUsers();
             case POST_USERS:
                 return visitor.visitPostUsers();
+            case PATCH_USERS:
+                return visitor.visitPatchUsers();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -76,8 +76,6 @@ public final class IdentityProvidersConfigProvisioningConfigurationScimTokensSco
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static IdentityProvidersConfigProvisioningConfigurationScimTokensScopesEnum valueOf(String value) {
         switch (value) {
-            case "patch:users":
-                return PATCH_USERS;
             case "delete:users":
                 return DELETE_USERS;
             case "get:users":
@@ -86,6 +84,8 @@ public final class IdentityProvidersConfigProvisioningConfigurationScimTokensSco
                 return PUT_USERS;
             case "post:users":
                 return POST_USERS;
+            case "patch:users":
+                return PATCH_USERS;
             default:
                 return new IdentityProvidersConfigProvisioningConfigurationScimTokensScopesEnum(Value.UNKNOWN, value);
         }

@@ -1,7 +1,6 @@
 package com.auth0.client.myorganization;
 
 import com.auth0.client.myorganization.core.ObjectMappers;
-import com.auth0.client.myorganization.core.OptionalNullable;
 import com.auth0.client.myorganization.core.SyncPagingIterable;
 import com.auth0.client.myorganization.organization.types.GetOrganizationMemberRequestParameters;
 import com.auth0.client.myorganization.organization.types.ListOrganizationMembersRequestParameters;
@@ -47,11 +46,11 @@ public class OrganizationMembersWireTest {
         SyncPagingIterable<OrgMember> response = client.organization()
                 .members()
                 .list(ListOrganizationMembersRequestParameters.builder()
-                        .fields(OptionalNullable.of("fields"))
-                        .includeFields(OptionalNullable.of(true))
-                        .from(OptionalNullable.of("from"))
-                        .take(OptionalNullable.of(1))
-                        .includeTotals(OptionalNullable.of(true))
+                        .fields("fields")
+                        .includeFields(true)
+                        .from("from")
+                        .take(1)
+                        .includeTotals(true)
                         .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -75,8 +74,8 @@ public class OrganizationMembersWireTest {
                 .get(
                         "user_id",
                         GetOrganizationMemberRequestParameters.builder()
-                                .fields(OptionalNullable.of("fields"))
-                                .includeFields(OptionalNullable.of(true))
+                                .fields("fields")
+                                .includeFields(true)
                                 .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -146,7 +145,9 @@ public class OrganizationMembersWireTest {
             while (iter.hasNext()) {
                 java.util.Map.Entry<String, JsonNode> entry = iter.next();
                 JsonNode actualValue = actual.get(entry.getKey());
-                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+                if (actualValue == null) {
+                    if (!entry.getValue().isNull()) return false;
+                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
             }
             return true;
         }

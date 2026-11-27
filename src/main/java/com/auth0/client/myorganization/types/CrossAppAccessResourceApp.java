@@ -100,7 +100,6 @@ public final class CrossAppAccessResourceApp {
 
         /**
          * <p>The status of the cross-app access resource application role. To enable the cross-app access resource application role, OIDC issuer domain must be a verified domain for the organization.</p>
-         * <p>The status of the cross-app access resource application role. To enable the cross-app access resource application role, OIDC issuer domain must be a verified domain for the organization.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

@@ -227,7 +227,6 @@ public final class OrgDomain {
 
         /**
          * <p>Value used to verify the domain.</p>
-         * <p>Value used to verify the domain.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -238,7 +237,6 @@ public final class OrgDomain {
         }
 
         /**
-         * <p>Stores the full domain where the TXT record should be added.</p>
          * <p>Stores the full domain where the TXT record should be added.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

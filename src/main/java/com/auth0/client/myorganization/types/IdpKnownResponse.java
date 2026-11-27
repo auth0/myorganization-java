@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(using = IdpKnownResponse.Deserializer.class)
@@ -121,33 +122,47 @@ public final class IdpKnownResponse {
         @java.lang.Override
         public IdpKnownResponse deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpAdfsResponse.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("strategy")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpAdfsResponse.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpGoogleAppsResponse.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("strategy")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpGoogleAppsResponse.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpOidcResponse.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("strategy")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpOidcResponse.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpOktaResponse.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("strategy")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpOktaResponse.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpPingFederateResponse.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("strategy")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpPingFederateResponse.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpSamlpResponse.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("strategy")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpSamlpResponse.class));
+                } catch (RuntimeException e) {
+                }
             }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpWaadResponse.class));
-            } catch (RuntimeException e) {
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("strategy")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, IdpWaadResponse.class));
+                } catch (RuntimeException e) {
+                }
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }
